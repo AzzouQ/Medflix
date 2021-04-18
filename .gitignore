@@ -27,4 +27,7 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
-./src/theme/*.css.map
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
