@@ -19,6 +19,7 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Create from './pages/Create';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -42,6 +43,9 @@ const Router: React.FC = () => {
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/create">
+            <Create />
           </Route>
           <Route exact path="/register">
             <Register />
