@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import 'firebase/messaging';
 import 'firebase/database';
 import 'firebase/auth'
 
@@ -19,45 +18,44 @@ const vapidKey =
 const app = firebase.initializeApp(firebaseConfig);
 
 const auth = app.auth();
-const messaging = app.messaging()
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    messaging.onMessage((payload) => {
-      resolve(payload);
-    });
-  });
+// export const onMessageListener = () =>
+//   new Promise((resolve) => {
+//     messaging.onMessage((payload) => {
+//       resolve(payload);
+//     });
+//   });
 
-export const getToken = (setTokenFound: Function) => {
-  return messaging
-    .getToken({ vapidKey: vapidKey })
-    .then(async (currentToken) => {
-      if (currentToken) {
-        console.log('current token for client: ', currentToken);
-        setTokenFound(true);
+// export const getToken = (setTokenFound: Function) => {
+//   return messaging
+//     .getToken({ vapidKey: vapidKey })
+//     .then(async (currentToken) => {
+//       if (currentToken) {
+//         console.log('current token for client: ', currentToken);
+//         setTokenFound(true);
 
-        // TODO SEND TO BACK END
-        // await firebase
-        //   .database()
-        //   .ref('/user')
-        //   .child('pushToken')
-        //   .set(currentToken)
+//         // TODO SEND TO BACK END
+//         // await firebase
+//         //   .database()
+//         //   .ref('/user')
+//         //   .child('pushToken')
+//         //   .set(currentToken)
 
-        // Track the token -> client mapping, by sending to backend server
-        // show on the UI that permission is secured
-      } else {
-        console.log(
-          'No registration token available. Request permission to generate one.'
-        );
-        setTokenFound(false);
-        // shows on the UI that permission is required
-      }
-    })
-    .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
-      // catch error while creating client token
-    });
-};
+//         // Track the token -> client mapping, by sending to backend server
+//         // show on the UI that permission is secured
+//       } else {
+//         console.log(
+//           'No registration token available. Request permission to generate one.'
+//         );
+//         setTokenFound(false);
+//         // shows on the UI that permission is required
+//       }
+//     })
+//     .catch((err) => {
+//       console.log('An error occurred while retrieving token. ', err);
+//       // catch error while creating client token
+//     });
+// };
 
 export const login = (email: string, password: string): Promise<firebase.auth.UserCredential> => {
   return auth.signInWithEmailAndPassword(email, password)
