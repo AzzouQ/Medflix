@@ -4,12 +4,14 @@ import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
 import { useHistory } from 'react-router';
+import { login } from '../service/firebase';
 
 const SignInForm = () => {
   const { push } = useHistory();
 
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const yupValidation = Yup.object({
     password: Yup.string().required('Veuillez entrer un mot de passe'),
@@ -18,7 +20,14 @@ const SignInForm = () => {
       .email("L'email est invalide"),
   });
 
-  const doLogin = () => {};
+  const doLogin = async () => {
+    try {
+      await login(mail, pass);
+      push('/')
+    } catch (e) {
+      // TODO Handle error
+    } 
+  };
 
   const toSignup = () => {
     push('/register');
