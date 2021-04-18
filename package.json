@@ -51,9 +51,6 @@
     "less-watch-compiler": "^1.14.6"
   },
   "scripts": {
-    "css": "concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\"",
-    "prestart": "yarn css",
-    "prebuild": "yarn css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

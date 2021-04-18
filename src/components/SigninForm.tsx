@@ -69,8 +69,9 @@ const SignInForm = () => {
         <Col span={24}>
           <Form.Item name={'signIn'}>
             <Button
+
               type={'primary'}
-              style={{ width: '100%' }}
+              style={{ width: '100%', backgroundColor: 'pink' }}
               onClick={doLogin}
             >
               {'Se connecter'}
