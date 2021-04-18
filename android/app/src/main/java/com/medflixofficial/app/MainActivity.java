@@ -1,4 +1,4 @@
-package com.medflix.app;
+package com.medflixofficial.app;
 
 import android.os.Bundle;
 

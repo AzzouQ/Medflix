@@ -1,5 +1,5 @@
 {
-  "appId": "com.medflix.app",
+  "appId": "com.medflixofficial.app",
   "appName": "Medflix",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
