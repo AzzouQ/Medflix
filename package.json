@@ -1,6 +1,7 @@
 {
   "name": "medflix",
   "version": "1.0",
+  "description": "An Ionic project",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -43,6 +44,12 @@
     "workbox-streams": "^5.1.4",
     "yup": "^0.32.9"
   },
+  "devDependencies": {
+    "@capacitor/cli": "2.4.7",
+    "concurrently": "^6.0.2",
+    "less": "^4.1.1",
+    "less-watch-compiler": "^1.14.6"
+  },
   "scripts": {
     "css": "concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\"",
     "prestart": "yarn css",
@@ -71,12 +78,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@capacitor/cli": "2.4.7",
-    "concurrently": "^6.0.2",
-    "less": "^4.1.1",
-    "less-watch-compiler": "^1.14.6"
-  },
-  "description": "An Ionic project"
+  }
 }
