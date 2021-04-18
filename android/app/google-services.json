@@ -30,6 +30,13 @@
             {
               "client_id": "953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "953812443127-agfdtv040hdelubrp50kmd7mr46nlcdi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medflixofficial.app"
+              }
             }
           ]
         }

@@ -19,6 +19,8 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const auth = app.auth();
 
+const db = app.database();
+
 // export const onMessageListener = () =>
 //   new Promise((resolve) => {
 //     messaging.onMessage((payload) => {
@@ -57,12 +59,16 @@ const auth = app.auth();
 //     });
 // };
 
-export const login = (email: string, password: string): Promise<firebase.auth.UserCredential> => {
-  return auth.signInWithEmailAndPassword(email, password)
+export const login = async (email: string, password: string) => {
+  const { user } = await auth.signInWithEmailAndPassword(email, password)
+  const date = + new Date()
+  await db.ref(`/user/${user?.uid}`).update({ lastOnline: date})
 }
 
-export const register = (email: string, password: string): Promise<firebase.auth.UserCredential> => {
-  return auth.createUserWithEmailAndPassword(email, password)
+export const register = async (email: string, password: string, address: string, phone: string, siret: string) => {
+  const { user } = await auth.createUserWithEmailAndPassword(email, password)
+  const date = + new Date()
+  await db.ref(`/user/${user?.uid}`).set({ address, phone, siret, creationDate: date, lastOnline: date, followerNb: 0,  followers: [], following: [], followingNb: 0})
 }
 
 export const resetPassword = (email: string) => {
