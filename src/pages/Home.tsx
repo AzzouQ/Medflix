@@ -10,12 +10,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Image, Typography } from 'antd';
-import { Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Avatar, Button, Image, Typography } from 'antd';
+import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 
-const Profile: React.FC = () => {
+const Home: React.FC = () => {
+  var loggedIn = true;
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
   const data = [
@@ -47,6 +47,10 @@ const Profile: React.FC = () => {
       title: 'Video name 7',
       src: 'https://picsum.photos/400/200',
     },
+    {
+      title: 'Video name 8',
+      src: 'https://picsum.photos/400/200',
+    },
   ];
 
   const { Title } = Typography;
@@ -55,8 +59,8 @@ const Profile: React.FC = () => {
   const toAuth = () => {
     history.push('/login');
   };
-
-  const renderProfileHeader = (): React.ReactElement => (
+  
+  const renderHomeHeader = (): React.ReactElement => (
     <IonRow
       style={{
         justifyContent: 'center',
@@ -65,40 +69,33 @@ const Profile: React.FC = () => {
       }}
     >
       <IonCol size="8">
-        <IonRow
-          style={{
-            alignItems: 'center',
-          }}
-        >
-          <IonCol size="auto">
-            <Avatar size={80} src={<Image src={avatar} />} />
-          </IonCol>
-          <IonCol size="auto">
-            <Title level={2}>Channel's Name</Title>
-          </IonCol>
-        </IonRow>
+        <Title level={2}>Latest videos</Title>
       </IonCol>
       <IonCol size="auto">
         <Button
           type="primary"
           shape="round"
-          icon={<UploadOutlined />}
+          icon={loggedIn ? <LogoutOutlined /> : <LoginOutlined />}
           size={'large'}
-          onClick={toAuth}
+            onClick={toAuth}
         >
-          Upload
+          {loggedIn ? 'Disconnect' : 'Connect'}
         </Button>
       </IonCol>
     </IonRow>
   );
 
-  const renderProfileVideos = (): React.ReactElement => (
+  const renderHomeVideos = (): React.ReactElement => (
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
         {data.map((item) => (
           <IonItem lines="none">
             <IonCol size="auto">
-              <Image src={item.src} preview={false} onClick={toAuth} />
+              <Image
+                src={item.src}
+                preview={false}
+                //   onClick={}
+              />
               <IonRow>
                 <IonCol size="auto">
                   <Button
@@ -110,7 +107,7 @@ const Profile: React.FC = () => {
                           <Image
                             src={avatar}
                             preview={false}
-                            onClick={toAuth}
+                            // onClick={}
                           />
                         }
                       />
@@ -132,24 +129,24 @@ const Profile: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Profile</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
+            <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
 
         <IonGrid>
-          {renderProfileHeader()}
-          {renderProfileVideos()}
+          {renderHomeHeader()}
+          {renderHomeVideos()}
         </IonGrid>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Profile;
+export default Home;
