@@ -1,6 +1,11 @@
 platform :ios, '11.0'
 use_frameworks!
 
+pod 'Firebase/Auth'
+pod 'Firebase/Storage'
+pod 'Firebase/InAppMessaging'
+pod 'Firebase/Database'
+
 # workaround to avoid Xcode caching of Pods that requires
 # Product -> Clean Build Folder after new Cordova plugins installed
 # Requires CocoaPods 1.6 or newer

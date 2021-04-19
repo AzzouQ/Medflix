@@ -1,6 +1,6 @@
 import { IonApp } from '@ionic/react';
 
-import './theme/App.css';
+import './theme';
 
 import Router from './Router';
 

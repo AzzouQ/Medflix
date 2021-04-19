@@ -1,5 +1,5 @@
 {
-  "appId": "com.medflix.app",
+  "appId": "com.medflixofficial.app",
   "appName": "Medflix",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
@@ -9,5 +9,9 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.0.13:8100",
+    "cleartext": true
+  }
 }

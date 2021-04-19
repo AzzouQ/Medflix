@@ -26,3 +26,8 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map

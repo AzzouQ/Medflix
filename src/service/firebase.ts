@@ -1,5 +1,4 @@
 import firebase from 'firebase/app';
-import 'firebase/messaging';
 import 'firebase/database';
 import 'firebase/auth'
 
@@ -19,52 +18,57 @@ const vapidKey =
 const app = firebase.initializeApp(firebaseConfig);
 
 const auth = app.auth();
-const messaging = app.messaging()
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    messaging.onMessage((payload) => {
-      resolve(payload);
-    });
-  });
+const db = app.database();
 
-export const getToken = (setTokenFound: Function) => {
-  return messaging
-    .getToken({ vapidKey: vapidKey })
-    .then(async (currentToken) => {
-      if (currentToken) {
-        console.log('current token for client: ', currentToken);
-        setTokenFound(true);
+// export const onMessageListener = () =>
+//   new Promise((resolve) => {
+//     messaging.onMessage((payload) => {
+//       resolve(payload);
+//     });
+//   });
 
-        // TODO SEND TO BACK END
-        // await firebase
-        //   .database()
-        //   .ref('/user')
-        //   .child('pushToken')
-        //   .set(currentToken)
+// export const getToken = (setTokenFound: Function) => {
+//   return messaging
+//     .getToken({ vapidKey: vapidKey })
+//     .then(async (currentToken) => {
+//       if (currentToken) {
+//         console.log('current token for client: ', currentToken);
+//         setTokenFound(true);
 
-        // Track the token -> client mapping, by sending to backend server
-        // show on the UI that permission is secured
-      } else {
-        console.log(
-          'No registration token available. Request permission to generate one.'
-        );
-        setTokenFound(false);
-        // shows on the UI that permission is required
-      }
-    })
-    .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
-      // catch error while creating client token
-    });
-};
+//         // TODO SEND TO BACK END
+//         // await firebase
+//         //   .database()
+//         //   .ref('/user')
+//         //   .child('pushToken')
+//         //   .set(currentToken)
 
-export const login = (email: string, password: string): Promise<firebase.auth.UserCredential> => {
-  return auth.signInWithEmailAndPassword(email, password)
+//         // Track the token -> client mapping, by sending to backend server
+//         // show on the UI that permission is secured
+//       } else {
+//         console.log(
+//           'No registration token available. Request permission to generate one.'
+//         );
+//         setTokenFound(false);
+//         // shows on the UI that permission is required
+//       }
+//     })
+//     .catch((err) => {
+//       console.log('An error occurred while retrieving token. ', err);
+//       // catch error while creating client token
+//     });
+// };
+
+export const login = async (email: string, password: string) => {
+  const { user } = await auth.signInWithEmailAndPassword(email, password)
+  const date = + new Date()
+  await db.ref(`/user/${user?.uid}`).update({ lastOnline: date})
 }
 
-export const register = (email: string, password: string): Promise<firebase.auth.UserCredential> => {
-  return auth.createUserWithEmailAndPassword(email, password)
+export const register = async (email: string, password: string, address: string, phone: string, siret: string) => {
+  const { user } = await auth.createUserWithEmailAndPassword(email, password)
+  const date = + new Date()
+  await db.ref(`/user/${user?.uid}`).set({ address, phone, siret, creationDate: date, lastOnline: date, followerNb: 0,  followers: [], following: [], followingNb: 0})
 }
 
 export const resetPassword = (email: string) => {

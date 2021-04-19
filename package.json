@@ -45,21 +45,15 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.7",
-    "concurrently": "^6.0.2",
-    "less": "^4.1.1",
-    "less-watch-compiler": "^1.14.6"
+    "@capacitor/cli": "2.4.7"
   },
   "scripts": {
-    "css": "concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\"",
-    "prestart": "yarn css",
-    "prebuild": "yarn css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "ios": "cap open ios",
-    "android": "cap open android"
+    "ios": "ionic capacitor run ios -l --external",
+    "android": "ionic capacitor run android -l --external"
   },
   "eslintConfig": {
     "extends": [

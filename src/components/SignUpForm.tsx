@@ -42,7 +42,7 @@ const SignInForm = () => {
 
   const doRegister = async () => {
     try {
-    await register(mail, pass)
+    await register(mail, pass, address, phone, siret)
     push('/');
     } catch (error) {
         // TODO Handle error

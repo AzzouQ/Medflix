@@ -42,7 +42,6 @@ const Router: React.FC = () => {
           <Route exact path="/login">
             <Login />
           </Route>
-
           <Route exact path="/register">
             <Register />
           </Route>
