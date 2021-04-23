@@ -15,42 +15,27 @@ import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 
 const Home: React.FC = () => {
-  var loggedIn = true;
+  var loggedIn = false;
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
   const data = [
     {
-      title: 'Video name 1',
-      src: 'https://picsum.photos/400/200',
+      title: 'Ted video 1',
+      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
-      title: 'Video name 2',
-      src: 'https://picsum.photos/400/200',
+      title: 'Ted video 2',
+      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
-      title: 'Video name 3',
-      src: 'https://picsum.photos/400/200',
+      title: 'Ted video 3',
+      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
-      title: 'Video name 4',
-      src: 'https://picsum.photos/400/200',
+      title: 'Ted video 4',
+      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
-    {
-      title: 'Video name 5',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 6',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 7',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 8',
-      src: 'https://picsum.photos/400/200',
-    },
+
   ];
 
   const { Title } = Typography;
@@ -59,7 +44,7 @@ const Home: React.FC = () => {
   const toAuth = () => {
     history.push('/login');
   };
-  
+
   const renderHomeHeader = (): React.ReactElement => (
     <IonRow
       style={{
@@ -77,7 +62,7 @@ const Home: React.FC = () => {
           shape="round"
           icon={loggedIn ? <LogoutOutlined /> : <LoginOutlined />}
           size={'large'}
-            onClick={toAuth}
+          onClick={toAuth}
         >
           {loggedIn ? 'Disconnect' : 'Connect'}
         </Button>
@@ -93,8 +78,13 @@ const Home: React.FC = () => {
             <IonCol size="auto">
               <Image
                 src={item.src}
+                height={200}
+                width={400}
                 preview={false}
-                //   onClick={}
+                onClick={() => window.open(
+                  'https://mityurl.com/y/TEDT/r-5-25',
+                  '_system'
+                )}
               />
               <IonRow>
                 <IonCol size="auto">
