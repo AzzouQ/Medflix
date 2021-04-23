@@ -1,13 +1,10 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
-import 'firebase/storage';
-
+import firebase from 'firebase';
 import { UploadRequestOption } from 'rc-upload/es/interface';
-import getBlob from './getBlob';
 
-const vapidKey =
-  'BEn5sZUgguVum0ZMp1NIVFUIzrF56Ri8oVcdMxWnaZcKF_lxDKYUsezgbpUkovJyxCvnZFMk74GI9KL_CoPpRjc';
+// import getBlob from './getBlob';
+
+// const vapidKey =
+//   'BEn5sZUgguVum0ZMp1NIVFUIzrF56Ri8oVcdMxWnaZcKF_lxDKYUsezgbpUkovJyxCvnZFMk74GI9KL_CoPpRjc';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAztsCYu4ldxfOZGNY4T3g8bl1QgxxgmWg',
@@ -19,7 +16,10 @@ const firebaseConfig = {
   messagingSenderId: '953812443127',
   appId: '1:953812443127:web:ba919d28b2cb09f79b18f2',
 };
+
 const app = firebase.initializeApp(firebaseConfig);
+
+firebase.auth()
 
 const auth = app.auth();
 

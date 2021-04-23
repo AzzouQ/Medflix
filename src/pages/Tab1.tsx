@@ -4,9 +4,22 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from '@ionic/react';
+import { Button } from 'antd';
+import { CloudUploadOutlined } from '@ant-design/icons';
+
+import Upload from './Upload';
 
 const Tab1: React.FC = () => {
+  const onDismiss = () => {
+    dismiss();
+  };
+
+  const [present, dismiss] = useIonModal(Upload, {
+    onDismiss,
+  });
+
   return (
     <IonPage>
       <IonHeader>
@@ -15,11 +28,14 @@ const Tab1: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <Button
+          type={'primary'}
+          shape={'round'}
+          icon={<CloudUploadOutlined />}
+          onClick={() => present()}
+        >
+          {'Upload'}
+        </Button>
       </IonContent>
     </IonPage>
   );

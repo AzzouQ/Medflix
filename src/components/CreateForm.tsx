@@ -6,8 +6,6 @@ import { useHistory } from 'react-router';
 // import { upload } from '../service/firebase';
 
 const CreateForm = () => {
-  const { push } = useHistory();
-
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
 
