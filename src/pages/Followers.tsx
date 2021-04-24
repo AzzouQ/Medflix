@@ -14,22 +14,17 @@ import { Avatar, Image, Typography } from 'antd';
 import { Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import { listUser, sendNotif } from '../service/firebase';
+import { useEffect, useState } from 'react';
 
 const Profile: React.FC = () => {
-  const users = [
-    {
-      name: 'hafid merguez',
-      follow: false,
-    },
-    {
-      name: 'jean mouloud',
-      follow: true,
-    },
-    {
-      name: 'cycile ducon',
-      follow: false,
-    },
-  ];
+  const [users, setUsers] = useState<string[]>([]);
+
+  useEffect(() => {
+    listUser().then((_users) => {
+      setUsers(_users);
+    });
+  }, []);
 
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
@@ -65,14 +60,16 @@ const Profile: React.FC = () => {
         {users.map((item) => (
           <IonItem lines="none">
             <IonCol size="auto">
-              <Title level={2}>{item.name}</Title>
+              <Title level={2}>{item}</Title>
               <Button
                 type="primary"
                 shape="round"
                 size={'large'}
-                onClick={() => {}}
+                onClick={() => {
+                  sendNotif(item)
+                }}
               >
-                {item.follow ? 'Follow' : 'Unfollow'}
+                {item ? 'Follow' : 'Unfollow'}
               </Button>
             </IonCol>
           </IonItem>

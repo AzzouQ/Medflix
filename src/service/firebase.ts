@@ -122,13 +122,20 @@ export const videoUpload = async ({
 
 export const getFcmFromUid = async (uid: string) => {
   const fcm = await (await db.ref(`/user/${uid}/fcm`).once('value')).val();
-  console.log(fcm)
+  console.log(fcm);
   return fcm;
 };
 
-export const listUser = async () => {
-  const users = await (await db.ref(`/user/`).once('value')).val();
-  console.log(users);
+export const listUser = async (): Promise<string[]> => {
+  const keys: string[] = [];
+  const data = await (await db.ref(`/user/`).once('value')).val()
+  Object.keys(data).forEach(function(key) {
+
+    keys.push(key);
+  
+  });
+  console.log(keys)
+  return keys;
 };
 
 export const sendNotif = async (uid: string) => {
