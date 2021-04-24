@@ -12,12 +12,12 @@ import {
   IonToolbar,
 } from '@ionic/react';
 
-const Login: React.FC = () => {
+const SignIn: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>SignIn</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -48,4 +48,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignIn;

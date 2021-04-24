@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router';
 import {
   IonCol,
   IonContent,
@@ -10,18 +11,17 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Avatar, Button, Image, Typography } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
-import firebase from "firebase/app";
-import "firebase/auth";
+
 import { useState } from 'react';
-import { listUser, sendNotif } from '../service/firebase';
+import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | null>(null)
-  firebase.auth().onAuthStateChanged((_user) => setUser(_user))
-
+  const [user, setUser] = useState<firebase.User | null>(null);
+  firebase.auth().onAuthStateChanged((_user) => setUser(_user));
 
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
   const toAuth = async () => {
     if (user) {
       await firebase.auth().signOut();
-    } else history.push('/login');
+    } else history.push('/signIn');
   };
 
   const renderHomeHeader = (): React.ReactElement => (
@@ -108,7 +108,9 @@ const Home: React.FC = () => {
                           <Image
                             src={avatar}
                             preview={false}
-                            onClick={() => sendNotif("B8kEqRO9qlZL0DYcGLjq2h1LL4K3")}
+                            onClick={() =>
+                              sendNotif('B8kEqRO9qlZL0DYcGLjq2h1LL4K3')
+                            }
                           />
                         }
                       />

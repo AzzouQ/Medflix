@@ -7,7 +7,7 @@ import SignUpForm from '../components/SignUpForm';
 import lottieAnim from '../assets/21474-medical-frontliners.json';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
-const Register: React.FC = () => {
+const SignUp: React.FC = () => {
   return (
     <IonPage>
     <IonHeader>
@@ -43,4 +43,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default SignUp;

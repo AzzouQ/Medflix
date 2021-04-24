@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
 import { useHistory } from 'react-router';
-import { login } from '../service/firebase';
+import { signIn } from '../service/firebase';
 
 const SignInForm = () => {
   const { push } = useHistory();
@@ -20,9 +20,9 @@ const SignInForm = () => {
       .email("L'email est invalide"),
   });
 
-  const doLogin = async () => {
+  const doSignIn = async () => {
     try {
-      await login(mail, pass);
+      await signIn(mail, pass);
       push('/home')
     } catch (e) {
       // TODO Handle error
@@ -30,7 +30,7 @@ const SignInForm = () => {
   };
 
   const toSignup = () => {
-    push('/register');
+    push('/signUp');
   };
 
   const toReset = () => {
@@ -72,7 +72,7 @@ const SignInForm = () => {
 
               type={'primary'}
               style={{ width: '100%', backgroundColor: 'pink' }}
-              onClick={doLogin}
+              onClick={doSignIn}
             >
               {'Se connecter'}
             </Button>

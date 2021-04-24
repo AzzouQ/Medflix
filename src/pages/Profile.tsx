@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
   const history = useHistory();
 
   const toAuth = () => {
-    history.push('/login');
+    history.push('/signIn');
   };
 
   const renderProfileHeader = (): React.ReactElement => (

@@ -67,14 +67,14 @@ export const setFcm = async () => {
     });
 };
 
-export const login = async (email: string, password: string) => {
+export const signIn = async (email: string, password: string) => {
   const { user } = await auth.signInWithEmailAndPassword(email, password);
   const date = +new Date();
   await db.ref(`/user/${user?.uid}`).update({ lastOnline: date });
   await setFcm();
 };
 
-export const register = async (
+export const signUp = async (
   email: string,
   password: string,
   address: string,

@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import firebase from 'firebase'
 import LoadingModal from './LoadingModal';
 import { useHistory } from 'react-router';
-import { register } from '../service/firebase';
+import { signUp } from '../service/firebase';
 
 type FormValues = {
   email: string;
@@ -36,13 +36,13 @@ const SignInForm = () => {
     siret: Yup.string().required('Le siret est requis'),
   });
 
-  const toLogin = () => {
-    push('/login');
+  const toSignIn = () => {
+    push('/signIn');
   };
 
-  const doRegister = async () => {
+  const doSignUp = async () => {
     try {
-    await register(mail, pass, address, phone, siret)
+    await signUp(mail, pass, address, phone, siret)
     push('/home');
     } catch (error) {
         // TODO Handle error
@@ -114,7 +114,7 @@ const SignInForm = () => {
       <Row gutter={20}>
         <Col span={12}>
           <Form.Item name={'signUp'}>
-            <Button type={'primary'} style={{ width: '100%' }} onClick={doRegister}>
+            <Button type={'primary'} style={{ width: '100%' }} onClick={doSignUp}>
               {'Créer mon compte'}
             </Button>
           </Form.Item>
@@ -124,7 +124,7 @@ const SignInForm = () => {
             <Button
               type={'default'}
               style={{ width: '100%' }}
-              onClick={toLogin}
+              onClick={toSignIn}
             >
               {'Déjà inscrit ?'}
             </Button>
