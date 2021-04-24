@@ -12,8 +12,6 @@ import {
 } from '@ionic/react';
 import { Avatar, Image, Typography } from 'antd';
 import { Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
 import { listUser, sendNotif } from '../service/firebase';
 import { useEffect, useState } from 'react';
 
@@ -30,7 +28,6 @@ const Profile: React.FC = () => {
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
   const { Title } = Typography;
-  const history = useHistory();
 
   const renderFollowersHeader = (): React.ReactElement => (
     <IonRow

@@ -16,7 +16,7 @@ import { useHistory } from 'react-router';
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useState } from 'react';
-import { listUser, sendNotif } from '../service/firebase';
+import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null)

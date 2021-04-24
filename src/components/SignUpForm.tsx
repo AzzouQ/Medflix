@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, notification, Form, Input } from 'antd';
+import { Button, Row, Col, Form, Input } from 'antd';
 import * as Yup from 'yup';
-import firebase from 'firebase'
 import LoadingModal from './LoadingModal';
 import { useHistory } from 'react-router';
 import { register } from '../service/firebase';
-
-type FormValues = {
-  email: string;
-  password: string;
-  phone: string;
-  address: string;
-  siret: string;
-};
 
 const SignInForm = () => {
   const [mail, setMail] = useState('');
@@ -24,28 +15,19 @@ const SignInForm = () => {
   const { push } = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
-  const yupValidation = Yup.object({
-    password: Yup.string().required('Veuillez entrer un mot de passe'),
-    email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
-    address: Yup.string()
-      .max(250, "L'adresse est trop longue (max 250)")
-      .required("L'adresse est requise"),
-    phone: Yup.string().required('Le téléphone est requis'),
-    siret: Yup.string().required('Le siret est requis'),
-  });
-
   const toLogin = () => {
     push('/login');
   };
 
   const doRegister = async () => {
+    setIsLoading(true)
     try {
     await register(mail, pass, address, phone, siret)
     push('/home');
     } catch (error) {
         // TODO Handle error
+    } finally {
+      setIsLoading(false)
     }
   }
 

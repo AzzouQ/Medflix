@@ -13,20 +13,17 @@ const SignInForm = () => {
   const [pass, setPass] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
-  const yupValidation = Yup.object({
-    password: Yup.string().required('Veuillez entrer un mot de passe'),
-    email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
-  });
 
   const doLogin = async () => {
+    setIsLoading(true)
     try {
       await login(mail, pass);
       push('/home')
     } catch (e) {
       // TODO Handle error
-    } 
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   const toSignup = () => {

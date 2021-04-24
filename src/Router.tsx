@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   IonIcon,
   IonLabel,
@@ -9,12 +9,6 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import {
-  SmileTwoTone,
-  HomeTwoTone,
-  PlayCircleTwoTone,
-  IdcardTwoTone,
-} from '@ant-design/icons';
 import { ellipse, square, triangle } from 'ionicons/icons';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
