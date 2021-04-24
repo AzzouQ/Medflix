@@ -1,10 +1,15 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/storage';
+import 'firebase/messaging';
+
 import { UploadRequestOption } from 'rc-upload/es/interface';
 
 // import getBlob from './getBlob';
 
-// const vapidKey =
-//   'BEn5sZUgguVum0ZMp1NIVFUIzrF56Ri8oVcdMxWnaZcKF_lxDKYUsezgbpUkovJyxCvnZFMk74GI9KL_CoPpRjc';
+const vapidKey =
+  'BEn5sZUgguVum0ZMp1NIVFUIzrF56Ri8oVcdMxWnaZcKF_lxDKYUsezgbpUkovJyxCvnZFMk74GI9KL_CoPpRjc';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAztsCYu4ldxfOZGNY4T3g8bl1QgxxgmWg',
@@ -19,56 +24,32 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
-firebase.auth()
-
 const auth = app.auth();
 
 const db = app.database();
 
 const storage = app.storage();
 
-// export const onMessageListener = () =>
-//   new Promise((resolve) => {
-//     messaging.onMessage((payload) => {
-//       resolve(payload);
-//     });
-//   });
+const messaging = app.messaging();
 
-// export const getToken = (setTokenFound: Function) => {
-//   return messaging
-//     .getToken({ vapidKey: vapidKey })
-//     .then(async (currentToken) => {
-//       if (currentToken) {
-//         console.log('current token for client: ', currentToken);
-//         setTokenFound(true);
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    messaging.onMessage((payload) => {
+      resolve(payload);
+    });
+  });
 
-//         // TODO SEND TO BACK END
-//         // await firebase
-//         //   .database()
-//         //   .ref('/user')
-//         //   .child('pushToken')
-//         //   .set(currentToken)
-
-//         // Track the token -> client mapping, by sending to backend server
-//         // show on the UI that permission is secured
-//       } else {
-//         console.log(
-//           'No registration token available. Request permission to generate one.'
-//         );
-//         setTokenFound(false);
-//         // shows on the UI that permission is required
-//       }
-//     })
-//     .catch((err) => {
-//       console.log('An error occurred while retrieving token. ', err);
-//       // catch error while creating client token
-//     });
-// };
+export const setFcm = async () => {
+  const user = auth.currentUser;
+  const fcmToken = await messaging.getToken({ vapidKey: vapidKey });
+  return db.ref(`/user/${user?.uid}`).update({ fcm: fcmToken });
+};
 
 export const login = async (email: string, password: string) => {
   const { user } = await auth.signInWithEmailAndPassword(email, password);
   const date = +new Date();
   await db.ref(`/user/${user?.uid}`).update({ lastOnline: date });
+  await setFcm();
 };
 
 export const register = async (
@@ -80,36 +61,84 @@ export const register = async (
 ) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
   const date = +new Date();
-  await db
-    .ref(`/user/${user?.uid}`)
-    .set({
-      address,
-      phone,
-      siret,
-      creationDate: date,
-      lastOnline: date,
-      followerNb: 0,
-      followers: [],
-      following: [],
-      followingNb: 0,
-    });
+  await db.ref(`/user/${user?.uid}`).set({
+    address,
+    phone,
+    siret,
+    creationDate: date,
+    lastOnline: date,
+    followerNb: 0,
+    followers: [],
+    following: [],
+    followingNb: 0,
+  });
+  await setFcm();
 };
 
 export const resetPassword = (email: string) => {
   // TODO Handle resetPassword *****
 };
 
-export const videoUpload = async ({ filename, file, onSuccess }: UploadRequestOption<any>) => {
-    const { currentUser } = auth;
-    const uid = currentUser?.uid;
+export const videoUpload = async ({
+  filename,
+  file,
+  onSuccess,
+}: UploadRequestOption<any>) => {
+  const { currentUser } = auth;
+  const uid = currentUser?.uid;
 
-    const name = filename ?? `${new Date().getTime()}-easyCloud`;
+  const name = filename ?? `${new Date().getTime()}-easyCloud`;
 
-    const storageRef = storage.ref(`/video/${uid}/${name}`);
+  const storageRef = storage.ref(`/video/${uid}/${name}`);
 
-    try {
-      const uploadTask = await storageRef.put(file as Blob);
-    } catch (e) {
-      console.log(e);
-    }
+  try {
+    const uploadTask = await storageRef.put(file as Blob);
+  } catch (e) {
+    console.log(e);
   }
+};
+
+export const initMessaging = () => {
+  return new Promise<void>((resolve, reject) => {
+    navigator.serviceWorker.ready.then(
+      (registration) => {
+        // Don't crash an error if messaging not supported
+        if (!firebase.messaging.isSupported()) {
+          resolve();
+          return;
+        }
+
+        const messaging = firebase.messaging();
+
+        // Register the Service Worker
+        messaging.useServiceWorker(registration);
+
+        // Initialize your VAPI key
+        messaging.usePublicVapidKey(vapidKey);
+
+        // Optional and not covered in the article
+        // Listen to messages when your app is in the foreground
+        messaging.onMessage((payload) => {
+          console.log(payload);
+        });
+        // Optional and not covered in the article
+        // Handle token refresh
+        messaging.onTokenRefresh(() => {
+          messaging
+            .getToken({vapidKey: vapidKey, serviceWorkerRegistration: ''})
+            .then((refreshedToken: string) => {
+              console.log(refreshedToken);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        });
+
+        resolve();
+      },
+      (err) => {
+        reject(err);
+      }
+    );
+  });
+};

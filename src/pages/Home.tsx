@@ -74,7 +74,7 @@ const Home: React.FC = () => {
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
         {data.map((item) => (
-          <IonItem lines="none">
+          <IonItem lines="none" key={item.title}>
             <IonCol size="auto">
               <Image
                 src={item.src}
