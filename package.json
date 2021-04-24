@@ -50,6 +50,7 @@
     "@capacitor/cli": "2.4.7"
   },
   "scripts": {
+    "lint": "react-scripts lint",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

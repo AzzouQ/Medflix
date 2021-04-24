@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Form, Input } from 'antd';
-import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
 import { useHistory } from 'react-router';
@@ -13,20 +12,17 @@ const SignInForm = () => {
   const [pass, setPass] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
-  const yupValidation = Yup.object({
-    password: Yup.string().required('Veuillez entrer un mot de passe'),
-    email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
-  });
 
   const doSignIn = async () => {
+    setIsLoading(true)
     try {
       await signIn(mail, pass);
       push('/home')
     } catch (e) {
       // TODO Handle error
-    } 
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   const toSignup = () => {

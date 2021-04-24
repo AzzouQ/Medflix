@@ -6,7 +6,6 @@ import 'firebase/messaging';
 import axios from 'axios';
 
 import { UploadRequestOption } from 'rc-upload/es/interface';
-import userEvent from '@testing-library/user-event';
 
 // import getBlob from './getBlob';
 
@@ -115,6 +114,7 @@ export const videoUpload = async ({
 
   try {
     const uploadTask = await storageRef.put(file as Blob);
+    console.log(uploadTask.totalBytes)
   } catch (e) {
     console.log(e);
   }
