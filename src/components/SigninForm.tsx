@@ -23,7 +23,7 @@ const SignInForm = () => {
   const doLogin = async () => {
     try {
       await login(mail, pass);
-      push('/')
+      push('/home')
     } catch (e) {
       // TODO Handle error
     } 
