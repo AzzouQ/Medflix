@@ -16,6 +16,7 @@ import { useHistory } from 'react-router';
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useState } from 'react';
+import { listUser, sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null)
@@ -107,7 +108,7 @@ const Home: React.FC = () => {
                           <Image
                             src={avatar}
                             preview={false}
-                            // onClick={}
+                            onClick={() => sendNotif("B8kEqRO9qlZL0DYcGLjq2h1LL4K3")}
                           />
                         }
                       />

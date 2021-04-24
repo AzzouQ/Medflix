@@ -3,10 +3,15 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/messaging';
+import axios from 'axios';
 
 import { UploadRequestOption } from 'rc-upload/es/interface';
+import userEvent from '@testing-library/user-event';
 
 // import getBlob from './getBlob';
+
+const SERVER_KEY =
+  'AAAA3hOm3_c:APA91bETq9iSsgOUsBzl1EEkCOqeH131hx9zlBCFWlHNXqp8AFPCQZnv0MStMp-oEx321Elv-TLeVMNoASsQT0_C0MHkp-aViir_Bb13zS_LG6HvyBGFEpxKmaIprNO5rsIN4KG11sSd';
 
 const vapidKey =
   'BM0a1iAARbJRo1jVs2Dh7tjrpv8XNnfQGWb528rY5dMLHe0K8IIaeRvsKxdlhsJM4X5IV6NpVXl8VsEpmOFjl0E';
@@ -24,7 +29,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
-export const auth = app.auth();
+const auth = app.auth();
 
 const db = app.database();
 
@@ -113,4 +118,40 @@ export const videoUpload = async ({
   } catch (e) {
     console.log(e);
   }
+};
+
+export const getFcmFromUid = async (uid: string) => {
+  const fcm = await (await db.ref(`/user/${uid}/fcm`).once('value')).val();
+  console.log(fcm)
+  return fcm;
+};
+
+export const listUser = async () => {
+  const users = await (await db.ref(`/user/`).once('value')).val();
+  console.log(users);
+};
+
+export const sendNotif = async (uid: string) => {
+  const fcm = await getFcmFromUid(uid);
+  const url = 'https://fcm.googleapis.com/fcm/send';
+  const payload = {
+    to: fcm,
+    collapse_key: 'type_a',
+    notification: {
+      body: 'Allez vite le follow back',
+      title: 'Vous avez un nouvel abonné',
+    },
+    data: {
+      body: 'Allez vite le follow back',
+      title: 'Vous avez un nouvel abonné',
+      key_1: 'Value for key_1',
+      key_2: 'Value for key_2',
+    },
+  };
+  axios.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `key=${SERVER_KEY}`,
+    },
+  });
 };
