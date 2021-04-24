@@ -21,6 +21,7 @@ import Home from './pages/Home';
 import Tab2 from './pages/Tab2';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Followers from './pages/Followers';
 
 const Router: React.FC = () => {
   return (
@@ -29,6 +30,10 @@ const Router: React.FC = () => {
         <IonRouterOutlet>
           <Route exact path="/Home">
             <Home />
+          </Route>
+
+          <Route exact path="/Followers">
+            <Followers />
           </Route>
 
           <Route exact path="/tab2">
