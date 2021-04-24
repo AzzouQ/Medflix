@@ -9,7 +9,7 @@ import { UploadRequestOption } from 'rc-upload/es/interface';
 // import getBlob from './getBlob';
 
 const vapidKey =
-  'BEn5sZUgguVum0ZMp1NIVFUIzrF56Ri8oVcdMxWnaZcKF_lxDKYUsezgbpUkovJyxCvnZFMk74GI9KL_CoPpRjc';
+  'BM0a1iAARbJRo1jVs2Dh7tjrpv8XNnfQGWb528rY5dMLHe0K8IIaeRvsKxdlhsJM4X5IV6NpVXl8VsEpmOFjl0E';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAztsCYu4ldxfOZGNY4T3g8bl1QgxxgmWg',
@@ -41,8 +41,25 @@ export const onMessageListener = () =>
 
 export const setFcm = async () => {
   const user = auth.currentUser;
-  const fcmToken = await messaging.getToken({ vapidKey: vapidKey });
-  return db.ref(`/user/${user?.uid}`).update({ fcm: fcmToken });
+  messaging
+    .getToken({ vapidKey: vapidKey })
+    .then((currentToken) => {
+      if (currentToken) {
+        // Send the token to your server and update the UI if necessary
+        // ...
+        db.ref(`/user/${user?.uid}`).update({ fcm: currentToken });
+      } else {
+        // Show permission request UI
+        console.log(
+          'No registration token available. Request permission to generate one.'
+        );
+        // ...
+      }
+    })
+    .catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+      // ...
+    });
 };
 
 export const login = async (email: string, password: string) => {
