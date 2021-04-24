@@ -15,6 +15,8 @@ import { Button } from 'antd';
 import { listUser, sendNotif } from '../service/firebase';
 import { useEffect, useState } from 'react';
 
+const names = ['Nazim', 'Bastien', 'Nathan', 'Jordan', 'Mark', 'Elon'];
+
 const Profile: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
 
@@ -54,16 +56,16 @@ const Profile: React.FC = () => {
   const renderFollowers = (): React.ReactElement => (
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
-        {users.map((item) => (
+        {users.map((item, idx) => (
           <IonItem lines="none">
             <IonCol size="auto">
-              <Title level={2}>{item}</Title>
+              <Title level={2}>{names[idx]}</Title>
               <Button
                 type="primary"
                 shape="round"
                 size={'large'}
                 onClick={() => {
-                  sendNotif(item)
+                  sendNotif(item);
                 }}
               >
                 {item ? 'Follow' : 'Unfollow'}
