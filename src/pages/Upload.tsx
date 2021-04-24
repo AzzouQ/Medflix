@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -8,9 +8,6 @@ import {
 } from '@ionic/react';
 import { Row, Col, Button, Typography, Upload } from 'antd';
 import { PlusCircleTwoTone, CloudUploadOutlined } from '@ant-design/icons';
-import CreateForm from '../components/CreateForm';
-import FilePicker from '../components/FilePicker';
-import ThumbnailUpload from '../components/ThumbnailUpload';
 
 type Props = {
   onDismiss: () => void;

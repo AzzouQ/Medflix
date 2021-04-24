@@ -1,8 +1,8 @@
 import ImgCrop from 'antd-img-crop';
 
-import { InboxOutlined, PictureOutlined } from '@ant-design/icons';
+import { PictureOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
-import { DraggerProps, UploadChangeParam } from 'antd/lib/upload';
+import { UploadChangeParam } from 'antd/lib/upload';
 import React from 'react';
 
 type Props = { isLoading: boolean };
@@ -31,13 +31,13 @@ const ThumbnailUpload = ({ isLoading }: Props) => {
         <Dragger {...props}>
           <p className="ant-upload-drag-icon">
             <PictureOutlined />
-            </p>
-            <p className="ant-upload-text">
-              Déplacer ou cliquez pour ajouter votre miniature
-            </p>
-            <p className="ant-upload-hint">
-              Uniquement les fichiers .png / jpeg sont acceptés
-            </p>
+          </p>
+          <p className="ant-upload-text">
+            Déplacer ou cliquez pour ajouter votre miniature
+          </p>
+          <p className="ant-upload-hint">
+            Uniquement les fichiers .png / jpeg sont acceptés
+          </p>
         </Dragger>
       </ImgCrop>
     </div>

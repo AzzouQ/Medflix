@@ -1,23 +1,13 @@
-import { InboxOutlined, VideoCameraAddOutlined } from '@ant-design/icons';
-import { Upload, message } from 'antd';
-import { DraggerProps, RcFile, UploadChangeParam } from 'antd/lib/upload';
-import { invertModeOutline } from 'ionicons/icons';
 import React from 'react';
+import { VideoCameraAddOutlined } from '@ant-design/icons';
+import { Upload, message } from 'antd';
+import { RcFile, UploadChangeParam } from 'antd/lib/upload';
+
 import { videoUpload } from '../service/firebase';
 
 type Props = { isLoading: boolean };
 
 const { Dragger } = Upload;
-
-const props: DraggerProps = {
-  name: 'file',
-  multiple: false,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-};
-
-const generateHashName = () => {
-  return null;
-};
 
 const FilePicker = ({ isLoading }: Props) => {
   const beforeUplaod = (file: RcFile) => {

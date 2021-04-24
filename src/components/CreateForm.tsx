@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Form, Input } from 'antd';
-import * as Yup from 'yup';
-
-import { useHistory } from 'react-router';
-// import { upload } from '../service/firebase';
 
 const CreateForm = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const yupValidation = Yup.object({
-    title: Yup.string().required('Veuillez entrer un titre'),
-    desc: Yup.string()
-      .required('Veuillez entrer une description')
-  });
 
   return (
     <Form name={'title'} size={'middle'} layout={'vertical'}>
