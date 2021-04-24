@@ -13,36 +13,47 @@ import {
 import { Avatar, Button, Image, Typography } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import firebase from "firebase/app";
+import "firebase/auth";
+import { useState } from 'react';
 
 const Home: React.FC = () => {
-  var loggedIn = false;
+  const [user, setUser] = useState<firebase.User | null>(null)
+  firebase.auth().onAuthStateChanged((_user) => setUser(_user))
+
+
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
   const data = [
     {
       title: 'Ted video 1',
-      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      src:
+        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
       title: 'Ted video 2',
-      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      src:
+        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
       title: 'Ted video 3',
-      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      src:
+        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
     {
       title: 'Ted video 4',
-      src: 'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      src:
+        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
     },
-
   ];
 
   const { Title } = Typography;
   const history = useHistory();
 
-  const toAuth = () => {
-    history.push('/login');
+  const toAuth = async () => {
+    if (user) {
+      await firebase.auth().signOut();
+    } else history.push('/login');
   };
 
   const renderHomeHeader = (): React.ReactElement => (
@@ -60,11 +71,11 @@ const Home: React.FC = () => {
         <Button
           type="primary"
           shape="round"
-          icon={loggedIn ? <LogoutOutlined /> : <LoginOutlined />}
+          icon={user ? <LogoutOutlined /> : <LoginOutlined />}
           size={'large'}
           onClick={toAuth}
         >
-          {loggedIn ? 'Disconnect' : 'Connect'}
+          {user ? 'Disconnect' : 'Connect'}
         </Button>
       </IonCol>
     </IonRow>
@@ -81,10 +92,9 @@ const Home: React.FC = () => {
                 height={200}
                 width={400}
                 preview={false}
-                onClick={() => window.open(
-                  'https://mityurl.com/y/TEDT/r-5-25',
-                  '_system'
-                )}
+                onClick={() =>
+                  window.open('https://mityurl.com/y/TEDT/r-5-25', '_system')
+                }
               />
               <IonRow>
                 <IonCol size="auto">
