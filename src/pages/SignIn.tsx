@@ -3,7 +3,7 @@ import { Typography, Row, Col } from 'antd';
 import { Player } from '@lottiefiles/react-lottie-player';
 import lottieAnim from '../assets/21474-medical-frontliners.json';
 
-import SignInForm from '../components/SigninForm';
+import SignInForm from '../components/SignInForm';
 import {
   IonContent,
   IonHeader,
