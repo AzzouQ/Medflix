@@ -14,6 +14,7 @@ import { Avatar, Image, Typography } from 'antd';
 import { Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import { auth } from '../service/firebase';
 
 const Profile: React.FC = () => {
   const avatar =
@@ -53,7 +54,8 @@ const Profile: React.FC = () => {
   const history = useHistory();
 
   const toAuth = () => {
-    history.push('/signIn');
+    if (auth.currentUser) history.push('/create');
+    else history.push('/signIn');
   };
 
   const renderProfileHeader = (): React.ReactElement => (
@@ -98,22 +100,14 @@ const Profile: React.FC = () => {
         {data.map((item) => (
           <IonItem lines="none">
             <IonCol size="auto">
-              <Image src={item.src} preview={false} onClick={toAuth} />
+              <Image src={item.src} preview={false} />
               <IonRow>
                 <IonCol size="auto">
                   <Button
                     shape="circle"
                     size="large"
                     icon={
-                      <Avatar
-                        src={
-                          <Image
-                            src={avatar}
-                            preview={false}
-                            onClick={toAuth}
-                          />
-                        }
-                      />
+                      <Avatar src={<Image src={avatar} preview={false} />} />
                     }
                   />
                 </IonCol>
