@@ -11,7 +11,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 
 import SignInForm from '../components/SignInForm';
 
-import lottieAnim from '../assets/21474-medical-frontliners.json';
+import lottieAnim from '../assets/AuthLottie.json';
 
 const SignIn: React.FC = () => {
   return (
