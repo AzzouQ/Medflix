@@ -32,9 +32,10 @@ const SignInForm: React.FC = () => {
     setFieldValue('password', '', false);
     try {
       await signIn(email, password);
-      push('/home');
-    } catch (error) {
-      console.log(error);
+      push('/home')
+    } catch (e) {
+      console.log(e)
+      // TODO Handle error
     } finally {
       setSubmitting(false);
     }

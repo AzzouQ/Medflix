@@ -18,31 +18,9 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Followers from './pages/Followers';
+import Create from './pages/Create';
 
 const Router: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
-  firebase.auth().onAuthStateChanged((_user) => setUser(_user));
-
-  const AuthSwitch = () => {
-    return (
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Switch>
-            <Route exact path={'/signIn'}>
-              <SignIn />
-            </Route>
-            <Route exact path={'/signUp'}>
-              <SignUp />
-            </Route>
-            <Route path={'/'}>
-              <Redirect to={'/signIn'} />
-            </Route>
-          </Switch>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    );
-  };
-
   const AppSwitch = () => {
     return (
       <IonReactRouter>
@@ -63,6 +41,18 @@ const Router: React.FC = () => {
 
               <Route exact path={'/profile'}>
                 <Profile />
+              </Route>
+
+              <Route exact path={'/create'}>
+                <Create />
+              </Route>
+
+              <Route exact path={'/signIn'}>
+                <SignIn />
+              </Route>
+
+              <Route exact path={'/signUp'}>
+                <SignUp />
               </Route>
             </Switch>
           </IonRouterOutlet>
@@ -86,10 +76,6 @@ const Router: React.FC = () => {
       </IonReactRouter>
     );
   };
-
-  if (!user) {
-    return <AuthSwitch />;
-  }
 
   return <AppSwitch />;
 };

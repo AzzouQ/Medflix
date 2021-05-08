@@ -18,12 +18,11 @@ const SignUpForm: React.FC = () => {
   const { push } = useHistory();
 
   const yupValidation = Yup.object({
-    password: Yup.string()
-      .required('Veuillez entrer un password')
-      .email('Le password est invalide'),
+    password: Yup.string().required('Veuillez entrer un password'),
     email: Yup.string()
       .required('Veuillez entrer un email')
       .email("L'email est invalide"),
+    name: Yup.string().required('Veuillez entrer un name'),
   });
 
   const formikSubmit = async (
@@ -36,13 +35,14 @@ const SignUpForm: React.FC = () => {
       push('/home');
     } catch (error) {
       console.log(error);
+      // TODO Handle error
     } finally {
       setSubmitting(false);
     }
   };
 
   const toSignIn = () => {
-    push('/login');
+    push('/signIn');
   };
 
   return (

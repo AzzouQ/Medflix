@@ -17,7 +17,7 @@ import { Avatar, Button, Image, Typography } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 
 import { useState } from 'react';
-import { sendNotif } from '../service/firebase';
+// import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -109,7 +109,8 @@ const Home: React.FC = () => {
                             src={avatar}
                             preview={false}
                             onClick={() =>
-                              sendNotif('B8kEqRO9qlZL0DYcGLjq2h1LL4K3')
+                              // sendNotif('B8kEqRO9qlZL0DYcGLjq2h1LL4K3')
+                              console.log('')
                             }
                           />
                         }
