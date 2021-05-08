@@ -1,9 +1,4 @@
 import React from 'react';
-import { Typography, Row, Col } from 'antd';
-import { Player } from '@lottiefiles/react-lottie-player';
-import lottieAnim from '../assets/21474-medical-frontliners.json';
-
-import SignInForm from '../components/SignInForm';
 import {
   IonContent,
   IonHeader,
@@ -11,13 +6,19 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { Typography, Row, Col } from 'antd';
+import { Player } from '@lottiefiles/react-lottie-player';
+
+import SignInForm from '../components/SignInForm';
+
+import lottieAnim from '../assets/21474-medical-frontliners.json';
 
 const SignIn: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>SignIn</IonTitle>
+          <IonTitle>{'Sign In'}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -37,9 +38,7 @@ const SignIn: React.FC = () => {
             />
           </Col>
           <Col lg={6} xl={6}>
-            <Typography.Title level={2}>
-              {'Bienvenue !'}
-            </Typography.Title>
+            <Typography.Title level={2}>{'Bienvenue !'}</Typography.Title>
             <SignInForm />
           </Col>
         </Row>

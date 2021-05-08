@@ -6,15 +6,14 @@ import { Button, Row, Col } from 'antd';
 import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
-import { signUp } from '../service/firebase';
+import { signIn } from '../service/firebase';
 
-type SignUpFormValues = {
-  name: string;
+type SignInFormValues = {
   email: string;
   password: string;
 };
 
-const SignUpForm: React.FC = () => {
+const SignInForm: React.FC = () => {
   const { push } = useHistory();
 
   const yupValidation = Yup.object({
@@ -27,12 +26,12 @@ const SignUpForm: React.FC = () => {
   });
 
   const formikSubmit = async (
-    { name, email, password }: SignUpFormValues,
-    { setSubmitting, setFieldValue }: FormikHelpers<SignUpFormValues>
+    { email, password }: SignInFormValues,
+    { setSubmitting, setFieldValue }: FormikHelpers<SignInFormValues>
   ) => {
     setFieldValue('password', '', false);
     try {
-      await signUp(name, email, password);
+      await signIn(email, password);
       push('/home');
     } catch (error) {
       console.log(error);
@@ -41,26 +40,23 @@ const SignUpForm: React.FC = () => {
     }
   };
 
-  const toSignIn = () => {
-    push('/login');
+  const toSignup = () => {
+    push('/signUp');
+  };
+
+  const toReset = () => {
+    push('/reset');
   };
 
   return (
-    <Formik<SignUpFormValues>
-      initialValues={{ name: '', email: '', password: '' }}
+    <Formik<SignInFormValues>
+      initialValues={{ email: '', password: '' }}
       onSubmit={formikSubmit}
       validationSchema={yupValidation}
     >
       {(formik) => (
-        <Form name={'sign-up'} size={'middle'} layout={'vertical'}>
+        <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
           <LoadingModal isLoading={formik.isSubmitting} />
-          <Row gutter={20}>
-            <Col span={24}>
-              <Form.Item name={'name'} label={'Nom'} required={true}>
-                <Input name={'name'} placeholder={'Bastien Silhol'} />
-              </Form.Item>
-            </Col>
-          </Row>
           <Row gutter={20}>
             <Col span={24}>
               <Form.Item name={'email'} label={'E-mail'} required={true}>
@@ -87,21 +83,34 @@ const SignUpForm: React.FC = () => {
             </Col>
           </Row>
           <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item name={'signUp'}>
+            <Col span={24}>
+              <Form.Item name={'signIn'}>
                 <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                  {'Créer mon compte'}
+                  {'Se connecter'}
                 </SubmitButton>
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={20}>
             <Col span={12}>
-              <Form.Item name={'signIn'}>
+              <Form.Item name={'signUp'}>
                 <Button
                   type={'default'}
                   style={{ width: '100%' }}
-                  onClick={toSignIn}
+                  onClick={toSignup}
                 >
-                  {'Déjà inscrit ?'}
+                  {'Créer un compte'}
+                </Button>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name={'resetPassword'}>
+                <Button
+                  type={'default'}
+                  style={{ width: '100%' }}
+                  onClick={toReset}
+                >
+                  {'Mot de passe oublié'}
                 </Button>
               </Form.Item>
             </Col>
@@ -112,4 +121,4 @@ const SignUpForm: React.FC = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

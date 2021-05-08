@@ -73,19 +73,11 @@ export const signIn = async (email: string, password: string) => {
   await setFcm();
 };
 
-export const signUp = async (
-  email: string,
-  password: string,
-  address: string,
-  phone: string,
-  siret: string
-) => {
+export const signUp = async (name: string, email: string, password: string) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
   const date = +new Date();
   await db.ref(`/user/${user?.uid}`).set({
-    address,
-    phone,
-    siret,
+    name,
     creationDate: date,
     lastOnline: date,
     followerNb: 0,
@@ -114,7 +106,7 @@ export const videoUpload = async ({
 
   try {
     const uploadTask = await storageRef.put(file as Blob);
-    console.log(uploadTask.totalBytes)
+    console.log(uploadTask.totalBytes);
   } catch (e) {
     console.log(e);
   }
@@ -128,13 +120,11 @@ export const getFcmFromUid = async (uid: string) => {
 
 export const listUser = async (): Promise<string[]> => {
   const keys: string[] = [];
-  const data = await (await db.ref(`/user/`).once('value')).val()
-  Object.keys(data).forEach(function(key) {
-
+  const data = await (await db.ref(`/user/`).once('value')).val();
+  Object.keys(data).forEach(function (key) {
     keys.push(key);
-  
   });
-  console.log(keys)
+  console.log(keys);
   return keys;
 };
 

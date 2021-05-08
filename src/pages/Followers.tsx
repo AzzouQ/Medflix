@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 
 const names = ['Nazim', 'Bastien', 'Nathan', 'Jordan', 'Mark', 'Elon'];
 
-const Profile: React.FC = () => {
+const Followers: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
 
   useEffect(() => {
@@ -101,4 +101,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default Followers;
