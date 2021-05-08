@@ -24,6 +24,7 @@ const SignInForm = () => {
     await signUp(mail, pass, address, phone, siret)
     push('/home');
     } catch (error) {
+      console.log(error)
         // TODO Handle error
     } finally {
       setIsLoading(false)

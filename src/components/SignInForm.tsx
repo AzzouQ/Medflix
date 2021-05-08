@@ -19,6 +19,7 @@ const SignInForm = () => {
       await signIn(mail, pass);
       push('/home')
     } catch (e) {
+      console.log(e)
       // TODO Handle error
     } finally {
       setIsLoading(false)
