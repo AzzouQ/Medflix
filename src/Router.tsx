@@ -18,9 +18,33 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Followers from './pages/Followers';
+import EditProfile from './pages/EditProfile';
 import Create from './pages/Create';
 
 const Router: React.FC = () => {
+  const [user, setUser] = useState<firebase.User | null>(null);
+  firebase.auth().onAuthStateChanged((_user) => setUser(_user));
+
+  const AuthSwitch = () => {
+    return (
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Switch>
+            <Route exact path={'/signIn'}>
+              <SignIn />
+            </Route>
+            <Route exact path={'/signUp'}>
+              <SignUp />
+            </Route>
+            <Route path={'/'}>
+              <Redirect to={'/profile'} />
+            </Route>
+          </Switch>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    );
+  };
+
   const AppSwitch = () => {
     return (
       <IonReactRouter>
@@ -53,6 +77,9 @@ const Router: React.FC = () => {
 
               <Route exact path={'/signUp'}>
                 <SignUp />
+              </Route>
+              <Route exact path={'/editProfile'}>
+                <EditProfile />
               </Route>
             </Switch>
           </IonRouterOutlet>

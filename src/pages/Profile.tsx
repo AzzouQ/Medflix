@@ -10,11 +10,19 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Image, Typography } from 'antd';
+import { Avatar, Image, Typography, Menu } from 'antd';
 import { Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ShareAltOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { auth } from '../service/firebase';
+import React, { useState } from 'react';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import { Plugins } from '@capacitor/core';
 
 const Profile: React.FC = () => {
   const avatar =
@@ -52,13 +60,27 @@ const Profile: React.FC = () => {
 
   const { Title } = Typography;
   const history = useHistory();
+  const { Share } = Plugins;
 
   const toAuth = () => {
     if (auth.currentUser) history.push('/create');
     else history.push('/signIn');
   };
 
-  const renderProfileHeader = (): React.ReactElement => (
+  const toEditProfile = () => {
+    history.push('/editProfile');
+  };
+
+  const share = async () => {
+    await Share.share({
+      title: 'See video',
+      text: 'Really awesome video you need to see right now',
+      url: 'http://ionicframework.com/',
+      dialogTitle: 'Share with buddies',
+    });
+  };
+
+  const renderProfileHeader = (): React.ReactElement | null => (
     <IonRow
       style={{
         justifyContent: 'center',
@@ -76,7 +98,7 @@ const Profile: React.FC = () => {
             <Avatar size={80} src={<Image src={avatar} />} />
           </IonCol>
           <IonCol size="auto">
-            <Title level={2}>Channel's Name</Title>
+            <Title level={2}>Name</Title>
           </IonCol>
         </IonRow>
       </IonCol>
@@ -88,31 +110,75 @@ const Profile: React.FC = () => {
           size={'large'}
           onClick={toAuth}
         >
-          Upload
+          {`Upload`}
+        </Button>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<EditOutlined />}
+          size={'large'}
+          onClick={toEditProfile}
+          style={{ marginLeft: 10 }}
+        >
+          {`Edit`}
         </Button>
       </IonCol>
     </IonRow>
   );
 
-  const renderProfileVideos = (): React.ReactElement => (
+  const renderProfileVideos = (): React.ReactElement | null => (
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
-        {data.map((item) => (
-          <IonItem lines="none">
+        {data.map((item, index) => (
+          <IonItem lines="none" key={index}>
             <IonCol size="auto">
               <Image src={item.src} preview={false} />
-              <IonRow>
+              <IonRow
+                style={{
+                  justifyContent: 'space-between',
+                }}
+              >
                 <IonCol size="auto">
-                  <Button
-                    shape="circle"
-                    size="large"
-                    icon={
-                      <Avatar src={<Image src={avatar} preview={false} />} />
-                    }
-                  />
+                  <IonRow>
+                    <IonCol>
+                      <Button
+                        shape="circle"
+                        size="large"
+                        icon={
+                          <Avatar
+                            src={<Image src={avatar} preview={false} />}
+                          />
+                        }
+                      />
+                    </IonCol>
+                    <IonCol size="auto">
+                      <Title level={4}>{item.title}</Title>
+                    </IonCol>
+                  </IonRow>
                 </IonCol>
                 <IonCol size="auto">
-                  <Title level={4}>{item.title}</Title>
+                  <Menu
+                    mode="inline"
+                    selectable={false}
+                    style={{
+                      width: 80,
+                      backgroundColor: 'white',
+                      color: 'white',
+                    }}
+                  >
+                    <SubMenu key="sub1" title="">
+                      <Menu.Item
+                        key="1"
+                        icon={<ShareAltOutlined />}
+                        onClick={share}
+                      />
+                      <Menu.Item
+                        key="2"
+                        onClick={() => {}}
+                        icon={<DeleteOutlined />}
+                      />
+                    </SubMenu>
+                  </Menu>
                 </IonCol>
               </IonRow>
             </IonCol>

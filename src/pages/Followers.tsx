@@ -57,7 +57,7 @@ const Followers: React.FC = () => {
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
         {users.map((item, idx) => (
-          <IonItem lines="none">
+          <IonItem lines="none" key={idx}>
             <IonCol size="auto">
               <Title level={2}>{item}</Title>
               <Button
