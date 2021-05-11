@@ -19,6 +19,7 @@ import { ShareAltOutlined } from '@ant-design/icons';
 
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
+import useTranslate from '../local/local';
 
 // import { sendNotif } from '../service/firebase';
 
@@ -28,31 +29,31 @@ const Home: React.FC = () => {
 
   const data = [
     {
-      title: 'Video name 1',
+      title: 'Ted Talk 1',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 2',
+      title: 'Ted Talk 2',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 3',
+      title: 'Ted Talk 3',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 4',
+      title: 'Video Ted Talk 4',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 5',
+      title: 'Ted Talk 5',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 6',
+      title: 'Ted Talk 6',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 7',
+      title: 'Ted Talk 7',
       src: 'https://picsum.photos/400/200',
     },
   ];
@@ -69,10 +70,8 @@ const Home: React.FC = () => {
     });
   };
 
-  // const viewTitle = useTranslate('HOME_VIEW_TITLE')
-  // const hometitle = useTranslate('HOME_TITLE');
-  // const connect = useTranslate('CONNECT');
-  // const disconnect = useTranslate('DISCONNECT');
+  const viewTitle = useTranslate('HOME_VIEW_TITLE');
+  const hometitle = useTranslate('HOME_TITLE');
 
   const renderHomeVideos = (): React.ReactElement => (
     <IonList>
@@ -154,14 +153,14 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{'Home'}</IonTitle>
+            <IonTitle>{viewTitle}</IonTitle>
           </IonButtons>
           <IonButtons slot={'end'}>
             <AuthModal />
           </IonButtons>
         </IonToolbar>
         <IonToolbar>
-          <IonTitle>{'Latest videos'}</IonTitle>
+          <IonTitle>{hometitle}</IonTitle>
         </IonToolbar>
       </IonHeader>
 

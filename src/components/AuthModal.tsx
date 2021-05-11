@@ -10,8 +10,11 @@ import { signOut } from '../service/firebase';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import useTranslate from '../local/local';
 
 const AuthModal: React.FC = () => {
+  const connect = useTranslate('CONNECT');
+  const disconnect = useTranslate('DISCONNECT');
   const [isModalOpen, setModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
 
@@ -21,7 +24,7 @@ const AuthModal: React.FC = () => {
   return (
     <>
       <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
-        {formMode === 'signIn' ? (
+        {formMode === connect ? (
           <SignInForm setModalOpen={setModalOpen} setFormMode={setFormMode} />
         ) : (
           <SignUpForm setModalOpen={setModalOpen} setFormMode={setFormMode} />
@@ -34,7 +37,7 @@ const AuthModal: React.FC = () => {
           icon={<LogoutOutlined />}
           onClick={() => signOut()}
         >
-          {'Sign Out'}
+          {disconnect}
         </Button>
       ) : (
         <>

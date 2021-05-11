@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Followers from './pages/Followers';
 import Profile from './pages/Profile';
 import Create from './pages/Create';
+import EditProfile from './pages/EditProfile';
 import { Plugins } from '@capacitor/core';
 import { useDispatch } from 'react-redux';
 import { localActions } from './redux/Local.slice';
@@ -51,6 +52,10 @@ const Router: React.FC = () => {
 
           <Route exact path={'/create'}>
             <Create />
+          </Route>
+
+          <Route exact path={'/editProfile'}>
+            <EditProfile />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot={'bottom'}>

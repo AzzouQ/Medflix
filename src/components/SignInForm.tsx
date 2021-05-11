@@ -53,7 +53,6 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
   const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
   const connect = useTranslate('CONNECT');
   const createAccount = useTranslate('CREATE_ACCOUNT');
-  const forgottenPassword = useTranslate('FORGOTTEN_PASSWORD');
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
       <Formik<SignInFormValues>
@@ -73,10 +72,10 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'email'} label={'E-mail'} required={true}>
+                <Form.Item name={'email'} label={email} required={true}>
                   <Input
                     name={'email'}
-                    placeholder={'bastien.silhol@epitech.eu'}
+                    placeholder={emailPlaceholder}
                   />
                 </Form.Item>
               </Col>
@@ -85,12 +84,12 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item
                   name={'password'}
-                  label={'Mot de passe'}
+                  label={password}
                   required={true}
                 >
                   <Input.Password
                     name={'password'}
-                    placeholder={'p4sSw0rD'}
+                    placeholder={passwordPlaceholder}
                     allowClear={true}
                   />
                 </Form.Item>
@@ -100,7 +99,7 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item name={'signIn'}>
                   <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                    {'Se connecter'}
+                    {connect}
                   </SubmitButton>
                 </Form.Item>
               </Col>
@@ -113,7 +112,7 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
                     style={{ width: '100%' }}
                     onClick={goToSignUp}
                   >
-                    {'Crée un compte'}
+                    {createAccount}
                   </Button>
                 </Form.Item>
               </Col>

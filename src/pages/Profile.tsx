@@ -31,31 +31,31 @@ const Profile: React.FC = () => {
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
   const data = [
     {
-      title: 'Video name 1',
+      title: 'Ted Talk 1',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 2',
+      title: 'Ted Talk 2',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 3',
+      title: 'Ted Talk 3',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 4',
+      title: 'Ted Talk 4',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 5',
+      title: 'Ted Talk 5',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 6',
+      title: 'Ted Talk 6',
       src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Video name 7',
+      title: 'Ted Talk 7',
       src: 'https://picsum.photos/400/200',
     },
   ];
@@ -64,9 +64,9 @@ const Profile: React.FC = () => {
   const history = useHistory();
   const { Share } = Plugins;
 
-  const toAuth = () => {
+  const toCreate = () => {
     if (auth.currentUser) history.push('/create');
-    else history.push('/signIn');
+    else history.push('/create');
   };
 
   const toEditProfile = () => {
@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
           shape={'round'}
           icon={<UploadOutlined />}
           size={'large'}
-          onClick={toAuth}
+          onClick={toCreate}
         >
           {upload}
         </Button>

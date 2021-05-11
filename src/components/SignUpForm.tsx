@@ -49,14 +49,14 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
     setFormMode('signIn');
   }, [setFormMode]);
 
-  const name = useTranslate("NAME")
-  const namePlaceholder = useTranslate("NAME_PLACEHOLDER")
+  const name = useTranslate('NAME');
+  const namePlaceholder = useTranslate('NAME_PLACEHOLDER');
   const mail = useTranslate('EMAIL');
   const mailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
   const password = useTranslate('PASSWORD');
   const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
-  const createAccount = useTranslate("CREATE_ACCOUNT")
-  const alreadyregistered = useTranslate("ALREADY_REGISTERED")
+  const createAccount = useTranslate('CREATE_ACCOUNT');
+  const alreadyregistered = useTranslate('ALREADY_REGISTERED');
 
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
@@ -70,38 +70,29 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
             <LoadingModal isLoading={formik.isSubmitting} />
             <Row gutter={20}>
               <Col span={24}>
-                <Typography.Title level={2}>
-                  {'Crée un compte !'}
-                </Typography.Title>
+                <Typography.Title level={2}>{createAccount}</Typography.Title>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'name'} label={'Name'} required={true}>
-                  <Input name={'name'} placeholder={'Bastien'} />
+                <Form.Item name={'name'} label={name} required={true}>
+                  <Input name={'name'} placeholder={namePlaceholder} />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'email'} label={'E-mail'} required={true}>
-                  <Input
-                    name={'email'}
-                    placeholder={'bastien.silhol@epitech.eu'}
-                  />
+                <Form.Item name={'email'} label={mail} required={true}>
+                  <Input name={'email'} placeholder={mailPlaceholder} />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item
-                  name={'password'}
-                  label={'Mot de passe'}
-                  required={true}
-                >
+                <Form.Item name={'password'} label={password} required={true}>
                   <Input.Password
                     name={'password'}
-                    placeholder={'p4sSw0rD'}
+                    placeholder={passwordPlaceholder}
                     allowClear={true}
                   />
                 </Form.Item>
@@ -111,7 +102,7 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item name={'signIn'}>
                   <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                    {'Crée un compte'}
+                    {createAccount}
                   </SubmitButton>
                 </Form.Item>
               </Col>
@@ -124,7 +115,7 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
                     style={{ width: '100%' }}
                     onClick={goToSignIn}
                   >
-                    {'Se connecter'}
+                    {alreadyregistered}
                   </Button>
                 </Form.Item>
               </Col>
