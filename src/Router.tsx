@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { IonReactRouter } from '@ionic/react-router';
 import {
   IonIcon,
   IonLabel,
@@ -10,14 +9,11 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-
 import { home, person, people } from 'ionicons/icons';
-import Profile from './pages/Profile';
+
 import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import Followers from './pages/Followers';
+import Profile from './pages/Profile';
 import Create from './pages/Create';
 
 const Router: React.FC = () => {
@@ -26,35 +22,25 @@ const Router: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Switch>
-              <Route exact path={'/'}>
-                <Redirect to={'/home'} />
-              </Route>
+            <Route exact path={'/'}>
+              <Redirect to={'/home'} />
+            </Route>
 
-              <Route exact path={'/home'}>
-                <Home />
-              </Route>
+            <Route exact path={'/home'}>
+              <Home />
+            </Route>
 
-              <Route exact path={'/followers'}>
-                <Followers />
-              </Route>
+            <Route exact path={'/followers'}>
+              <Followers />
+            </Route>
 
-              <Route exact path={'/profile'}>
-                <Profile />
-              </Route>
+            <Route exact path={'/profile'}>
+              <Profile />
+            </Route>
 
-              <Route exact path={'/create'}>
-                <Create />
-              </Route>
-
-              <Route exact path={'/signIn'}>
-                <SignIn />
-              </Route>
-
-              <Route exact path={'/signUp'}>
-                <SignUp />
-              </Route>
-            </Switch>
+            <Route exact path={'/create'}>
+              <Create />
+            </Route>
           </IonRouterOutlet>
           <IonTabBar slot={'bottom'}>
             <IonTabButton tab={'Home'} href={'/home'}>
@@ -62,7 +48,7 @@ const Router: React.FC = () => {
               <IonLabel>{'Home'}</IonLabel>
             </IonTabButton>
 
-            <IonTabButton tab={'tab2'} href={'/followers'}>
+            <IonTabButton tab={'Followers'} href={'/followers'}>
               <IonIcon icon={people} />
               <IonLabel>{'Followers'}</IonLabel>
             </IonTabButton>

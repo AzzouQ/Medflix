@@ -9,12 +9,14 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from '@ionic/react';
 import { Avatar, Image, Typography } from 'antd';
 import { Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { auth } from '../service/firebase';
+import SignInForm from '../components/SignInForm';
 
 const Profile: React.FC = () => {
   const avatar =
@@ -58,6 +60,16 @@ const Profile: React.FC = () => {
     else history.push('/signIn');
   };
 
+  const handleDismiss = () => {
+    dismiss();
+  };
+
+  const [present, dismiss] = useIonModal(SignInForm, {
+    onDismiss: handleDismiss,
+  });
+
+  const openModal = () => {};
+
   const renderProfileHeader = (): React.ReactElement => (
     <IonRow
       style={{
@@ -66,7 +78,7 @@ const Profile: React.FC = () => {
         backgroundColor: '#eeeeee',
       }}
     >
-      <IonCol size="8">
+      <IonCol size={'8'}>
         <IonRow
           style={{
             alignItems: 'center',
@@ -75,20 +87,31 @@ const Profile: React.FC = () => {
           <IonCol size="auto">
             <Avatar size={80} src={<Image src={avatar} />} />
           </IonCol>
-          <IonCol size="auto">
-            <Title level={2}>Channel's Name</Title>
+          <IonCol size={'auto'}>
+            <Title level={2}>{"Channel's Name"}</Title>
           </IonCol>
         </IonRow>
       </IonCol>
-      <IonCol size="auto">
+      <IonCol size={'auto'}>
         <Button
-          type="primary"
-          shape="round"
+          type={'primary'}
+          shape={'round'}
           icon={<UploadOutlined />}
           size={'large'}
           onClick={toAuth}
         >
-          Upload
+          {'Upload'}
+        </Button>
+      </IonCol>
+      <IonCol size={'auto'}>
+        <Button
+          type={'primary'}
+          shape={'round'}
+          icon={<UploadOutlined />}
+          size={'large'}
+          onClick={() => present()}
+        >
+          {'Modal'}
         </Button>
       </IonCol>
     </IonRow>
@@ -98,20 +121,20 @@ const Profile: React.FC = () => {
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
         {data.map((item) => (
-          <IonItem lines="none">
-            <IonCol size="auto">
+          <IonItem lines={'none'}>
+            <IonCol size={'auto'}>
               <Image src={item.src} preview={false} />
               <IonRow>
-                <IonCol size="auto">
+                <IonCol size={'auto'}>
                   <Button
-                    shape="circle"
-                    size="large"
+                    shape={'circle'}
+                    size={'large'}
                     icon={
                       <Avatar src={<Image src={avatar} preview={false} />} />
                     }
                   />
                 </IonCol>
-                <IonCol size="auto">
+                <IonCol size={'auto'}>
                   <Title level={4}>{item.title}</Title>
                 </IonCol>
               </IonRow>
@@ -126,14 +149,14 @@ const Profile: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Profile</IonTitle>
+          <IonTitle>{'Profile'}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader collapse={'condense'}>
           <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
+            <IonTitle size={'large'}>{'Profile'}</IonTitle>
           </IonToolbar>
         </IonHeader>
 
