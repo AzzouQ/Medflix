@@ -151,6 +151,10 @@ export const signIn = async (email: string, password: string) => {
   await setFcm();
 };
 
+export const signOut = async () => {
+  await auth.signOut();
+};
+
 export const signUp = async (name: string, email: string, password: string) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
   const date = +new Date();
@@ -193,9 +197,9 @@ export const videoUpload = async ({
 export const getFcmFromUid = async (uid: string) => {
   try {
     const keys = await (await db.ref(`/user/${uid}/fcm`).once('value')).val();
-    return Object.values(keys)
+    return Object.values(keys);
   } catch (err) {
-    throw Error(err)
+    throw Error(err);
   }
 };
 
@@ -211,38 +215,35 @@ export const listUser = async (): Promise<string[]> => {
 
 export const sendNotif = async (uid: string) => {
   try {
-  const registrationIds = await getFcmFromUid(uid);
+    const registrationIds = await getFcmFromUid(uid);
 
-  if (registrationIds.length === 0)
-    return console.log("Can't fetch FCM from user");
+    if (registrationIds.length === 0)
+      return console.log("Can't fetch FCM from user");
 
-  const url = 'https://fcm.googleapis.com/fcm/send';
-  const payload = {
-    registration_ids: registrationIds,
-    collapse_key: 'type_a',
-    notification: {
-      body: 'Allez vite le follow back',
-      title: 'Vous avez un nouvel abonné',
-    },
-    data: {
-      body: 'Allez vite le follow back',
-      title: 'Vous avez un nouvel abonné',
-      key_1: 'Value for key_1',
-      key_2: 'Value for key_2',
-    },
-  };
-  axios.post(url, payload, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `key=${SERVER_KEY}`,
-    },
-  });
-
+    const url = 'https://fcm.googleapis.com/fcm/send';
+    const payload = {
+      registration_ids: registrationIds,
+      collapse_key: 'type_a',
+      notification: {
+        body: 'Allez vite le follow back',
+        title: 'Vous avez un nouvel abonné',
+      },
+      data: {
+        body: 'Allez vite le follow back',
+        title: 'Vous avez un nouvel abonné',
+        key_1: 'Value for key_1',
+        key_2: 'Value for key_2',
+      },
+    };
+    axios.post(url, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `key=${SERVER_KEY}`,
+      },
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-
-
 };
 
 export { auth };

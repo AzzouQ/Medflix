@@ -1,5 +1,6 @@
-import { useHistory } from 'react-router';
+import React from 'react';
 import {
+  IonButtons,
   IonCol,
   IonContent,
   IonGrid,
@@ -11,25 +12,17 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import { Avatar, Button, Image, Menu, Typography } from 'antd';
-import {
-  LoginOutlined,
-  LogoutOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
 
-import React, { useState } from 'react';
+import AuthModal from '../components/AuthModal';
+import { ShareAltOutlined } from '@ant-design/icons';
+
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
-import useTranslate from '../local/local';
+
 // import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
-  firebase.auth().onAuthStateChanged((_user) => setUser(_user));
-
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
@@ -65,14 +58,7 @@ const Home: React.FC = () => {
   ];
 
   const { Title } = Typography;
-  const history = useHistory();
   const { Share } = Plugins;
-
-  const toAuth = async () => {
-    if (user) {
-      await firebase.auth().signOut();
-    } else history.push('/signIn');
-  };
 
   const share = async () => {
     await Share.share({
@@ -83,35 +69,10 @@ const Home: React.FC = () => {
     });
   };
 
-  const viewTitle = useTranslate('HOME_VIEW_TITLE')
-  const hometitle = useTranslate('HOME_TITLE');
-  const connect = useTranslate('CONNECT');
-  const disconnect = useTranslate('DISCONNECT');
-
-  const renderHomeHeader = (): React.ReactElement => (
-    <IonRow
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eeeeee',
-      }}
-    >
-      <IonCol size="8">
-        <Title level={2}>{hometitle}</Title>
-      </IonCol>
-      <IonCol size="auto">
-        <Button
-          type="primary"
-          shape="round"
-          icon={user ? <LogoutOutlined /> : <LoginOutlined />}
-          size={'large'}
-          onClick={toAuth}
-        >
-          {user ? disconnect : connect}
-        </Button>
-      </IonCol>
-    </IonRow>
-  );
+  // const viewTitle = useTranslate('HOME_VIEW_TITLE')
+  // const hometitle = useTranslate('HOME_TITLE');
+  // const connect = useTranslate('CONNECT');
+  // const disconnect = useTranslate('DISCONNECT');
 
   const renderHomeVideos = (): React.ReactElement => (
     <IonList>
@@ -192,21 +153,20 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{viewTitle}</IonTitle>
+          <IonButtons slot={'start'}>
+            <IonTitle>{'Home'}</IonTitle>
+          </IonButtons>
+          <IonButtons slot={'end'}>
+            <AuthModal />
+          </IonButtons>
+        </IonToolbar>
+        <IonToolbar>
+          <IonTitle>{'Latest videos'}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonGrid>
-          {renderHomeHeader()}
-          {renderHomeVideos()}
-        </IonGrid>
+      <IonContent fullscreen={true}>
+        <IonGrid>{renderHomeVideos()}</IonGrid>
       </IonContent>
     </IonPage>
   );

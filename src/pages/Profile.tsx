@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   IonCol,
   IonContent,
@@ -20,7 +21,6 @@ import {
 } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { auth } from '../service/firebase';
-import React, { useState, useEffect } from 'react';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
 
@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
         backgroundColor: '#eeeeee',
       }}
     >
-      <IonCol size="8">
+      <IonCol size={'8'}>
         <IonRow
           style={{
             alignItems: 'center',
@@ -107,10 +107,10 @@ const Profile: React.FC = () => {
           </IonCol>
         </IonRow>
       </IonCol>
-      <IonCol size="auto">
+      <IonCol size={'auto'}>
         <Button
-          type="primary"
-          shape="round"
+          type={'primary'}
+          shape={'round'}
           icon={<UploadOutlined />}
           size={'large'}
           onClick={toAuth}
@@ -202,9 +202,9 @@ const Profile: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader collapse={'condense'}>
           <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
+            <IonTitle size={'large'}>{'Profile'}</IonTitle>
           </IonToolbar>
         </IonHeader>
 
