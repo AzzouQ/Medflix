@@ -6,6 +6,7 @@ import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 
 import com.getcapacitor.community.fcm.FCMPlugin;
+import com.jeep.plugin.capacitor.CapacitorVideoPlayer;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class MainActivity extends BridgeActivity {
     this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
 
       add(FCMPlugin.class);
+      add(CapacitorVideoPlayer.class);
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
     }});
