@@ -197,12 +197,6 @@ const Profile: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonGrid>
           {renderProfileHeader()}
           {renderProfileVideos()}

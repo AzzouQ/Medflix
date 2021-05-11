@@ -1,10 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, notification } from 'antd';
 import * as Yup from 'yup';
-
 import LoadingModal from './LoadingModal';
 import { signIn } from '../service/firebase';
 
@@ -13,30 +12,29 @@ type SignInFormValues = {
   password: string;
 };
 
+const yupValidation = Yup.object({
+  password: Yup.string().required('Veuillez entrer un password'),
+  email: Yup.string()
+    .required('Veuillez entrer un email')
+    .email("L'email est invalide"),
+});
+
 const SignInForm: React.FC = () => {
   const { push } = useHistory();
-
-  const yupValidation = Yup.object({
-    password: Yup.string()
-      .required('Veuillez entrer un password')
-      .email('Le password est invalide'),
-    email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
-  });
 
   const formikSubmit = async (
     { email, password }: SignInFormValues,
     { setSubmitting, setFieldValue }: FormikHelpers<SignInFormValues>
   ) => {
     setFieldValue('password', '', false);
+    setSubmitting(true);
     try {
       await signIn(email, password);
-      push('/home')
+      notification.success({ message: `Welcome back ${email}` });
+      setSubmitting(false);
     } catch (e) {
-      console.log(e)
-      // TODO Handle error
-    } finally {
+      notification.error({ message: 'error' });
+      console.log(e);
       setSubmitting(false);
     }
   };

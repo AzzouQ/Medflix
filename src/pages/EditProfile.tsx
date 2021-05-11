@@ -21,11 +21,6 @@ const EditProfie: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Edit Profile</IonTitle>
-          </IonToolbar>
-        </IonHeader>
 
         <IonGrid>
           <EditProfileForm />

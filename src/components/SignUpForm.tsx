@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, notification } from 'antd';
 import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
@@ -32,9 +32,11 @@ const SignUpForm: React.FC = () => {
     setFieldValue('password', '', false);
     try {
       await signUp(name, email, password);
+      notification.success({ message: `Welcome ${name}` });
       push('/home');
     } catch (error) {
       console.log(error);
+      notification.error({ message: 'error' });
       // TODO Handle error
     } finally {
       setSubmitting(false);

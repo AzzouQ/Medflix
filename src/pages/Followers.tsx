@@ -21,9 +21,13 @@ const Followers: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
 
   useEffect(() => {
-    listUser().then((_users) => {
+    async function fetchUsers() {
+      const _users = await listUser()
       setUsers(_users);
-    });
+    }
+
+    fetchUsers()
+
   }, []);
 
   const avatar =
@@ -86,11 +90,6 @@ const Followers: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Followers</IonTitle>
-          </IonToolbar>
-        </IonHeader>
 
         <IonGrid>
           {renderFollowersHeader()}

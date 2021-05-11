@@ -12,8 +12,14 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import SignInForm from '../components/SignInForm';
 
 import lottieAnim from '../assets/AuthLottie.json';
+import { useLocation, useParams } from 'react-router';
 
-const SignIn: React.FC = () => {
+type signInParams = {
+  to: string | undefined
+}
+
+const SignIn: React.FC = (props: any) => {
+
   return (
     <IonPage>
       <IonHeader>

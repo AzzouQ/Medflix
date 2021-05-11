@@ -9,6 +9,11 @@ import { isPlatform } from '@ionic/react';
 import axios from 'axios';
 import { FCM } from '@capacitor-community/fcm';
 import { UploadRequestOption } from 'rc-upload/es/interface';
+import { useDispatch } from 'react-redux';
+import { storefront } from 'ionicons/icons';
+import { Dispatch } from 'react';
+import { uploadActions } from '../redux';
+import getBlob from './getBlob';
 
 // import getBlob from './getBlob';
 
@@ -170,21 +175,70 @@ export const resetPassword = (email: string) => {
   // TODO Handle resetPassword *****
 };
 
-export const videoUpload = async ({
-  filename,
-  file,
-  onSuccess,
-}: UploadRequestOption<any>) => {
+export const videoUpload = async (
+  { filename, file, onSuccess, onError, onProgress }: UploadRequestOption<any>,
+  dispatch: Dispatch<any>
+) => {
   const { currentUser } = auth;
   const uid = currentUser?.uid;
 
-  const name = filename ?? `${new Date().getTime()}-easyCloud`;
+  const name = filename ?? `${new Date().getTime()}-medflix`;
 
-  const storageRef = storage.ref(`/video/${uid}/${name}`);
 
+  
   try {
-    const uploadTask = await storageRef.put(file as Blob);
-    console.log(uploadTask.totalBytes);
+    const blob: any = await getBlob(file);
+
+    const storageRef = storage.ref(`/video/${uid}/todofixit`);
+
+
+    const uploadTask = storageRef.put(file as Blob);
+
+    // dispatch
+    dispatch(uploadActions.setUpload({ blob: blob, uploadTask }));
+
+    uploadTask.on(
+      'state_changed',
+      function (snapshot) {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress: any =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+
+        if (onProgress)
+          // CONNECT ON PROGRESS
+          onProgress(progress);
+
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      },
+      function (error) {
+        // Handle unsuccessful uploads
+
+        // CONNECT ON ERROR
+        if (onError) onError(error);
+      },
+      function () {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref
+          .getDownloadURL()
+          .then(function (downloadURL: any) {
+            console.log('File available at', downloadURL);
+
+            // CONNECT ON SUCCESS
+            if (onSuccess) onSuccess(downloadURL, blob);
+            // Pass any parameter you would like
+          });
+      }
+    );
   } catch (e) {
     console.log(e);
   }
@@ -193,9 +247,9 @@ export const videoUpload = async ({
 export const getFcmFromUid = async (uid: string) => {
   try {
     const keys = await (await db.ref(`/user/${uid}/fcm`).once('value')).val();
-    return Object.values(keys)
+    return Object.values(keys);
   } catch (err) {
-    throw Error(err)
+    throw Error(err);
   }
 };
 
@@ -211,38 +265,35 @@ export const listUser = async (): Promise<string[]> => {
 
 export const sendNotif = async (uid: string) => {
   try {
-  const registrationIds = await getFcmFromUid(uid);
+    const registrationIds = await getFcmFromUid(uid);
 
-  if (registrationIds.length === 0)
-    return console.log("Can't fetch FCM from user");
+    if (registrationIds.length === 0)
+      return console.log("Can't fetch FCM from user");
 
-  const url = 'https://fcm.googleapis.com/fcm/send';
-  const payload = {
-    registration_ids: registrationIds,
-    collapse_key: 'type_a',
-    notification: {
-      body: 'Allez vite le follow back',
-      title: 'Vous avez un nouvel abonné',
-    },
-    data: {
-      body: 'Allez vite le follow back',
-      title: 'Vous avez un nouvel abonné',
-      key_1: 'Value for key_1',
-      key_2: 'Value for key_2',
-    },
-  };
-  axios.post(url, payload, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `key=${SERVER_KEY}`,
-    },
-  });
-
+    const url = 'https://fcm.googleapis.com/fcm/send';
+    const payload = {
+      registration_ids: registrationIds,
+      collapse_key: 'type_a',
+      notification: {
+        body: 'Allez vite le follow back',
+        title: 'Vous avez un nouvel abonné',
+      },
+      data: {
+        body: 'Allez vite le follow back',
+        title: 'Vous avez un nouvel abonné',
+        key_1: 'Value for key_1',
+        key_2: 'Value for key_2',
+      },
+    };
+    axios.post(url, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `key=${SERVER_KEY}`,
+      },
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-
-
 };
 
 export { auth };

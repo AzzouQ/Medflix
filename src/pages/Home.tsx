@@ -2,6 +2,7 @@ import { useHistory } from 'react-router';
 import {
   IonCol,
   IonContent,
+  IonFooter,
   IonGrid,
   IonHeader,
   IonItem,
@@ -13,21 +14,27 @@ import {
 } from '@ionic/react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { Avatar, Button, Image, Menu, Typography } from 'antd';
+import { Avatar, Button, Image, Menu, Typography, notification } from 'antd';
 import {
   LoginOutlined,
   LogoutOutlined,
   ShareAltOutlined,
 } from '@ant-design/icons';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
+import ProgressBar from '../components/ProgressBar';
 // import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
-  firebase.auth().onAuthStateChanged((_user) => setUser(_user));
+
+  useEffect(() => {
+    return firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  });
 
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
@@ -70,6 +77,7 @@ const Home: React.FC = () => {
   const toAuth = async () => {
     if (user) {
       await firebase.auth().signOut();
+      notification.success({ message: `See you later!` });
     } else history.push('/signIn');
   };
 
@@ -191,17 +199,16 @@ const Home: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonGrid>
           {renderHomeHeader()}
           {renderHomeVideos()}
         </IonGrid>
       </IonContent>
+      <IonFooter>
+        <IonToolbar>
+          <ProgressBar />
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };
