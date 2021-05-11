@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   IonButtons,
   IonCol,
@@ -11,38 +12,67 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Button, Image, Typography } from 'antd';
+import { Avatar, Button, Image, Menu, Typography } from 'antd';
 
 import AuthModal from '../components/AuthModal';
+import { ShareAltOutlined } from '@ant-design/icons';
+
+import SubMenu from 'antd/lib/menu/SubMenu';
+import { Plugins } from '@capacitor/core';
+
 // import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
   const avatar =
     'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+
   const data = [
     {
-      title: 'Ted video 1',
-      src:
-        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      title: 'Video name 1',
+      src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Ted video 2',
-      src:
-        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      title: 'Video name 2',
+      src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Ted video 3',
-      src:
-        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      title: 'Video name 3',
+      src: 'https://picsum.photos/400/200',
     },
     {
-      title: 'Ted video 4',
-      src:
-        'https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo.png?bust=amove',
+      title: 'Video name 4',
+      src: 'https://picsum.photos/400/200',
+    },
+    {
+      title: 'Video name 5',
+      src: 'https://picsum.photos/400/200',
+    },
+    {
+      title: 'Video name 6',
+      src: 'https://picsum.photos/400/200',
+    },
+    {
+      title: 'Video name 7',
+      src: 'https://picsum.photos/400/200',
     },
   ];
 
   const { Title } = Typography;
+  const { Share } = Plugins;
+
+  const share = async () => {
+    await Share.share({
+      title: 'See video',
+      text: 'Really awesome video you need to see right now',
+      url: 'http://ionicframework.com/',
+      dialogTitle: 'Share with buddies',
+    });
+  };
+
+  // const viewTitle = useTranslate('HOME_VIEW_TITLE')
+  // const hometitle = useTranslate('HOME_TITLE');
+  // const connect = useTranslate('CONNECT');
+  // const disconnect = useTranslate('DISCONNECT');
 
   const renderHomeVideos = (): React.ReactElement => (
     <IonList>
@@ -59,29 +89,57 @@ const Home: React.FC = () => {
                   window.open('https://mityurl.com/y/TEDT/r-5-25', '_system')
                 }
               />
-              <IonRow>
+              <IonRow
+                style={{
+                  justifyContent: 'space-between',
+                }}
+              >
                 <IonCol size="auto">
-                  <Button
-                    shape="circle"
-                    size="large"
-                    icon={
-                      <Avatar
-                        src={
-                          <Image
-                            src={avatar}
-                            preview={false}
-                            onClick={() =>
-                              // sendNotif('B8kEqRO9qlZL0DYcGLjq2h1LL4K3')
-                              console.log('')
+                  <IonRow>
+                    <IonCol size="auto">
+                      <Button
+                        shape="circle"
+                        size="large"
+                        icon={
+                          <Avatar
+                            src={
+                              <Image
+                                src={avatar}
+                                preview={false}
+                                onClick={() =>
+                                  // sendNotif('B8kEqRO9qlZL0DYcGLjq2h1LL4K3')
+                                  console.log('')
+                                }
+                              />
                             }
                           />
                         }
                       />
-                    }
-                  />
+                    </IonCol>
+
+                    <IonCol size="auto">
+                      <Title level={4}>{item.title}</Title>
+                    </IonCol>
+                  </IonRow>
                 </IonCol>
                 <IonCol size="auto">
-                  <Title level={4}>{item.title}</Title>
+                  <Menu
+                    mode="inline"
+                    selectable={false}
+                    style={{
+                      width: 80,
+                      backgroundColor: 'white',
+                      color: 'white',
+                    }}
+                  >
+                    <SubMenu key="sub1" title="">
+                      <Menu.Item
+                        key="1"
+                        icon={<ShareAltOutlined />}
+                        onClick={share}
+                      />
+                    </SubMenu>
+                  </Menu>
                 </IonCol>
               </IonRow>
             </IonCol>

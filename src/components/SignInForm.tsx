@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { signIn } from '../service/firebase';
 import translateFirebaseError from '../service/translateFirebaseError';
 import LoadingModal from './LoadingModal';
+import useTranslate from '../local/local';
 
 type SignInFormValues = {
   email: string;
@@ -46,6 +47,13 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
     setFormMode('signUp');
   }, [setFormMode]);
 
+  const email = useTranslate('EMAIL');
+  const emailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
+  const password = useTranslate('PASSWORD');
+  const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
+  const connect = useTranslate('CONNECT');
+  const createAccount = useTranslate('CREATE_ACCOUNT');
+  const forgottenPassword = useTranslate('FORGOTTEN_PASSWORD');
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
       <Formik<SignInFormValues>

@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { signUp } from '../service/firebase';
 import translateFirebaseError from '../service/translateFirebaseError';
 import LoadingModal from './LoadingModal';
+import useTranslate from '../local/local';
 
 type SignUpFormValues = {
   name: string;
@@ -47,6 +48,15 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
   const goToSignIn = useCallback(() => {
     setFormMode('signIn');
   }, [setFormMode]);
+
+  const name = useTranslate("NAME")
+  const namePlaceholder = useTranslate("NAME_PLACEHOLDER")
+  const mail = useTranslate('EMAIL');
+  const mailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
+  const password = useTranslate('PASSWORD');
+  const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
+  const createAccount = useTranslate("CREATE_ACCOUNT")
+  const alreadyregistered = useTranslate("ALREADY_REGISTERED")
 
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>

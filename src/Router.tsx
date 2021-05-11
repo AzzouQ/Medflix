@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonReactRouter } from '@ionic/react-router';
 import {
@@ -15,55 +15,63 @@ import Home from './pages/Home';
 import Followers from './pages/Followers';
 import Profile from './pages/Profile';
 import Create from './pages/Create';
+import { Plugins } from '@capacitor/core';
+import { useDispatch } from 'react-redux';
+import { localActions } from './redux/Local.slice';
 
+const { Device } = Plugins;
 const Router: React.FC = () => {
-  const AppSwitch = () => {
-    return (
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path={'/'}>
-              <Redirect to={'/home'} />
-            </Route>
+  const dispatch = useDispatch();
 
-            <Route exact path={'/home'}>
-              <Home />
-            </Route>
+  useEffect(() => {
+    Device.getLanguageCode().then((value) => {
+      dispatch(localActions.setLocal({ local: value.value }));
+    });
+  });
 
-            <Route exact path={'/followers'}>
-              <Followers />
-            </Route>
+  return (
+    <IonReactRouter>
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path={'/'}>
+            <Redirect to={'/home'} />
+          </Route>
 
-            <Route exact path={'/profile'}>
-              <Profile />
-            </Route>
+          <Route exact path={'/home'}>
+            <Home />
+          </Route>
 
-            <Route exact path={'/create'}>
-              <Create />
-            </Route>
-          </IonRouterOutlet>
-          <IonTabBar slot={'bottom'}>
-            <IonTabButton tab={'Home'} href={'/home'}>
-              <IonIcon icon={home} />
-              <IonLabel>{'Home'}</IonLabel>
-            </IonTabButton>
+          <Route exact path={'/followers'}>
+            <Followers />
+          </Route>
 
-            <IonTabButton tab={'Followers'} href={'/followers'}>
-              <IonIcon icon={people} />
-              <IonLabel>{'Followers'}</IonLabel>
-            </IonTabButton>
+          <Route exact path={'/profile'}>
+            <Profile />
+          </Route>
 
-            <IonTabButton tab={'Profile'} href={'/profile'}>
-              <IonIcon icon={person} />
-              <IonLabel>{'Profile'}</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    );
-  };
+          <Route exact path={'/create'}>
+            <Create />
+          </Route>
+        </IonRouterOutlet>
+        <IonTabBar slot={'bottom'}>
+          <IonTabButton tab={'Home'} href={'/home'}>
+            <IonIcon icon={home} />
+            <IonLabel>{'Home'}</IonLabel>
+          </IonTabButton>
 
-  return <AppSwitch />;
+          <IonTabButton tab={'Followers'} href={'/followers'}>
+            <IonIcon icon={people} />
+            <IonLabel>{'Followers'}</IonLabel>
+          </IonTabButton>
+
+          <IonTabButton tab={'Profile'} href={'/profile'}>
+            <IonIcon icon={person} />
+            <IonLabel>{'Profile'}</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
+  );
 };
 
 export default Router;

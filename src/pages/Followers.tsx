@@ -14,6 +14,7 @@ import { Avatar, Image, Typography } from 'antd';
 import { Button } from 'antd';
 import { listUser, sendNotif } from '../service/firebase';
 import { useEffect, useState } from 'react';
+import useTranslate from '../local/local';
 
 const names = ['Nazim'];
 
@@ -31,6 +32,9 @@ const Followers: React.FC = () => {
 
   const { Title } = Typography;
 
+  const viewTitle = useTranslate("FOLLOWERS_VIEW_TITLE");
+  const follow = useTranslate("FOLLOW")
+  const unfollow = useTranslate("UNFOLLOW")
   const renderFollowersHeader = (): React.ReactElement => (
     <IonRow
       style={{
@@ -57,7 +61,7 @@ const Followers: React.FC = () => {
     <IonList>
       <IonRow style={{ justifyContent: 'center' }}>
         {users.map((item, idx) => (
-          <IonItem lines="none">
+          <IonItem lines="none" key={idx}>
             <IonCol size="auto">
               <Title level={2}>{item}</Title>
               <Button
@@ -68,7 +72,7 @@ const Followers: React.FC = () => {
                   sendNotif(item);
                 }}
               >
-                {item ? 'Follow' : 'Unfollow'}
+                {item ? follow : unfollow}
               </Button>
             </IonCol>
           </IonItem>
@@ -81,7 +85,7 @@ const Followers: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Followers</IonTitle>
+          <IonTitle>{viewTitle}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
