@@ -32,37 +32,37 @@ const Home: React.FC = () => {
     {
       title: 'Ted Talk 1',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 2',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 3',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Video Ted Talk 4',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 5',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 6',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 7',
       src: 'https://picsum.photos/400/200',
-      url: 'https://mityurl.com/y/TEDT/r-5-25'
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
   ];
 

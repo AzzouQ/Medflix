@@ -10,6 +10,7 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
+  isPlatform,
 } from '@ionic/react';
 import { Avatar, Image, Typography, Menu } from 'antd';
 import { Button } from 'antd';
@@ -33,36 +34,43 @@ const Profile: React.FC = () => {
     {
       title: 'Ted Talk 1',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 2',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 3',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 4',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 5',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 6',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
     {
       title: 'Ted Talk 7',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25',
     },
   ];
 
   const { Title } = Typography;
   const history = useHistory();
-  const { Share } = Plugins;
+  const { Clipboard, Share } = Plugins;
 
   const toCreate = () => {
     if (auth.currentUser) history.push('/create');
@@ -79,6 +87,12 @@ const Profile: React.FC = () => {
       text: 'Really awesome video you need to see right now',
       url: 'http://ionicframework.com/',
       dialogTitle: 'Share with buddies',
+    });
+  };
+
+  const clipboardCopy = (link: string) => {
+    Clipboard.write({
+      string: link,
     });
   };
 
@@ -175,7 +189,11 @@ const Profile: React.FC = () => {
                       <Menu.Item
                         key="1"
                         icon={<ShareAltOutlined />}
-                        onClick={share}
+                        onClick={
+                          isPlatform('mobile')
+                            ? share
+                            : () => clipboardCopy(item.url)
+                        }
                       />
                       <Menu.Item
                         key="2"
