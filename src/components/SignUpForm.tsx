@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
 import { signUp } from '../service/firebase';
+import useTranslate from '../local/local';
 
 type SignUpFormValues = {
   name: string;
@@ -45,6 +46,14 @@ const SignUpForm: React.FC = () => {
     push('/signIn');
   };
 
+  const name = useTranslate("NAME")
+  const namePlaceholder = useTranslate("NAME_PLACEHOLDER")
+  const mail = useTranslate('EMAIL');
+  const mailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
+  const password = useTranslate('PASSWORD');
+  const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
+  const createAccount = useTranslate("CREATE_ACCOUNT")
+  const alreadyregistered = useTranslate("ALREADY_REGISTERED")
   return (
     <Formik<SignUpFormValues>
       initialValues={{ name: '', email: '', password: '' }}
@@ -56,17 +65,17 @@ const SignUpForm: React.FC = () => {
           <LoadingModal isLoading={formik.isSubmitting} />
           <Row gutter={20}>
             <Col span={24}>
-              <Form.Item name={'name'} label={'Nom'} required={true}>
-                <Input name={'name'} placeholder={'Bastien Silhol'} />
+              <Form.Item name={'name'} label={name} required={true}>
+                <Input name={'name'} placeholder={namePlaceholder} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={20}>
             <Col span={24}>
-              <Form.Item name={'email'} label={'E-mail'} required={true}>
+              <Form.Item name={'email'} label={mail} required={true}>
                 <Input
                   name={'email'}
-                  placeholder={'bastien.silhol@epitech.eu'}
+                  placeholder={mailPlaceholder}
                 />
               </Form.Item>
             </Col>
@@ -75,12 +84,12 @@ const SignUpForm: React.FC = () => {
             <Col span={24}>
               <Form.Item
                 name={'password'}
-                label={'Mot de passe'}
+                label={password}
                 required={true}
               >
                 <Input.Password
                   name={'password'}
-                  placeholder={'p4sSw0rD'}
+                  placeholder={passwordPlaceholder}
                   allowClear={true}
                 />
               </Form.Item>
@@ -90,7 +99,7 @@ const SignUpForm: React.FC = () => {
             <Col span={12}>
               <Form.Item name={'signUp'}>
                 <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                  {'Créer mon compte'}
+                  {createAccount}
                 </SubmitButton>
               </Form.Item>
             </Col>
@@ -101,7 +110,7 @@ const SignUpForm: React.FC = () => {
                   style={{ width: '100%' }}
                   onClick={toSignIn}
                 >
-                  {'Déjà inscrit ?'}
+                  {alreadyregistered}
                 </Button>
               </Form.Item>
             </Col>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -20,10 +20,23 @@ import SignUp from './pages/SignUp';
 import Followers from './pages/Followers';
 import EditProfile from './pages/EditProfile';
 import Create from './pages/Create';
+import { Plugins } from '@capacitor/core';
+import { useDispatch } from 'react-redux';
+import { localActions } from './redux/Local.slice';
 
+const { Device } = Plugins;
 const Router: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
+
+  const dispatch = useDispatch();
+
   firebase.auth().onAuthStateChanged((_user) => setUser(_user));
+
+  useEffect(() => {
+    Device.getLanguageCode().then((value) => {
+      dispatch(localActions.setLocal({ local: value.value }));
+    });
+  });
 
   const AuthSwitch = () => {
     return (

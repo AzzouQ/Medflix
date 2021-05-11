@@ -12,13 +12,14 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import SignInForm from '../components/SignInForm';
 
 import lottieAnim from '../assets/AuthLottie.json';
+import useTranslate from '../local/local';
 
 const SignIn: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{'Sign In'}</IonTitle>
+          <IonTitle>{useTranslate("SIGN_IN_VIEW_TITLE")}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -38,7 +39,7 @@ const SignIn: React.FC = () => {
             />
           </Col>
           <Col lg={6} xl={6}>
-            <Typography.Title level={2}>{'Bienvenue !'}</Typography.Title>
+            <Typography.Title level={2}>{useTranslate("SIGN_IN_TITLE")}</Typography.Title>
             <SignInForm />
           </Col>
         </Row>

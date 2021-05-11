@@ -23,6 +23,7 @@ import {
 import React, { useState } from 'react';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
+import useTranslate from '../local/local';
 // import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
@@ -82,6 +83,11 @@ const Home: React.FC = () => {
     });
   };
 
+  const viewTitle = useTranslate('HOME_VIEW_TITLE')
+  const hometitle = useTranslate('HOME_TITLE');
+  const connect = useTranslate('CONNECT');
+  const disconnect = useTranslate('DISCONNECT');
+
   const renderHomeHeader = (): React.ReactElement => (
     <IonRow
       style={{
@@ -91,7 +97,7 @@ const Home: React.FC = () => {
       }}
     >
       <IonCol size="8">
-        <Title level={2}>Latest videos</Title>
+        <Title level={2}>{hometitle}</Title>
       </IonCol>
       <IonCol size="auto">
         <Button
@@ -101,7 +107,7 @@ const Home: React.FC = () => {
           size={'large'}
           onClick={toAuth}
         >
-          {user ? 'Disconnect' : 'Connect'}
+          {user ? disconnect : connect}
         </Button>
       </IonCol>
     </IonRow>
@@ -186,7 +192,7 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>{viewTitle}</IonTitle>
         </IonToolbar>
       </IonHeader>
 

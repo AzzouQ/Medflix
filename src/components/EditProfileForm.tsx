@@ -6,6 +6,7 @@ import { Button, Row, Col } from 'antd';
 import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
+import useTranslate from '../local/local';
 
 type EditProfileFormalues = {
   name: string;
@@ -47,11 +48,23 @@ const EditProfileForm: React.FC = () => {
     push('/profile');
   };
 
+  const name = useTranslate("NAME")
+  const namePlaceholder = useTranslate("NAME_PLACEHOLDER")
+  const desc = useTranslate("DESC_TITLE")
+  const descPlaceholder = useTranslate("DESC_PLACEHOLDER")
+  const mail = useTranslate("EMAIL")
+  const mailPlaceholder = useTranslate("EMAIL_PLACEHOLDER")
+  const oldPass = useTranslate("OLD_PASSWORD_TITLE")
+  const oldPassPlaceholder = useTranslate("OLD_PASSWORD_PLACEHOLDER")
+  const newPass = useTranslate("NEW_PASSWORD_TITLE")
+  const newPassPlaceholder = useTranslate("NEW_PASSWORD_PLACEHOLDER")
+  const save = useTranslate("SAVE")
+  
   const renderEditName = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
-        <Form.Item name={'name'} label={'Nom'} required={true}>
-          <Input name={'name'} placeholder={'bastien'} />
+        <Form.Item name={'name'} label={name} required={true}>
+          <Input name={'name'} placeholder={namePlaceholder} />
         </Form.Item>
       </Col>
     </Row>
@@ -59,8 +72,8 @@ const EditProfileForm: React.FC = () => {
   const renderEditDesc = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
-        <Form.Item name={'desc'} label={'Description'} required={true}>
-          <Input name={'desc'} placeholder={'je lés aime tousse...'} />
+        <Form.Item name={'desc'} label={desc} required={true}>
+          <Input name={'desc'} placeholder={descPlaceholder} />
         </Form.Item>
       </Col>
     </Row>
@@ -69,8 +82,8 @@ const EditProfileForm: React.FC = () => {
   const renderEditEmail = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
-        <Form.Item name={'email'} label={'E-mail'} required={true}>
-          <Input name={'email'} placeholder={'bastien.silhol@epitech.eu'} />
+        <Form.Item name={'email'} label={mail} required={true}>
+          <Input name={'email'} placeholder={mailPlaceholder} />
         </Form.Item>
       </Col>
     </Row>
@@ -82,12 +95,12 @@ const EditProfileForm: React.FC = () => {
         <Col span={24}>
           <Form.Item
             name={'oldPassword'}
-            label={'Ancien mot de passe'}
+            label={oldPass}
             required={true}
           >
             <Input.Password
               name={'oldPassword'}
-              placeholder={'p4sSw0rD'}
+              placeholder={oldPassPlaceholder}
               allowClear={true}
             />
           </Form.Item>
@@ -97,12 +110,12 @@ const EditProfileForm: React.FC = () => {
         <Col span={24}>
           <Form.Item
             name={'password'}
-            label={'Nouveau mot de passe'}
+            label={newPass}
             required={true}
           >
             <Input.Password
               name={'password'}
-              placeholder={'p4sSw0rD'}
+              placeholder={newPassPlaceholder}
               allowClear={true}
             />
           </Form.Item>
@@ -116,7 +129,7 @@ const EditProfileForm: React.FC = () => {
       <Col span={24}>
         <Form.Item name={'editProfile'}>
           <SubmitButton type={'primary'} style={{ width: '100%' }}>
-            {'Enregistrer'}
+            {save}
           </SubmitButton>
         </Form.Item>
       </Col>

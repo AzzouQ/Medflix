@@ -11,13 +11,14 @@ import {
 import React from 'react';
 
 import EditProfileForm from '../components/EditProfileForm';
+import useTranslate from '../local/local';
 
 const EditProfie: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Edit Profile</IonTitle>
+          <IonTitle>{useTranslate("EDIT_PROFILE_VIEW_TITLE")}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

@@ -20,9 +20,11 @@ import {
 } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { auth } from '../service/firebase';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Plugins } from '@capacitor/core';
+
+import useTranslate from '../local/local';
 
 const Profile: React.FC = () => {
   const avatar =
@@ -80,6 +82,9 @@ const Profile: React.FC = () => {
     });
   };
 
+  const upload = useTranslate('UPLOAD');
+  const edit = useTranslate('EDIT');
+
   const renderProfileHeader = (): React.ReactElement | null => (
     <IonRow
       style={{
@@ -110,7 +115,7 @@ const Profile: React.FC = () => {
           size={'large'}
           onClick={toAuth}
         >
-          {`Upload`}
+          {upload}
         </Button>
         <Button
           type="primary"
@@ -120,7 +125,7 @@ const Profile: React.FC = () => {
           onClick={toEditProfile}
           style={{ marginLeft: 10 }}
         >
-          {`Edit`}
+          {edit}
         </Button>
       </IonCol>
     </IonRow>
@@ -192,7 +197,7 @@ const Profile: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Profile</IonTitle>
+          <IonTitle>{useTranslate('PROFILE_VIEW_TITLE')}</IonTitle>
         </IonToolbar>
       </IonHeader>
 

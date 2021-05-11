@@ -10,7 +10,7 @@ import { Typography, Row, Col } from 'antd';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import SignUpForm from '../components/SignUpForm';
-
+import useTranslate from '../local/local';
 import lottieAnim from '../assets/AuthLottie.json';
 
 const SignUp: React.FC = () => {
@@ -18,7 +18,7 @@ const SignUp: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{'Sign Up'}</IonTitle>
+          <IonTitle>{useTranslate("SIGN_UP_VIEW_TITLE")}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
           </Col>
           <Col lg={6} xl={6}>
             <Typography.Title level={2}>
-              {'Créer votre compte'}
+              {useTranslate("SIGN_UP_TITLE")}
             </Typography.Title>
             <SignUpForm />
           </Col>

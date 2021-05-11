@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import LoadingModal from './LoadingModal';
 import { signIn } from '../service/firebase';
+import useTranslate from '../local/local';
 
 type SignInFormValues = {
   email: string;
@@ -18,11 +19,11 @@ const SignInForm: React.FC = () => {
 
   const yupValidation = Yup.object({
     password: Yup.string()
-      .required('Veuillez entrer un password')
-      .email('Le password est invalide'),
+      .required(useTranslate('PASSWORD_ERROR'))
+      .email(useTranslate('PASSWORD_ERROR_2')),
     email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
+      .required(useTranslate('EMAIL_ERROR'))
+      .email(useTranslate('EMAIL_ERROR_2')),
   });
 
   const formikSubmit = async (
@@ -32,9 +33,9 @@ const SignInForm: React.FC = () => {
     setFieldValue('password', '', false);
     try {
       await signIn(email, password);
-      push('/home')
+      push('/home');
     } catch (e) {
-      console.log(e)
+      console.log(e);
       // TODO Handle error
     } finally {
       setSubmitting(false);
@@ -49,6 +50,13 @@ const SignInForm: React.FC = () => {
     push('/reset');
   };
 
+  const email = useTranslate('EMAIL');
+  const emailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
+  const password = useTranslate('PASSWORD');
+  const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
+  const connect = useTranslate('CONNECT');
+  const createAccount = useTranslate('CREATE_ACCOUNT');
+  const forgottenPassword = useTranslate('FORGOTTEN_PASSWORD');
   return (
     <Formik<SignInFormValues>
       initialValues={{ email: '', password: '' }}
@@ -61,23 +69,16 @@ const SignInForm: React.FC = () => {
           <Row gutter={20}>
             <Col span={24}>
               <Form.Item name={'email'} label={'E-mail'} required={true}>
-                <Input
-                  name={'email'}
-                  placeholder={'bastien.silhol@epitech.eu'}
-                />
+                <Input name={email} placeholder={emailPlaceholder} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={20}>
             <Col span={24}>
-              <Form.Item
-                name={'password'}
-                label={'Mot de passe'}
-                required={true}
-              >
+              <Form.Item name={'password'} label={password} required={true}>
                 <Input.Password
-                  name={'password'}
-                  placeholder={'p4sSw0rD'}
+                  name={password}
+                  placeholder={passwordPlaceholder}
                   allowClear={true}
                 />
               </Form.Item>
@@ -87,7 +88,7 @@ const SignInForm: React.FC = () => {
             <Col span={24}>
               <Form.Item name={'signIn'}>
                 <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                  {'Se connecter'}
+                  {connect}
                 </SubmitButton>
               </Form.Item>
             </Col>
@@ -100,7 +101,7 @@ const SignInForm: React.FC = () => {
                   style={{ width: '100%' }}
                   onClick={toSignup}
                 >
-                  {'Créer un compte'}
+                  {createAccount}
                 </Button>
               </Form.Item>
             </Col>
@@ -111,7 +112,7 @@ const SignInForm: React.FC = () => {
                   style={{ width: '100%' }}
                   onClick={toReset}
                 >
-                  {'Mot de passe oublié'}
+                  {forgottenPassword}
                 </Button>
               </Form.Item>
             </Col>
