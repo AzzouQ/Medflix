@@ -8,13 +8,14 @@ import {
   IonCol,
   IonModal,
   IonRow,
+  isPlatform,
 } from '@ionic/react';
 import { Plugins } from '@capacitor/core';
 import { useVideoPlayer } from 'react-video-player-hook';
 import { Row, Button, Image, Avatar } from 'antd';
 import { UserOutlined, MoreOutlined } from '@ant-design/icons';
 
-const { Share } = Plugins;
+const { Share, Clipboard } = Plugins;
 
 type Props = {
   video: {
@@ -59,13 +60,19 @@ const VideoCard: React.FC<Props> = ({ video }) => {
   }, [startPlaying]);
 
   const onShare = useCallback(async () => {
-    await Share.share({
-      title: 'See video',
-      text: 'Really awesome video you need to see right now',
-      url: 'http://ionicframework.com/',
-      dialogTitle: 'Share with buddies',
-    });
-  }, []);
+    if (isPlatform('mobile')) {
+      await Share.share({
+        title: 'See video',
+        text: 'Really awesome video you need to see right now',
+        url: 'http://ionicframework.com/',
+        dialogTitle: 'Share with buddies',
+      });
+    } else {
+      Clipboard.write({
+        string: video.url,
+      });
+    }
+  }, [video.url]);
 
   return (
     <>

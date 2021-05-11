@@ -17,13 +17,19 @@ import VideoCard from '../components/VideoCard';
 
 import { videos } from '../service/fakeData';
 
+import useTranslate from '../local/local';
+
+// import { sendNotif } from '../service/firebase';
+
 const Home: React.FC = () => {
+  const hometitle = useTranslate('HOME_TITLE');
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{'Latest videos'}</IonTitle>
+            <IonTitle>{hometitle}</IonTitle>
           </IonButtons>
           <IonButtons slot={'end'}>
             <AuthModal />
