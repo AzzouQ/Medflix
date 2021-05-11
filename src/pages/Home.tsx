@@ -13,6 +13,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { Avatar, Button, Image, Menu, Typography } from 'antd';
+import { isPlatform } from '@ionic/react';
 
 import AuthModal from '../components/AuthModal';
 import { ShareAltOutlined } from '@ant-design/icons';
@@ -31,35 +32,42 @@ const Home: React.FC = () => {
     {
       title: 'Ted Talk 1',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Ted Talk 2',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Ted Talk 3',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Video Ted Talk 4',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Ted Talk 5',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Ted Talk 6',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
     {
       title: 'Ted Talk 7',
       src: 'https://picsum.photos/400/200',
+      url: 'https://mityurl.com/y/TEDT/r-5-25'
     },
   ];
 
   const { Title } = Typography;
-  const { Share } = Plugins;
+  const { Clipboard, Share } = Plugins;
 
   const share = async () => {
     await Share.share({
@@ -67,6 +75,12 @@ const Home: React.FC = () => {
       text: 'Really awesome video you need to see right now',
       url: 'http://ionicframework.com/',
       dialogTitle: 'Share with buddies',
+    });
+  };
+
+  const clipboardCopy = (link: string) => {
+    Clipboard.write({
+      string: link,
     });
   };
 
@@ -135,7 +149,11 @@ const Home: React.FC = () => {
                       <Menu.Item
                         key="1"
                         icon={<ShareAltOutlined />}
-                        onClick={share}
+                        onClick={
+                          isPlatform('mobile')
+                            ? share
+                            : () => clipboardCopy(item.url)
+                        }
                       />
                     </SubMenu>
                   </Menu>
