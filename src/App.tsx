@@ -4,11 +4,11 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { IonApp } from '@ionic/react';
 
-import { userReducer } from './redux/User.slice';
-
+import { userReducer, uploadReducer } from './redux'
 import './theme';
 
 import Router from './Router';
+import Notification from './components/Notification';
 import { localReducer } from './redux/Local.slice';
 
 const App: React.FC = () => {
@@ -16,6 +16,7 @@ const App: React.FC = () => {
     const store = configureStore({
       reducer: {
         user: userReducer,
+        upload: uploadReducer,
         local: localReducer,
       },
       middleware: [
@@ -29,6 +30,7 @@ const App: React.FC = () => {
   return (
     <Provider store={rootStore.store}>
       <IonApp>
+        {/* <Notification /> */}
         <Router />
       </IonApp>
     </Provider>

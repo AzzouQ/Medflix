@@ -32,9 +32,13 @@ const Followers: React.FC = () => {
   ];
 
   useEffect(() => {
-    listUser().then((_users) => {
+    async function fetchUsers() {
+      const _users = await listUser()
       setUsers(_users);
-    });
+    }
+
+    fetchUsers()
+
   }, []);
 
   const viewTitle = useTranslate('FOLLOWERS_VIEW_TITLE');

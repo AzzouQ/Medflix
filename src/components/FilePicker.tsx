@@ -4,6 +4,7 @@ import { Upload, message } from 'antd';
 import { RcFile, UploadChangeParam } from 'antd/lib/upload';
 
 import { videoUpload } from '../service/firebase';
+import { useDispatch } from 'react-redux';
 import useTranslate from '../local/local';
 
 type Props = { isLoading: boolean };
@@ -11,6 +12,8 @@ type Props = { isLoading: boolean };
 const { Dragger } = Upload;
 
 const FilePicker = ({ isLoading }: Props) => {
+  const dispatch = useDispatch()
+
   const beforeUplaod = (file: RcFile) => {
     const isVideo = file.type.indexOf('video/') === 0;
     if (!isVideo) {
@@ -43,7 +46,7 @@ const FilePicker = ({ isLoading }: Props) => {
         accept="video/*"
         onChange={onChange}
         beforeUpload={beforeUplaod}
-        customRequest={videoUpload}
+        customRequest={(props) => videoUpload(props, dispatch)}
       >
         <p className="ant-upload-drag-icon">
           <VideoCameraAddOutlined />

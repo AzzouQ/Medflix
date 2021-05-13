@@ -1,7 +1,7 @@
-import fr from './fr.json';
-import en from './eng.json';
 import { useSelector } from 'react-redux';
 import { localSelectors } from '../redux/Local.slice';
+import en from './eng.json';
+import fr from './fr.json';
 
 const data = {
   'fr-FR': fr,

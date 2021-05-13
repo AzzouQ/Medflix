@@ -20,9 +20,7 @@ const EditProfileForm: React.FC = () => {
   const { push } = useHistory();
 
   const yupValidation = Yup.object({
-    password: Yup.string()
-      .required('Veuillez entrer un password')
-      .email('Le password est invalide'),
+    password: Yup.string().required('Veuillez entrer un password'),
     email: Yup.string()
       .required('Veuillez entrer un email')
       .email("L'email est invalide"),

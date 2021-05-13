@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonReactRouter } from '@ionic/react-router';
 import {
+  IonFooter,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonToolbar,
 } from '@ionic/react';
 import { home, person, people } from 'ionicons/icons';
 
@@ -21,6 +23,18 @@ import { useDispatch } from 'react-redux';
 import { localActions } from './redux/Local.slice';
 
 const { Device } = Plugins;
+
+const Links = {
+  Base: '/',
+  SignIn: '/signIn',
+  SignUp: '/signUp',
+  Profile: '/profile',
+  Home: '/home',
+  Create: '/create',
+  EditProfile: '/editProfile',
+  Followers: '/followers',
+};
+
 const Router: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -34,42 +48,42 @@ const Router: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path={'/'}>
-            <Redirect to={'/home'} />
+          <Route exact path={Links.Base}>
+            <Redirect to={Links.Home} />
           </Route>
 
-          <Route exact path={'/home'}>
+          <Route exact path={Links.Home}>
             <Home />
           </Route>
 
-          <Route exact path={'/followers'}>
+          <Route exact path={Links.Followers}>
             <Followers />
           </Route>
 
-          <Route exact path={'/profile'}>
+          <Route exact path={Links.Profile}>
             <Profile />
           </Route>
 
-          <Route exact path={'/create'}>
+          <Route exact path={Links.Create}>
             <Create />
           </Route>
 
-          <Route exact path={'/editProfile'}>
+          <Route exact path={Links.EditProfile}>
             <EditProfile />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot={'bottom'}>
-          <IonTabButton tab={'Home'} href={'/home'}>
+          <IonTabButton tab={'Home'} href={Links.Home}>
             <IonIcon icon={home} />
             <IonLabel>{'Home'}</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab={'Followers'} href={'/followers'}>
+          <IonTabButton tab={'Followers'} href={Links.Followers}>
             <IonIcon icon={people} />
             <IonLabel>{'Followers'}</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab={'Profile'} href={'/profile'}>
+          <IonTabButton tab={'Profile'} href={Links.Profile}>
             <IonIcon icon={person} />
             <IonLabel>{'Profile'}</IonLabel>
           </IonTabButton>
