@@ -3,7 +3,7 @@ import { VideoCameraAddOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import { RcFile, UploadChangeParam } from 'antd/lib/upload';
 
-import { videoUpload } from '../service/firebase';
+import { videoUpload } from '../service/firebase/upload';
 import { useDispatch } from 'react-redux';
 import useTranslate from '../local/local';
 

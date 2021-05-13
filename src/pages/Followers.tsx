@@ -10,7 +10,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { listUser } from '../service/firebase';
+import { listUser } from '../service/firebase/users';
 import { useEffect, useState } from 'react';
 import useTranslate from '../local/local';
 import AuthModal from '../components/AuthModal';

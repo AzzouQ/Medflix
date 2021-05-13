@@ -6,7 +6,7 @@ import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
-import { signOut } from '../service/firebase';
+import { signOut } from '../service/firebase/auth';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';

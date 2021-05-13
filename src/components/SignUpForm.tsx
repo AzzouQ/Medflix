@@ -4,7 +4,7 @@ import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 
-import { signUp } from '../service/firebase';
+import { signUp } from '../service/firebase/auth';
 import translateFirebaseError from '../service/translateFirebaseError';
 import LoadingModal from './LoadingModal';
 import useTranslate from '../local/local';

@@ -9,7 +9,7 @@ import {
 import { Button } from 'antd';
 
 import useTranslate from '../local/local';
-import { sendNotif } from '../service/firebase';
+import { sendNotif } from '../service/firebase/fcm';
 
 type Props = {
   user: {
