@@ -24,7 +24,7 @@ const AuthModal: React.FC = () => {
   return (
     <>
       <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
-        {formMode === connect ? (
+        {formMode === 'signIn' ? (
           <SignInForm setModalOpen={setModalOpen} setFormMode={setFormMode} />
         ) : (
           <SignUpForm setModalOpen={setModalOpen} setFormMode={setFormMode} />
@@ -47,7 +47,7 @@ const AuthModal: React.FC = () => {
             icon={<LoginOutlined />}
             onClick={() => setModalOpen(true)}
           >
-            {'Sign In'}
+            {connect}
           </Button>
         </>
       )}

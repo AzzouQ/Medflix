@@ -53,6 +53,7 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
   const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
   const connect = useTranslate('CONNECT');
   const createAccount = useTranslate('CREATE_ACCOUNT');
+
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
       <Formik<SignInFormValues>
