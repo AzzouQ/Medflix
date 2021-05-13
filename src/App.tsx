@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
@@ -9,6 +9,7 @@ import './theme';
 
 import Router from './Router';
 import Notification from './components/Notification';
+import { localReducer } from './redux/Local.slice';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       reducer: {
         user: userReducer,
         upload: uploadReducer,
+        local: localReducer,
       },
       middleware: [
         logger,

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import React, { useEffect } from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { IonReactRouter } from '@ionic/react-router';
 import {
   IonFooter,
   IonIcon,
@@ -12,17 +11,18 @@ import {
   IonTabs,
   IonToolbar,
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-
 import { home, person, people } from 'ionicons/icons';
-import Profile from './pages/Profile';
+
 import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import Followers from './pages/Followers';
-import EditProfile from './pages/EditProfile';
+import Profile from './pages/Profile';
 import Create from './pages/Create';
-import ProgressBar from './components/ProgressBar';
+import EditProfile from './pages/EditProfile';
+import { Plugins } from '@capacitor/core';
+import { useDispatch } from 'react-redux';
+import { localActions } from './redux/Local.slice';
+
+const { Device } = Plugins;
 
 const Links = {
   Base: '/',
@@ -36,133 +36,61 @@ const Links = {
 };
 
 const Router: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    return firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
+    Device.getLanguageCode().then((value) => {
+      dispatch(localActions.setLocal({ local: value.value }));
     });
   });
 
-  const AuthSwitch = () => {
-    return (
-      <IonReactRouter>
+  return (
+    <IonReactRouter>
+      <IonTabs>
         <IonRouterOutlet>
-          <Switch>
-            <Route exact path={Links.SignIn}>
-              <SignIn />
-            </Route>
-            <Route exact path={Links.SignUp}>
-              <SignUp />
-            </Route>
-            <Route path={Links.Base}>
-              <Redirect to={Links.Profile} />
-            </Route>
-          </Switch>
+          <Route exact path={Links.Base}>
+            <Redirect to={Links.Home} />
+          </Route>
+
+          <Route exact path={Links.Home}>
+            <Home />
+          </Route>
+
+          <Route exact path={Links.Followers}>
+            <Followers />
+          </Route>
+
+          <Route exact path={Links.Profile}>
+            <Profile />
+          </Route>
+
+          <Route exact path={Links.Create}>
+            <Create />
+          </Route>
+
+          <Route exact path={Links.EditProfile}>
+            <EditProfile />
+          </Route>
         </IonRouterOutlet>
-      </IonReactRouter>
-    );
-  };
+        <IonTabBar slot={'bottom'}>
+          <IonTabButton tab={'Home'} href={Links.Home}>
+            <IonIcon icon={home} />
+            <IonLabel>{'Home'}</IonLabel>
+          </IonTabButton>
 
-  const AppSwitch = () => {
-    return (
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Switch>
-              <Route exact path={Links.Base}>
-                <Redirect to={Links.Home} />
-              </Route>
+          <IonTabButton tab={'Followers'} href={Links.Followers}>
+            <IonIcon icon={people} />
+            <IonLabel>{'Followers'}</IonLabel>
+          </IonTabButton>
 
-              <Route exact path={Links.Home}>
-                <Home />
-              </Route>
-
-              <Route exact path={Links.Followers}>
-                {user ? (
-                  <Followers />
-                ) : (
-                  <Redirect
-                    to={{
-                      state: { from: Links.Followers },
-                      pathname: Links.SignIn,
-                    }}
-                  />
-                )}
-              </Route>
-
-              <Route exact path={Links.Profile}>
-                {user ? (
-                  <Profile />
-                ) : (
-                  <Redirect
-                    to={{
-                      state: { from: Links.Profile },
-                      pathname: Links.SignIn,
-                    }}
-                  />
-                )}
-              </Route>
-
-              <Route exact path={Links.Create}>
-                {user ? (
-                  <Create />
-                ) : (
-                  <Redirect
-                    to={{
-                      state: { from: Links.Create },
-                      pathname: Links.SignIn,
-                    }}
-                  />
-                )}
-              </Route>
-
-              <Route exact path={Links.SignIn}>
-                <SignIn />
-              </Route>
-
-              <Route exact path={Links.SignUp}>
-                <SignUp />
-              </Route>
-
-              <Route exact path={Links.EditProfile}>
-                {user ? (
-                  <EditProfile />
-                ) : (
-                  <Redirect
-                    to={{
-                      state: { from: Links.EditProfile },
-                      pathname: Links.SignIn,
-                    }}
-                  />
-                )}
-              </Route>
-            </Switch>
-          </IonRouterOutlet>
-
-    
-          <IonTabBar slot={'bottom'}>
-            <IonTabButton tab={'Home'} href={Links.Home}>
-              <IonIcon icon={home} />
-              <IonLabel>{'Home'}</IonLabel>
-            </IonTabButton>
-
-            <IonTabButton tab={'Followers'} href={Links.Followers}>
-              <IonIcon icon={people} />
-              <IonLabel>{'Followers'}</IonLabel>
-            </IonTabButton>
-
-            <IonTabButton tab={'Profile'} href={Links.Profile}>
-              <IonIcon icon={person} />
-              <IonLabel>{'Profile'}</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    );
-  };
-
-  return <AppSwitch />;
+          <IonTabButton tab={'Profile'} href={Links.Profile}>
+            <IonIcon icon={person} />
+            <IonLabel>{'Profile'}</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
+  );
 };
 
 export default Router;

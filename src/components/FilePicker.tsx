@@ -5,6 +5,7 @@ import { RcFile, UploadChangeParam } from 'antd/lib/upload';
 
 import { videoUpload } from '../service/firebase';
 import { useDispatch } from 'react-redux';
+import useTranslate from '../local/local';
 
 type Props = { isLoading: boolean };
 
@@ -50,12 +51,8 @@ const FilePicker = ({ isLoading }: Props) => {
         <p className="ant-upload-drag-icon">
           <VideoCameraAddOutlined />
         </p>
-        <p className="ant-upload-text">
-          Déplacer ou cliquez pour ajouter votre vidéo
-        </p>
-        <p className="ant-upload-hint">
-          Uniquement les fichiers .mp4 sont acceptés
-        </p>
+        <p className="ant-upload-text">{useTranslate('ADD_VIDEO_MESSAGE')}</p>
+        <p className="ant-upload-hint">{useTranslate('ADD_VIDEO_WARNING')}</p>
       </Dragger>
     </div>
   );

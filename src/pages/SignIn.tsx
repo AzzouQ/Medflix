@@ -15,11 +15,10 @@ import lottieAnim from '../assets/AuthLottie.json';
 import { useLocation, useParams } from 'react-router';
 
 type signInParams = {
-  to: string | undefined
-}
+  to: string | undefined;
+};
 
 const SignIn: React.FC = (props: any) => {
-
   return (
     <IonPage>
       <IonHeader>
@@ -45,7 +44,7 @@ const SignIn: React.FC = (props: any) => {
           </Col>
           <Col lg={6} xl={6}>
             <Typography.Title level={2}>{'Bienvenue !'}</Typography.Title>
-            <SignInForm />
+            {/* <SignInForm  /> */}
           </Col>
         </Row>
       </IonContent>

@@ -1,12 +1,13 @@
-import React from 'react';
-import { useHistory } from 'react-router';
+import React, { useCallback } from 'react';
+import { Row, Col, Typography, Button } from 'antd';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
-import { Button, Row, Col, notification } from 'antd';
 import * as Yup from 'yup';
 
-import LoadingModal from './LoadingModal';
 import { signUp } from '../service/firebase';
+import translateFirebaseError from '../service/translateFirebaseError';
+import LoadingModal from './LoadingModal';
+import useTranslate from '../local/local';
 
 type SignUpFormValues = {
   name: string;
@@ -14,103 +15,115 @@ type SignUpFormValues = {
   password: string;
 };
 
-const SignUpForm: React.FC = () => {
-  const { push } = useHistory();
+type Props = {
+  setModalOpen: (value: boolean) => void;
+  setFormMode: (value: 'signIn' | 'signUp') => void;
+};
 
+const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
   const yupValidation = Yup.object({
-    password: Yup.string().required('Veuillez entrer un password'),
+    name: Yup.string().required('Veuillez entrer un nom'),
     email: Yup.string()
       .required('Veuillez entrer un email')
       .email("L'email est invalide"),
-    name: Yup.string().required('Veuillez entrer un name'),
+    password: Yup.string().required('Veuillez entrer un password'),
   });
 
   const formikSubmit = async (
     { name, email, password }: SignUpFormValues,
-    { setSubmitting, setFieldValue }: FormikHelpers<SignUpFormValues>
+    { setSubmitting, setFieldError }: FormikHelpers<SignUpFormValues>
   ) => {
-    setFieldValue('password', '', false);
+    setSubmitting(true);
     try {
       await signUp(name, email, password);
-      notification.success({ message: `Welcome ${name}` });
-      push('/home');
+      setModalOpen(false);
     } catch (error) {
-      console.log(error);
-      notification.error({ message: 'error' });
-      // TODO Handle error
+      const { field, message } = translateFirebaseError(error);
+      setFieldError(field, message);
     } finally {
       setSubmitting(false);
     }
   };
 
-  const toSignIn = () => {
-    push('/signIn');
-  };
+  const goToSignIn = useCallback(() => {
+    setFormMode('signIn');
+  }, [setFormMode]);
+
+  const name = useTranslate('NAME');
+  const namePlaceholder = useTranslate('NAME_PLACEHOLDER');
+  const mail = useTranslate('EMAIL');
+  const mailPlaceholder = useTranslate('EMAIL_PLACEHOLDER');
+  const password = useTranslate('PASSWORD');
+  const passwordPlaceholder = useTranslate('PASSWORD_PLACEHOLDER');
+  const createAccount = useTranslate('CREATE_ACCOUNT');
+  const alreadyregistered = useTranslate('ALREADY_REGISTERED');
 
   return (
-    <Formik<SignUpFormValues>
-      initialValues={{ name: '', email: '', password: '' }}
-      onSubmit={formikSubmit}
-      validationSchema={yupValidation}
-    >
-      {(formik) => (
-        <Form name={'sign-up'} size={'middle'} layout={'vertical'}>
-          <LoadingModal isLoading={formik.isSubmitting} />
-          <Row gutter={20}>
-            <Col span={24}>
-              <Form.Item name={'name'} label={'Nom'} required={true}>
-                <Input name={'name'} placeholder={'Bastien Silhol'} />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={20}>
-            <Col span={24}>
-              <Form.Item name={'email'} label={'E-mail'} required={true}>
-                <Input
-                  name={'email'}
-                  placeholder={'bastien.silhol@epitech.eu'}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={20}>
-            <Col span={24}>
-              <Form.Item
-                name={'password'}
-                label={'Mot de passe'}
-                required={true}
-              >
-                <Input.Password
-                  name={'password'}
-                  placeholder={'p4sSw0rD'}
-                  allowClear={true}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item name={'signUp'}>
-                <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                  {'Créer mon compte'}
-                </SubmitButton>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name={'signIn'}>
-                <Button
-                  type={'default'}
-                  style={{ width: '100%' }}
-                  onClick={toSignIn}
-                >
-                  {'Déjà inscrit ?'}
-                </Button>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      )}
-    </Formik>
+    <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
+      <Formik<SignUpFormValues>
+        initialValues={{ name: '', email: '', password: '' }}
+        onSubmit={formikSubmit}
+        validationSchema={yupValidation}
+      >
+        {(formik) => (
+          <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
+            <LoadingModal isLoading={formik.isSubmitting} />
+            <Row gutter={20}>
+              <Col span={24}>
+                <Typography.Title level={2}>{createAccount}</Typography.Title>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'name'} label={name} required={true}>
+                  <Input name={'name'} placeholder={namePlaceholder} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'email'} label={mail} required={true}>
+                  <Input name={'email'} placeholder={mailPlaceholder} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'password'} label={password} required={true}>
+                  <Input.Password
+                    name={'password'}
+                    placeholder={passwordPlaceholder}
+                    allowClear={true}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'signIn'}>
+                  <SubmitButton type={'primary'} style={{ width: '100%' }}>
+                    {createAccount}
+                  </SubmitButton>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'signUp'}>
+                  <Button
+                    type={'default'}
+                    style={{ width: '100%' }}
+                    onClick={goToSignIn}
+                  >
+                    {alreadyregistered}
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Formik>
+    </Row>
   );
 };
 

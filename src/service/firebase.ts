@@ -156,6 +156,10 @@ export const signIn = async (email: string, password: string) => {
   await setFcm();
 };
 
+export const signOut = async () => {
+  await auth.signOut();
+};
+
 export const signUp = async (name: string, email: string, password: string) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
   const date = +new Date();
