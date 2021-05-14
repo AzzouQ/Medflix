@@ -1,120 +1,138 @@
-import React, { useState } from 'react';
-import { Button, Row, Col, Form, Input } from 'antd';
+import React, { useCallback } from 'react';
+import { Row, Col, Typography, Button } from 'antd';
+import { Formik, FormikHelpers } from 'formik';
+import { Form, Input, SubmitButton } from 'formik-antd';
+import * as Yup from 'yup';
+import { t } from '../i18n';
+
 import LoadingModal from './LoadingModal';
-import { useHistory } from 'react-router';
-import { signUp } from '../service/firebase';
+import translateFirebaseError from '../service/translateFirebaseError';
+import { signUp } from '../service/firebase/auth';
 
-const SignInForm = () => {
-  const [mail, setMail] = useState('');
-  const [pass, setPass] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [siret, setSiret] = useState('');
+type SignUpFormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
 
-  const { push } = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
+type Props = {
+  setModalOpen: (value: boolean) => void;
+  setFormMode: (value: 'signIn' | 'signUp') => void;
+};
 
-  const toSignIn = () => {
-    push('/login');
+const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
+  const yupValidation = Yup.object({
+    name: Yup.string().required('Veuillez entrer un nom'),
+    email: Yup.string()
+      .required('Veuillez entrer un email')
+      .email("L'email est invalide"),
+    // password: Yup.string().required('Veuillez entrer un mot de passe'),
+  });
+
+  const formikSubmit = async (
+    { name, email, password }: SignUpFormValues,
+    { setSubmitting, setFieldError }: FormikHelpers<SignUpFormValues>
+  ) => {
+    setSubmitting(true);
+    try {
+      await signUp(name, email, password);
+      setModalOpen(false);
+    } catch (error) {
+      const { field, message } = translateFirebaseError(error);
+      setFieldError(field, message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const doSignUp = async () => {
-    setIsLoading(true)
-    try {
-    await signUp(mail, pass, address, phone, siret)
-    push('/home');
-    } catch (error) {
-      console.log(error)
-        // TODO Handle error
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const goToSignIn = useCallback(() => {
+    setFormMode('signIn');
+  }, [setFormMode]);
 
   return (
-    <Form name={'sign-up'} size={'middle'} layout={'vertical'}>
-      <LoadingModal isLoading={isLoading} />
-      <Row gutter={20}>
-        <Col span={24}>
-          <Form.Item name={'email'} label={'E-mail'} required={true}>
-            <Input
-              name={'email'}
-              placeholder={'E-mail'}
-              value={mail}
-              onChange={(e) => setMail(e.target.value!)}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Form.Item name={'password'} label={'Mot de passe'} required={true}>
-            <Input.Password
-              name={'password'}
-              placeholder={'Mot de passe'}
-              allowClear={true}
-              value={pass}
-              onChange={(e) => setPass(e.target.value!)}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={20}>
-        <Col span={24}>
-          <Form.Item name={'address'} label={'Adresse'} required={true}>
-            <Input
-              name={'address'}
-              placeholder={'Adresse'}
-              value={address}
-              onChange={(e) => setAddress(e.target.value!)}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={20}>
-        <Col span={12}>
-          <Form.Item name={'phone'} label={'Téléphone'} required={true}>
-            <Input
-              name={'phone'}
-              placeholder={'Téléphone'}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value!)}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item name={'siret'} label={'Siret'} required={false}>
-            <Input
-              name={'siret'}
-              placeholder={'Siret'}
-              value={siret}
-              onChange={(e) => setSiret(e.target.value!)}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={20}>
-        <Col span={12}>
-          <Form.Item name={'signUp'}>
-            <Button type={'primary'} style={{ width: '100%' }} onClick={doSignUp}>
-              {'Créer mon compte'}
-            </Button>
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item name={'signIn'}>
-            <Button
-              type={'default'}
-              style={{ width: '100%' }}
-              onClick={toSignIn}
-            >
-              {'Déjà inscrit ?'}
-            </Button>
-          </Form.Item>
-        </Col>
-      </Row>
-    </Form>
+    <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
+      <Formik<SignUpFormValues>
+        initialValues={{ name: '', email: '', password: '' }}
+        onSubmit={formikSubmit}
+        validationSchema={yupValidation}
+      >
+        {(formik) => (
+          <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
+            <LoadingModal isLoading={formik.isSubmitting} />
+            <Row gutter={20}>
+              <Col span={24}>
+                <Typography.Title
+                  level={2}
+                >{t`form.signUp.title`}</Typography.Title>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item
+                  name={'name'}
+                  label={t`form.name.label`}
+                  required={true}
+                >
+                  <Input name={'name'} placeholder={t`form.name.placeholder`} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item
+                  name={'email'}
+                  label={t`form.email.label`}
+                  required={true}
+                >
+                  <Input
+                    name={'email'}
+                    placeholder={t`form.email.placeholder`}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item
+                  name={'password'}
+                  label={t`form.password.label`}
+                  required={true}
+                >
+                  <Input.Password
+                    name={'password'}
+                    placeholder={t`form.password.placeholder`}
+                    allowClear={true}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'signIn'}>
+                  <SubmitButton type={'primary'} style={{ width: '100%' }}>
+                    {t`form.signUp.save`}
+                  </SubmitButton>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={20}>
+              <Col span={24}>
+                <Form.Item name={'signUp'}>
+                  <Button
+                    type={'default'}
+                    style={{ width: '100%' }}
+                    onClick={goToSignIn}
+                  >
+                    {t`form.signUp.switch`}
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Formik>
+    </Row>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

@@ -1,147 +1,81 @@
+import React from 'react';
+import { useHistory } from 'react-router';
 import {
+  IonButtons,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
-  IonItem,
   IonList,
   IonPage,
   IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Image, Typography } from 'antd';
-import { Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
-import { auth } from '../service/firebase';
+import { Avatar, Button } from 'antd';
+import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { t } from '../i18n';
+
+import Footer from '../components/Footer';
+import VideoCard from '../components/VideoCard';
+
+import { user, videos } from '../service/fakeData';
 
 const Profile: React.FC = () => {
-  const avatar =
-    'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-  const data = [
-    {
-      title: 'Video name 1',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 2',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 3',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 4',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 5',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 6',
-      src: 'https://picsum.photos/400/200',
-    },
-    {
-      title: 'Video name 7',
-      src: 'https://picsum.photos/400/200',
-    },
-  ];
+  const { push } = useHistory();
 
-  const { Title } = Typography;
-  const history = useHistory();
-
-  const toAuth = () => {
-    if (auth.currentUser) history.push('/create');
-    else history.push('/signIn');
+  const goToUpload = () => {
+    push('/create');
   };
 
-  const renderProfileHeader = (): React.ReactElement => (
-    <IonRow
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eeeeee',
-      }}
-    >
-      <IonCol size="8">
-        <IonRow
-          style={{
-            alignItems: 'center',
-          }}
-        >
-          <IonCol size="auto">
-            <Avatar size={80} src={<Image src={avatar} />} />
-          </IonCol>
-          <IonCol size="auto">
-            <Title level={2}>Channel's Name</Title>
-          </IonCol>
-        </IonRow>
-      </IonCol>
-      <IonCol size="auto">
-        <Button
-          type="primary"
-          shape="round"
-          icon={<UploadOutlined />}
-          size={'large'}
-          onClick={toAuth}
-        >
-          Upload
-        </Button>
-      </IonCol>
-    </IonRow>
-  );
-
-  const renderProfileVideos = (): React.ReactElement => (
-    <IonList>
-      <IonRow style={{ justifyContent: 'center' }}>
-        {data.map((item) => (
-          <IonItem lines="none">
-            <IonCol size="auto">
-              <Image src={item.src} preview={false} />
-              <IonRow>
-                <IonCol size="auto">
-                  <Button
-                    shape="circle"
-                    size="large"
-                    icon={
-                      <Avatar src={<Image src={avatar} preview={false} />} />
-                    }
-                  />
-                </IonCol>
-                <IonCol size="auto">
-                  <Title level={4}>{item.title}</Title>
-                </IonCol>
-              </IonRow>
-            </IonCol>
-          </IonItem>
-        ))}
-      </IonRow>
-    </IonList>
-  );
+  const goToEditProfile = () => {
+    push('/editProfile');
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Profile</IonTitle>
+          <IonButtons slot={'start'} style={{ marginLeft: 20 }}>
+            <Avatar size={'large'} icon={<UserOutlined />} />
+            <IonTitle>{user.name}</IonTitle>
+          </IonButtons>
+          <IonButtons slot={'end'}>
+            <Button
+              type={'primary'}
+              style={{ marginRight: 20 }}
+              icon={<UploadOutlined />}
+              onClick={goToUpload}
+            >
+              {t`header.button.upload`}
+            </Button>
+            <Button
+              type={'primary'}
+              style={{ marginRight: 20 }}
+              icon={<EditOutlined />}
+              onClick={goToEditProfile}
+            >
+              {t`header.button.edit`}
+            </Button>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
+      <IonContent fullscreen={true}>
         <IonGrid>
-          {renderProfileHeader()}
-          {renderProfileVideos()}
+          <IonList style={{ backgroundColor: 'transparent' }}>
+            <IonRow style={{ justifyContent: 'center' }}>
+              {videos.map((video, index) => (
+                <IonCol size={'auto'} key={index}>
+                  <VideoCard video={video} />
+                </IonCol>
+              ))}
+            </IonRow>
+          </IonList>
         </IonGrid>
       </IonContent>
+
+      <Footer />
     </IonPage>
   );
 };

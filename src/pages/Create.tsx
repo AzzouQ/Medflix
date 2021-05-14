@@ -8,13 +8,14 @@ import {
 import CreateForm from '../components/CreateForm';
 import FilePicker from '../components/FilePicker';
 import ThumbnailUpload from '../components/ThumbnailUpload';
+import { t } from '../i18n';
 
 const Create: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Create</IonTitle>
+          <IonTitle>{t('CREATE_VIEW_TITLE')}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

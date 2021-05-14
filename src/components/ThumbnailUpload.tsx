@@ -3,6 +3,7 @@ import ImgCrop from 'antd-img-crop';
 import { PictureOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
+import { t } from '../i18n';
 import React from 'react';
 
 type Props = { isLoading: boolean };
@@ -33,10 +34,10 @@ const ThumbnailUpload = ({ isLoading }: Props) => {
             <PictureOutlined />
           </p>
           <p className="ant-upload-text">
-            Déplacer ou cliquez pour ajouter votre miniature
+            {t('ADD_PICTURE_MESSAGE')}
           </p>
           <p className="ant-upload-hint">
-            Uniquement les fichiers .png / jpeg sont acceptés
+            {t('ADD_PICTURE_WARNING')}
           </p>
         </Dragger>
       </ImgCrop>

@@ -1,7 +1,7 @@
 {
   "name": "medflix",
   "version": "1.0",
-  "description": "An Ionic project",
+  "description": "Share and learn with Medflix",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -12,6 +12,7 @@
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@lottiefiles/react-lottie-player": "^3.1.2",
+    "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -24,13 +25,21 @@
     "antd": "^4.15.1",
     "antd-img-crop": "^3.14.1",
     "axios": "^0.21.1",
+    "capacitor-video-player": "^2.4.7-2",
     "firebase": "^8.4.1",
+    "formik": "^2.2.6",
+    "formik-antd": "^2.0.1",
+    "gravatar-api": "^1.5.0",
+    "i18next": "^20.2.2",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-video-player-hook": "^0.0.4",
+    "redux-logger": "^3.0.6",
     "typescript": "^4.1.3",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
@@ -48,7 +57,8 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.7"
+    "@capacitor/cli": "2.4.7",
+    "@types/redux-logger": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
