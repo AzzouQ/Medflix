@@ -1,7 +1,7 @@
 {
   "name": "medflix",
   "version": "1.0",
-  "description": "An Ionic project",
+  "description": "Share and learn with Medflix",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
