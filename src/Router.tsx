@@ -1,28 +1,20 @@
-import React, { useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonReactRouter } from '@ionic/react-router';
 import {
-  IonFooter,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonToolbar,
 } from '@ionic/react';
-import { home, person, people } from 'ionicons/icons';
-
-import Home from './pages/Home';
-import Followers from './pages/Followers';
-import Profile from './pages/Profile';
+import { IonReactRouter } from '@ionic/react-router';
+import { home, people, person } from 'ionicons/icons';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 import Create from './pages/Create';
 import EditProfile from './pages/EditProfile';
-import { Plugins } from '@capacitor/core';
-import { useDispatch } from 'react-redux';
-import { localActions } from './redux/Local.slice';
-
-const { Device } = Plugins;
+import Followers from './pages/Followers';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 const Links = {
   Base: '/',
@@ -36,14 +28,6 @@ const Links = {
 };
 
 const Router: React.FC = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    Device.getLanguageCode().then((value) => {
-      dispatch(localActions.setLocal({ local: value.value }));
-    });
-  });
-
   return (
     <IonReactRouter>
       <IonTabs>

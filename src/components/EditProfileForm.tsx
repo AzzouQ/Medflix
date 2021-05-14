@@ -1,12 +1,11 @@
-import React from 'react';
-import { useHistory } from 'react-router';
+import { Col, Row } from 'antd';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
-import { Button, Row, Col } from 'antd';
+import React from 'react';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
-
+import { t } from '../locales';
 import LoadingModal from './LoadingModal';
-import useTranslate from '../local/local';
 
 type EditProfileFormalues = {
   name: string;
@@ -46,18 +45,18 @@ const EditProfileForm: React.FC = () => {
     push('/profile');
   };
 
-  const name = useTranslate("NAME")
-  const namePlaceholder = useTranslate("NAME_PLACEHOLDER")
-  const desc = useTranslate("DESC_TITLE")
-  const descPlaceholder = useTranslate("DESC_PLACEHOLDER")
-  const mail = useTranslate("EMAIL")
-  const mailPlaceholder = useTranslate("EMAIL_PLACEHOLDER")
-  const oldPass = useTranslate("OLD_PASSWORD_TITLE")
-  const oldPassPlaceholder = useTranslate("OLD_PASSWORD_PLACEHOLDER")
-  const newPass = useTranslate("NEW_PASSWORD_TITLE")
-  const newPassPlaceholder = useTranslate("NEW_PASSWORD_PLACEHOLDER")
-  const save = useTranslate("SAVE")
-  
+  const name = t('NAME');
+  const namePlaceholder = t('NAME_PLACEHOLDER');
+  const desc = t('DESC_TITLE');
+  const descPlaceholder = t('DESC_PLACEHOLDER');
+  const mail = t('EMAIL');
+  const mailPlaceholder = t('EMAIL_PLACEHOLDER');
+  const oldPass = t('OLD_PASSWORD_TITLE');
+  const oldPassPlaceholder = t('OLD_PASSWORD_PLACEHOLDER');
+  const newPass = t('NEW_PASSWORD_TITLE');
+  const newPassPlaceholder = t('NEW_PASSWORD_PLACEHOLDER');
+  const save = t('SAVE');
+
   const renderEditName = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
@@ -91,11 +90,7 @@ const EditProfileForm: React.FC = () => {
     <>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item
-            name={'oldPassword'}
-            label={oldPass}
-            required={true}
-          >
+          <Form.Item name={'oldPassword'} label={oldPass} required={true}>
             <Input.Password
               name={'oldPassword'}
               placeholder={oldPassPlaceholder}
@@ -106,11 +101,7 @@ const EditProfileForm: React.FC = () => {
       </Row>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item
-            name={'password'}
-            label={newPass}
-            required={true}
-          >
+          <Form.Item name={'password'} label={newPass} required={true}>
             <Input.Password
               name={'password'}
               placeholder={newPassPlaceholder}

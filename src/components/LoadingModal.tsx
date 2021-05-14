@@ -1,7 +1,7 @@
-import React from 'react';
-import { Modal } from 'antd';
 import { Player } from '@lottiefiles/react-lottie-player';
-import lottieAnim from '../assets/AuthLottie.json'
+import { Modal } from 'antd';
+import React from 'react';
+import lottieAnim from '../assets/AuthLottie.json';
 
 type Props = { isLoading: boolean };
 

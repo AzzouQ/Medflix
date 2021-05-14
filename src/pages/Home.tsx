@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import {
   IonButtons,
   IonCol,
@@ -12,32 +11,19 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import firebase from 'firebase/app';
 import 'firebase/auth';
-import { Avatar, Button, Image, Menu, Typography, notification } from 'antd';
-import {
-  LoginOutlined,
-  LogoutOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import { Plugins } from '@capacitor/core';
-import ProgressBar from '../components/ProgressBar';
-import { useHistory } from 'react-router';
+import React from 'react';
 // import { sendNotif } from '../service/firebase';
-
 import AuthModal from '../components/AuthModal';
+import ProgressBar from '../components/ProgressBar';
 import VideoCard from '../components/VideoCard';
-
+import { t } from '../locales';
 import { videos } from '../service/fakeData';
-
-import useTranslate from '../local/local';
-
 
 // import { sendNotif } from '../service/firebase';
 
 const Home: React.FC = () => {
-  const hometitle = useTranslate('HOME_TITLE');
+  const hometitle = t('HOME_TITLE');
 
   return (
     <IonPage>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonContent,
   IonHeader,
@@ -6,13 +5,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Typography, Row, Col } from 'antd';
 import { Player } from '@lottiefiles/react-lottie-player';
-
-import SignInForm from '../components/SignInForm';
-
+import { Col, Row, Typography } from 'antd';
+import React from 'react';
 import lottieAnim from '../assets/AuthLottie.json';
-import { useLocation, useParams } from 'react-router';
 
 type signInParams = {
   to: string | undefined;

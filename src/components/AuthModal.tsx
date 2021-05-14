@@ -10,11 +10,12 @@ import { signOut } from '../service/firebase/auth';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import useTranslate from '../local/local';
+import { t } from '../locales';
 
 const AuthModal: React.FC = () => {
-  const connect = useTranslate('CONNECT');
-  const disconnect = useTranslate('DISCONNECT');
+
+  const connect = t('CONNECT');
+  const disconnect = t('DISCONNECT');
   const [isModalOpen, setModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
 

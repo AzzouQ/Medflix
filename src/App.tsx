@@ -1,15 +1,11 @@
-import React, { useMemo, useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
 import { IonApp } from '@ionic/react';
-
-import { userReducer, uploadReducer } from './redux'
-import './theme';
-
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import React, { useMemo } from 'react';
+import { Provider } from 'react-redux';
+import logger from 'redux-logger';
+import { uploadReducer, userReducer } from './redux';
 import Router from './Router';
-import Notification from './components/Notification';
-import { localReducer } from './redux/Local.slice';
+import './theme';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {
@@ -17,7 +13,6 @@ const App: React.FC = () => {
       reducer: {
         user: userReducer,
         upload: uploadReducer,
-        local: localReducer,
       },
       middleware: [
         logger,
