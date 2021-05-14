@@ -41,10 +41,6 @@ const EditProfileForm: React.FC = () => {
     }
   };
 
-  const toProfile = () => {
-    push('/profile');
-  };
-
   const name = t('NAME');
   const namePlaceholder = t('NAME_PLACEHOLDER');
   const desc = t('DESC_TITLE');

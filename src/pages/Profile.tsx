@@ -1,4 +1,5 @@
-import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { useHistory } from 'react-router';
 import {
   IonButtons,
   IonCol,
@@ -12,25 +13,24 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { Avatar, Button } from 'antd';
-import React from 'react';
-import { useHistory } from 'react-router';
-import VideoCard from '../components/VideoCard';
+import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from '../i18n';
+
+import Footer from '../components/Footer';
+import VideoCard from '../components/VideoCard';
+
 import { user, videos } from '../service/fakeData';
 
 const Profile: React.FC = () => {
-  const history = useHistory();
+  const { push } = useHistory();
 
   const goToUpload = () => {
-    history.push('/create');
+    push('/create');
   };
 
   const goToEditProfile = () => {
-    history.push('/editProfile');
+    push('/editProfile');
   };
-
-  const upload = t('UPLOAD');
-  const edit = t('EDIT');
 
   return (
     <IonPage>
@@ -47,7 +47,7 @@ const Profile: React.FC = () => {
               icon={<UploadOutlined />}
               onClick={goToUpload}
             >
-              {upload}
+              {t`header.button.upload`}
             </Button>
             <Button
               type={'primary'}
@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
               icon={<EditOutlined />}
               onClick={goToEditProfile}
             >
-              {edit}
+              {t`header.button.edit`}
             </Button>
           </IonButtons>
         </IonToolbar>
@@ -74,6 +74,8 @@ const Profile: React.FC = () => {
           </IonList>
         </IonGrid>
       </IonContent>
+
+      <Footer />
     </IonPage>
   );
 };

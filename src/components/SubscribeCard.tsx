@@ -7,8 +7,8 @@ import {
   IonRow,
 } from '@ionic/react';
 import { Button } from 'antd';
-
 import { t } from '../i18n';
+
 import { sendNotif } from '../service/firebase/fcm';
 
 type Props = {
@@ -19,9 +19,6 @@ type Props = {
 };
 
 const SubscribeCard: React.FC<Props> = ({ user }) => {
-  const follow = t('FOLLOW');
-  const unfollow = t('UNFOLLOW');
-
   return (
     <IonCard>
       <IonCardHeader>
@@ -36,7 +33,7 @@ const SubscribeCard: React.FC<Props> = ({ user }) => {
                 sendNotif(user.fcm);
               }}
             >
-              {user ? follow : unfollow}
+              {user ? t`subscriptions.subscribe` : t`subscriptions.unsubscribe`}
             </Button>
           </IonCol>
         </IonRow>

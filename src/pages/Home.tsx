@@ -11,23 +11,21 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import 'firebase/auth';
+import { t } from '../i18n';
+
 import AuthModal from '../components/AuthModal';
 import VideoCard from '../components/VideoCard';
-import { t } from '../i18n';
-import { videos } from '../service/fakeData';
-
 import Footer from '../components/Footer';
 
-const Home: React.FC = () => {
-  const hometitle = t('HOME_TITLE');
+import { videos } from '../service/fakeData';
 
+const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{hometitle}</IonTitle>
+            <IonTitle>{t`header.title.home`}</IonTitle>
           </IonButtons>
           <IonButtons slot={'end'}>
             <AuthModal />

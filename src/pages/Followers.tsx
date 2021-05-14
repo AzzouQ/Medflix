@@ -11,10 +11,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { t } from '../i18n';
+
 import Footer from '../components/Footer';
 import AuthModal from '../components/AuthModal';
 import SubscribeCard from '../components/SubscribeCard';
-import { t } from '../i18n';
+
 import { listUser } from '../service/firebase/users';
 
 const Followers: React.FC = () => {
@@ -41,14 +43,13 @@ const Followers: React.FC = () => {
     fetchUsers();
   }, []);
 
-  const viewTitle = t('FOLLOWERS_VIEW_TITLE');
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{viewTitle}</IonTitle>
+            <IonTitle>{t`header.title.followers`}</IonTitle>
           </IonButtons>
           <IonButtons slot={'end'}>
             <AuthModal />

@@ -2,20 +2,17 @@ import React, { useState } from 'react';
 import { IonModal } from '@ionic/react';
 import { Button } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { t } from '../i18n';
+
+import firebase from 'firebase';
+import 'firebase/auth';
 
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
 import { signOut } from '../service/firebase/auth';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { t } from '../i18n';
-
 const AuthModal: React.FC = () => {
-
-  const connect = t('CONNECT');
-  const disconnect = t('DISCONNECT');
   const [isModalOpen, setModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
 
@@ -38,19 +35,17 @@ const AuthModal: React.FC = () => {
           icon={<LogoutOutlined />}
           onClick={() => signOut()}
         >
-          {disconnect}
+          {t`header.button.signOut`}
         </Button>
       ) : (
-        <>
-          <Button
-            type={'primary'}
-            style={{ marginRight: 20 }}
-            icon={<LoginOutlined />}
-            onClick={() => setModalOpen(true)}
-          >
-            {connect}
-          </Button>
-        </>
+        <Button
+          type={'primary'}
+          style={{ marginRight: 20 }}
+          icon={<LoginOutlined />}
+          onClick={() => setModalOpen(true)}
+        >
+          {t`header.button.signIn`}
+        </Button>
       )}
     </>
   );

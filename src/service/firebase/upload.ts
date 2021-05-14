@@ -10,14 +10,14 @@ export const videoUpload = async (
 ) => {
   const { currentUser } = auth;
   const uid = currentUser?.uid;
-  const name = filename ?? `${new Date().getTime()}-medflix`;
+  const name = `${new Date().getTime()}-medflix`;
 
   if (file) console.log();
 
   try {
     const blob: any = await getBlob(file);
 
-    const storageRef = storage.ref(`/video/${uid}/todofixit`);
+    const storageRef = storage.ref(`/video/${uid}/${name}`);
 
     const uploadTask = storageRef.put(file as Blob);
 

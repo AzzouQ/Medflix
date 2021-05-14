@@ -3,11 +3,11 @@ import { Row, Col, Typography, Button } from 'antd';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
-
-import { signUp } from '../service/firebase/auth';
-import translateFirebaseError from '../service/translateFirebaseError';
-import LoadingModal from './LoadingModal';
 import { t } from '../i18n';
+
+import LoadingModal from './LoadingModal';
+import translateFirebaseError from '../service/translateFirebaseError';
+import { signUp } from '../service/firebase/auth';
 
 type SignUpFormValues = {
   name: string;
@@ -26,7 +26,7 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
     email: Yup.string()
       .required('Veuillez entrer un email')
       .email("L'email est invalide"),
-    password: Yup.string().required('Veuillez entrer un password'),
+    // password: Yup.string().required('Veuillez entrer un mot de passe'),
   });
 
   const formikSubmit = async (
@@ -49,15 +49,6 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
     setFormMode('signIn');
   }, [setFormMode]);
 
-  const name = t('NAME');
-  const namePlaceholder = t('NAME_PLACEHOLDER');
-  const mail = t('EMAIL');
-  const mailPlaceholder = t('EMAIL_PLACEHOLDER');
-  const password = t('PASSWORD');
-  const passwordPlaceholder = t('PASSWORD_PLACEHOLDER');
-  const createAccount = t('CREATE_ACCOUNT');
-  const alreadyregistered = t('ALREADY_REGISTERED');
-
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
       <Formik<SignUpFormValues>
@@ -70,29 +61,46 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
             <LoadingModal isLoading={formik.isSubmitting} />
             <Row gutter={20}>
               <Col span={24}>
-                <Typography.Title level={2}>{createAccount}</Typography.Title>
+                <Typography.Title
+                  level={2}
+                >{t`form.signUp.title`}</Typography.Title>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'name'} label={name} required={true}>
-                  <Input name={'name'} placeholder={namePlaceholder} />
+                <Form.Item
+                  name={'name'}
+                  label={t`form.name.label`}
+                  required={true}
+                >
+                  <Input name={'name'} placeholder={t`form.name.placeholder`} />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'email'} label={mail} required={true}>
-                  <Input name={'email'} placeholder={mailPlaceholder} />
+                <Form.Item
+                  name={'email'}
+                  label={t`form.email.label`}
+                  required={true}
+                >
+                  <Input
+                    name={'email'}
+                    placeholder={t`form.email.placeholder`}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'password'} label={password} required={true}>
+                <Form.Item
+                  name={'password'}
+                  label={t`form.password.label`}
+                  required={true}
+                >
                   <Input.Password
                     name={'password'}
-                    placeholder={passwordPlaceholder}
+                    placeholder={t`form.password.placeholder`}
                     allowClear={true}
                   />
                 </Form.Item>
@@ -102,7 +110,7 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item name={'signIn'}>
                   <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                    {createAccount}
+                    {t`form.signUp.save`}
                   </SubmitButton>
                 </Form.Item>
               </Col>
@@ -115,7 +123,7 @@ const SignUpForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
                     style={{ width: '100%' }}
                     onClick={goToSignIn}
                   >
-                    {alreadyregistered}
+                    {t`form.signUp.switch`}
                   </Button>
                 </Form.Item>
               </Col>

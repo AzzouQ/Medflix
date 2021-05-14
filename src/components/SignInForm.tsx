@@ -3,11 +3,11 @@ import { Row, Col, Typography, Button } from 'antd';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
-
-import { signIn } from '../service/firebase/auth';
-import translateFirebaseError from '../service/translateFirebaseError';
-import LoadingModal from './LoadingModal';
 import { t } from '../i18n';
+
+import LoadingModal from './LoadingModal';
+import translateFirebaseError from '../service/translateFirebaseError';
+import { signIn } from '../service/firebase/auth';
 
 type SignInFormValues = {
   email: string;
@@ -47,13 +47,6 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
     setFormMode('signUp');
   }, [setFormMode]);
 
-  const email = t('EMAIL');
-  const emailPlaceholder = t('EMAIL_PLACEHOLDER');
-  const password = t('PASSWORD');
-  const passwordPlaceholder = t('PASSWORD_PLACEHOLDER');
-  const connect = t('CONNECT');
-  const createAccount = t('CREATE_ACCOUNT');
-
   return (
     <Row justify={'center'} align={'middle'} style={{ flex: 1 }}>
       <Formik<SignInFormValues>
@@ -67,16 +60,20 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
             <Row gutter={20}>
               <Col span={24}>
                 <Typography.Title level={2}>
-                  {'Connectez-vous !'}
+                  {t`form.signIn.title`}
                 </Typography.Title>
               </Col>
             </Row>
             <Row gutter={20}>
               <Col span={24}>
-                <Form.Item name={'email'} label={email} required={true}>
+                <Form.Item
+                  name={'email'}
+                  label={t`form.email.label`}
+                  required={true}
+                >
                   <Input
                     name={'email'}
-                    placeholder={emailPlaceholder}
+                    placeholder={t`form.email.placeholder`}
                   />
                 </Form.Item>
               </Col>
@@ -85,12 +82,12 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item
                   name={'password'}
-                  label={password}
+                  label={t`form.password.label`}
                   required={true}
                 >
                   <Input.Password
                     name={'password'}
-                    placeholder={passwordPlaceholder}
+                    placeholder={t`form.password.placeholder`}
                     allowClear={true}
                   />
                 </Form.Item>
@@ -100,7 +97,7 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
               <Col span={24}>
                 <Form.Item name={'signIn'}>
                   <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                    {connect}
+                    {t`form.signIn.save`}
                   </SubmitButton>
                 </Form.Item>
               </Col>
@@ -113,7 +110,7 @@ const SignInForm: React.FC<Props> = ({ setModalOpen, setFormMode }) => {
                     style={{ width: '100%' }}
                     onClick={goToSignUp}
                   >
-                    {createAccount}
+                    {t`form.signIn.switch`}
                   </Button>
                 </Form.Item>
               </Col>

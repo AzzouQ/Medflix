@@ -1,10 +1,12 @@
-import { IonApp } from '@ionic/react';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import React, { useMemo } from 'react';
+import { IonApp } from '@ionic/react';
 import { Provider } from 'react-redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import { uploadReducer, userReducer } from './redux';
+
 import Router from './Router';
+import { uploadReducer, userReducer } from './redux';
+
 import './theme';
 
 const App: React.FC = () => {
