@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Form, Input } from 'antd';
-import useTranslate from '../local/local';
+import { t } from '../i18n';
 
 const CreateForm = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   
-  const addVideoTitle = useTranslate('ADD_VIDEO_TITLE');
-  const addVideoTitlePlaceholder = useTranslate('ADD_VIDEO_TITLE_PLACEHOLDER');
-  const addVideoDesc = useTranslate('DESC_TITLE');
-  const addVideodescPlaceholder = useTranslate('DESC_PLACEHOLDER');
-  const upload = useTranslate('UPLOAD');
+  const addVideoTitle = t('ADD_VIDEO_TITLE');
+  const addVideoTitlePlaceholder = t('ADD_VIDEO_TITLE_PLACEHOLDER');
+  const addVideoDesc = t('DESC_TITLE');
+  const addVideodescPlaceholder = t('DESC_PLACEHOLDER');
+  const upload = t('UPLOAD');
 
   return (
     <Form name={'title'} size={'middle'} layout={'vertical'}>

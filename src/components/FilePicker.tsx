@@ -5,7 +5,7 @@ import { RcFile, UploadChangeParam } from 'antd/lib/upload';
 
 import { videoUpload } from '../service/firebase/upload';
 import { useDispatch } from 'react-redux';
-import useTranslate from '../local/local';
+import { t } from '../i18n';
 
 type Props = { isLoading: boolean };
 
@@ -51,8 +51,8 @@ const FilePicker = ({ isLoading }: Props) => {
         <p className="ant-upload-drag-icon">
           <VideoCameraAddOutlined />
         </p>
-        <p className="ant-upload-text">{useTranslate('ADD_VIDEO_MESSAGE')}</p>
-        <p className="ant-upload-hint">{useTranslate('ADD_VIDEO_WARNING')}</p>
+        <p className="ant-upload-text">{t('ADD_VIDEO_MESSAGE')}</p>
+        <p className="ant-upload-hint">{t('ADD_VIDEO_WARNING')}</p>
       </Dragger>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import {
   IonButtons,
   IonCol,
@@ -11,15 +11,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar } from 'antd';
-import { Button } from 'antd';
-import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button } from 'antd';
+import React from 'react';
 import { useHistory } from 'react-router';
-
-import useTranslate from '../local/local';
-
-import { user, videos } from '../service/fakeData';
 import VideoCard from '../components/VideoCard';
+import { t } from '../i18n';
+import { user, videos } from '../service/fakeData';
 
 const Profile: React.FC = () => {
   const history = useHistory();
@@ -32,8 +29,8 @@ const Profile: React.FC = () => {
     history.push('/editProfile');
   };
 
-  const upload = useTranslate('UPLOAD');
-  const edit = useTranslate('EDIT');
+  const upload = t('UPLOAD');
+  const edit = t('EDIT');
 
   return (
     <IonPage>

@@ -3,7 +3,7 @@ import ImgCrop from 'antd-img-crop';
 import { PictureOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
-import useTranslate from '../local/local';
+import { t } from '../i18n';
 import React from 'react';
 
 type Props = { isLoading: boolean };
@@ -34,10 +34,10 @@ const ThumbnailUpload = ({ isLoading }: Props) => {
             <PictureOutlined />
           </p>
           <p className="ant-upload-text">
-            {useTranslate('ADD_PICTURE_MESSAGE')}
+            {t('ADD_PICTURE_MESSAGE')}
           </p>
           <p className="ant-upload-hint">
-            {useTranslate('ADD_PICTURE_WARNING')}
+            {t('ADD_PICTURE_WARNING')}
           </p>
         </Dragger>
       </ImgCrop>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { CloudUploadOutlined, PlusCircleTwoTone } from '@ant-design/icons';
 import {
   IonContent,
   IonHeader,
@@ -6,8 +6,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Row, Col, Button, Typography, Upload } from 'antd';
-import { PlusCircleTwoTone, CloudUploadOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Typography, Upload } from 'antd';
+import React from 'react';
 
 type Props = {
   onDismiss: () => void;

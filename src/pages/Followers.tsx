@@ -11,12 +11,11 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-
-import { listUser } from '../service/firebase/users';
-import useTranslate from '../local/local';
+import Footer from '../components/Footer';
 import AuthModal from '../components/AuthModal';
 import SubscribeCard from '../components/SubscribeCard';
-import Footer from '../components/Footer';
+import { t } from '../i18n';
+import { listUser } from '../service/firebase/users';
 
 const Followers: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
@@ -42,7 +41,7 @@ const Followers: React.FC = () => {
     fetchUsers();
   }, []);
 
-  const viewTitle = useTranslate('FOLLOWERS_VIEW_TITLE');
+  const viewTitle = t('FOLLOWERS_VIEW_TITLE');
 
   return (
     <IonPage>

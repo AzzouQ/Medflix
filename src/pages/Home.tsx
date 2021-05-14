@@ -11,17 +11,16 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-
+import 'firebase/auth';
 import AuthModal from '../components/AuthModal';
 import VideoCard from '../components/VideoCard';
-
+import { t } from '../i18n';
 import { videos } from '../service/fakeData';
 
-import useTranslate from '../local/local';
 import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
-  const hometitle = useTranslate('HOME_TITLE');
+  const hometitle = t('HOME_TITLE');
 
   return (
     <IonPage>

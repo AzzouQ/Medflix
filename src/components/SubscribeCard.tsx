@@ -8,7 +8,7 @@ import {
 } from '@ionic/react';
 import { Button } from 'antd';
 
-import useTranslate from '../local/local';
+import { t } from '../i18n';
 import { sendNotif } from '../service/firebase/fcm';
 
 type Props = {
@@ -19,8 +19,8 @@ type Props = {
 };
 
 const SubscribeCard: React.FC<Props> = ({ user }) => {
-  const follow = useTranslate('FOLLOW');
-  const unfollow = useTranslate('UNFOLLOW');
+  const follow = t('FOLLOW');
+  const unfollow = t('UNFOLLOW');
 
   return (
     <IonCard>
