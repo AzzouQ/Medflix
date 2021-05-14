@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   IonButtons,
   IonCol,
@@ -10,11 +11,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+
 import { listUser } from '../service/firebase/users';
-import { useEffect, useState } from 'react';
 import useTranslate from '../local/local';
 import AuthModal from '../components/AuthModal';
 import SubscribeCard from '../components/SubscribeCard';
+import Footer from '../components/Footer';
 
 const Followers: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
@@ -28,17 +30,16 @@ const Followers: React.FC = () => {
     'Dr.Raoult',
     'Bertrand',
     'Thomas',
-    'Abdelkrim'
+    'Abdelkrim',
   ];
 
   useEffect(() => {
     async function fetchUsers() {
-      const _users = await listUser()
+      const _users = await listUser();
       setUsers(_users);
     }
 
-    fetchUsers()
-
+    fetchUsers();
   }, []);
 
   const viewTitle = useTranslate('FOLLOWERS_VIEW_TITLE');
@@ -69,6 +70,8 @@ const Followers: React.FC = () => {
           </IonList>
         </IonGrid>
       </IonContent>
+
+      <Footer />
     </IonPage>
   );
 };

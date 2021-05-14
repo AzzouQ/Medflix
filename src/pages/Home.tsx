@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   IonButtons,
   IonCol,
   IonContent,
-  IonFooter,
   IonGrid,
   IonHeader,
   IonList,
@@ -12,19 +11,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { Avatar, Button, Image, Menu, Typography, notification } from 'antd';
-import {
-  LoginOutlined,
-  LogoutOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import { Plugins } from '@capacitor/core';
-import ProgressBar from '../components/ProgressBar';
-import { useHistory } from 'react-router';
-// import { sendNotif } from '../service/firebase';
 
 import AuthModal from '../components/AuthModal';
 import VideoCard from '../components/VideoCard';
@@ -32,9 +18,7 @@ import VideoCard from '../components/VideoCard';
 import { videos } from '../service/fakeData';
 
 import useTranslate from '../local/local';
-
-
-// import { sendNotif } from '../service/firebase';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
   const hometitle = useTranslate('HOME_TITLE');
@@ -65,11 +49,8 @@ const Home: React.FC = () => {
           </IonList>
         </IonGrid>
       </IonContent>
-      <IonFooter>
-        <IonToolbar>
-          <ProgressBar />
-        </IonToolbar>
-      </IonFooter>
+
+      <Footer />
     </IonPage>
   );
 };

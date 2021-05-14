@@ -1,96 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import { Progress } from 'antd';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadActions, uploadSelectors } from '../redux';
-import { IonFooter, IonToolbar } from '@ionic/react';
 import firebase from 'firebase';
+import { IonButtons, IonToolbar, IonIcon } from '@ionic/react';
+import {
+  closeCircleOutline,
+  playCircleOutline,
+  pauseCircleOutline,
+} from 'ionicons/icons';
+import { Progress } from 'antd';
+
+import { uploadActions, uploadSelectors } from '../redux';
 
 const ProgressBar: React.FC = () => {
-  const uploadTask = useSelector(uploadSelectors.getUploadTask);
-  const [isRunning, setIsRunning] = useState(false);
-  const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
-  let unsubscribe: any;
+  const uploadTask = useSelector(uploadSelectors.getUploadTask)!;
+  const unsubscribe = useRef<Function>();
+  const [progress, setProgress] = useState(0);
+  const [isUploadRunning, setUploadRunning] = useState(false);
 
-  const handlePlayPause = () => {
-    if (isRunning) {
-      uploadTask.pause();
-      //   toast.show(t('toast.up.pause'));
-    } else {
-      uploadTask.resume();
-      //   toast.show(t('toast.up.resume'));
-    }
-  };
+  const uploadPauseResume = useCallback(() => {
+    if (isUploadRunning) uploadTask.pause();
+    else uploadTask.resume();
+  }, [isUploadRunning, uploadTask]);
 
-  const handleCancel = async () => {
-    try {
-      if (!isRunning) await uploadTask.resume();
-      await uploadTask.cancel();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      if (unsubscribe) unsubscribe();
-
-      //   toast.show(t('toast.up.cancel'));
-    }
-  };
-
-  const handleSnapshot = (snapshot: any) => {
-    // Observe state change events such as progress, pause, and resume
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    switch (snapshot.state) {
-      case firebase.storage.TaskState.PAUSED: // or 'paused'
-        setIsRunning(false);
-        break;
-      case firebase.storage.TaskState.RUNNING: // or 'running'
-        setIsRunning(true);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleError = () => {
+  const uploadCancel = useCallback(() => {
+    uploadTask.resume();
+    uploadTask.cancel();
+    unsubscribe.current!();
     dispatch(uploadActions.finish());
-    // Handle unsuccessful uploads
-  };
+  }, [dispatch, uploadTask]);
 
-  const handleFinally = () => {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+  const uploadNext = useCallback(
+    (snapshot: firebase.storage.UploadTaskSnapshot) => {
+      setProgress(
+        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+      );
+      setUploadRunning(snapshot.state === firebase.storage.TaskState.RUNNING);
+    },
+    []
+  );
+
+  const uploadError = useCallback(
+    (error: firebase.storage.FirebaseStorageError) => {
+      console.log(error);
+      unsubscribe.current!();
+      dispatch(uploadActions.finish());
+    },
+    [dispatch]
+  );
+
+  const uploadComplete = useCallback(() => {
     uploadTask.snapshot.ref
       .getDownloadURL()
-      .then(async (downloadURL: string) => {
+      .then(async (downloadURL) => {
         console.log(downloadURL);
       })
-      .catch((err: any) => console.log(err))
+      .catch((error) => {
+        console.log(error);
+      })
       .finally(() => {
+        unsubscribe.current!();
         dispatch(uploadActions.finish());
-        if (unsubscribe) unsubscribe();
       });
-  };
+  }, [dispatch, uploadTask]);
 
   useEffect(() => {
-    if (!uploadTask) return;
-    unsubscribe = uploadTask.on(
-      'state_changed',
-      handleSnapshot,
-      handleError,
-      handleFinally
+    unsubscribe.current = uploadTask.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      uploadNext,
+      uploadError,
+      uploadComplete
     );
-  }, [uploadTask]);
-
-  if (!uploadTask) return null;
+  }, [uploadTask, uploadNext, uploadError, uploadComplete]);
 
   return (
-    <Progress
-      strokeColor={{
-        '0%': '#108ee9',
-        '100%': '#87d068',
-      }}
-      percent={progress}
-    />
+    <IonToolbar>
+      <IonButtons slot={'start'} style={{ marginLeft: 15, marginRight: 15 }}>
+        <IonIcon
+          icon={isUploadRunning ? pauseCircleOutline : playCircleOutline}
+          size={'large'}
+          color={'primary'}
+          onClick={uploadPauseResume}
+        />
+        <IonIcon
+          icon={closeCircleOutline}
+          size={'large'}
+          color={'primary'}
+          onClick={uploadCancel}
+        />
+      </IonButtons>
+      <Progress
+        strokeColor={{
+          '0%': '#3880ff',
+          '100%': '#3dc2ff',
+        }}
+        percent={progress}
+        showInfo={false}
+      />
+      <IonButtons slot={'end'} style={{ marginRight: 25 }} />
+    </IonToolbar>
   );
 };
 

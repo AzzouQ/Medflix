@@ -1,8 +1,9 @@
 import firebase, {auth, storage} from './index'
+
 import { UploadRequestOption } from 'rc-upload/es/interface';
-import { Dispatch } from 'react';
 import { uploadActions } from '../../redux';
 import getBlob from '../getBlob';
+import { Dispatch } from '@reduxjs/toolkit';
 
 export const videoUpload = async (
     { filename, file, onSuccess, onError, onProgress }: UploadRequestOption<any>,
@@ -12,8 +13,6 @@ export const videoUpload = async (
     const uid = currentUser?.uid;
   
     const name = filename ?? `${new Date().getTime()}-medflix`;
-  
-  
     
     try {
       const blob: any = await getBlob(file);

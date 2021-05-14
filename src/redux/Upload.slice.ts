@@ -1,12 +1,17 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
+import firebase from 'firebase';
 
+export type UploadState = {
+  uploadTask: firebase.storage.UploadTask | undefined;
+  blob: Blob | undefined;
+};
 
 const uploadSlice = createSlice({
   name: 'Upload',
   initialState: {
     uploadTask: undefined,
     blob: undefined,
-  } as any,
+  } as UploadState,
   reducers: {
     setUpload: (state, action) => {
       state.uploadTask = action.payload.uploadTask;
@@ -15,12 +20,12 @@ const uploadSlice = createSlice({
     finish: (state) => {
       state.blob = undefined;
       state.uploadTask = undefined;
-    }
+    },
   },
 });
 
 const stateSelector = createSelector(
-  ({ upload }: { upload: any }) => upload,
+  ({ upload }: { upload: UploadState }) => upload,
   (state) => state
 );
 
