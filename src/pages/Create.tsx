@@ -15,7 +15,7 @@ const Create: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{t('CREATE_VIEW_TITLE')}</IonTitle>
+          <IonTitle>{t`header.title.create`}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

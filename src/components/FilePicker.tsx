@@ -12,7 +12,7 @@ type Props = { isLoading: boolean };
 const { Dragger } = Upload;
 
 const FilePicker = ({ isLoading }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const beforeUplaod = (file: RcFile) => {
     const isVideo = file.type.indexOf('video/') === 0;
@@ -51,8 +51,8 @@ const FilePicker = ({ isLoading }: Props) => {
         <p className="ant-upload-drag-icon">
           <VideoCameraAddOutlined />
         </p>
-        <p className="ant-upload-text">{t('ADD_VIDEO_MESSAGE')}</p>
-        <p className="ant-upload-hint">{t('ADD_VIDEO_WARNING')}</p>
+        <p className="ant-upload-text">{t`form.create.addVideoMessage`}</p>
+        <p className="ant-upload-hint">{t`form.create.addVideoWarning`}</p>
       </Dragger>
     </div>
   );

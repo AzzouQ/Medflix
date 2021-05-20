@@ -5,21 +5,19 @@ import { t } from '../i18n';
 const CreateForm = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  
-  const addVideoTitle = t('ADD_VIDEO_TITLE');
-  const addVideoTitlePlaceholder = t('ADD_VIDEO_TITLE_PLACEHOLDER');
-  const addVideoDesc = t('DESC_TITLE');
-  const addVideodescPlaceholder = t('DESC_PLACEHOLDER');
-  const upload = t('UPLOAD');
 
   return (
     <Form name={'title'} size={'middle'} layout={'vertical'}>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item name={'title'} label={addVideoTitle} required={true}>
+          <Form.Item
+            name={'title'}
+            label={t`form.create.title.label`}
+            required={true}
+          >
             <Input
               name={'title'}
-              placeholder={addVideoTitlePlaceholder}
+              placeholder={t`form.create.title.placeholder`}
               value={title}
               onChange={(e) => setTitle(e.target.value!)}
             />
@@ -28,13 +26,17 @@ const CreateForm = () => {
       </Row>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item name={'description'} label={addVideoDesc} required={true}>
+          <Form.Item
+            name={'description'}
+            label={t`form.create.description.label`}
+            required={true}
+          >
             <Input.TextArea
               aria-multiline
               value={desc}
               onChange={(e) => setDesc(e.target.value!)}
               name={'description'}
-              placeholder={addVideodescPlaceholder}
+              placeholder={t`form.create.description.placeholder`}
             />
           </Form.Item>
         </Col>
@@ -47,7 +49,7 @@ const CreateForm = () => {
               style={{ width: '100%', backgroundColor: 'pink' }}
               onClick={undefined}
             >
-              {upload}
+              {t`form.create.upload`}
             </Button>
           </Form.Item>
         </Col>

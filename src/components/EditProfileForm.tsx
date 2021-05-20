@@ -21,10 +21,10 @@ const EditProfileForm: React.FC = () => {
   const { push } = useHistory();
 
   const yupValidation = Yup.object({
-    password: Yup.string().required('Veuillez entrer un password'),
+    password: Yup.string().required(t`form.password.error`),
     email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
+      .required(t`form.email.error`)
+      .email(t`form.email.error2`),
   });
 
   const reauthenticate = (
@@ -119,33 +119,13 @@ const EditProfileForm: React.FC = () => {
     }
   };
 
-  const name = t('NAME');
-  const namePlaceholder = t('NAME_PLACEHOLDER');
-  const desc = t('DESC_TITLE');
-  const descPlaceholder = t('DESC_PLACEHOLDER');
-  const mail = t('EMAIL');
-  const mailPlaceholder = t('EMAIL_PLACEHOLDER');
-  const oldPass = t('OLD_PASSWORD_TITLE');
-  const oldPassPlaceholder = t('OLD_PASSWORD_PLACEHOLDER');
-  const newPass = t('NEW_PASSWORD_TITLE');
-  const newPassPlaceholder = t('NEW_PASSWORD_PLACEHOLDER');
   const save = t('SAVE');
 
   const renderEditName = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
-        <Form.Item name={'name'} label={name}>
-          <Input name={'name'} placeholder={namePlaceholder} />
-        </Form.Item>
-      </Col>
-    </Row>
-  );
-
-  const renderEditDesc = (): React.ReactElement | null => (
-    <Row gutter={20}>
-      <Col span={24}>
-        <Form.Item name={'desc'} label={desc}>
-          <Input name={'desc'} placeholder={descPlaceholder} />
+        <Form.Item name={'name'} label={t`form.name.label`}>
+          <Input name={'name'} placeholder={t`form.name.placeholder`} />
         </Form.Item>
       </Col>
     </Row>
@@ -154,8 +134,8 @@ const EditProfileForm: React.FC = () => {
   const renderEditEmail = (): React.ReactElement | null => (
     <Row gutter={20}>
       <Col span={24}>
-        <Form.Item name={'email'} label={mail}>
-          <Input name={'email'} placeholder={mailPlaceholder} />
+        <Form.Item name={'email'} label={t`form.email.label`}>
+          <Input name={'email'} placeholder={t`form.email.placeholder`} />
         </Form.Item>
       </Col>
     </Row>
@@ -165,10 +145,13 @@ const EditProfileForm: React.FC = () => {
     <>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item name={'currentPassword'} label={oldPass}>
+          <Form.Item
+            name={'currentPassword'}
+            label={t`form.editProfile.oldPassword.label`}
+          >
             <Input.Password
               name={'currentPassword'}
-              placeholder={oldPassPlaceholder}
+              placeholder={t`form.editProfile.oldPassword.placeholder`}
               allowClear={true}
             />
           </Form.Item>
@@ -176,10 +159,13 @@ const EditProfileForm: React.FC = () => {
       </Row>
       <Row gutter={20}>
         <Col span={24}>
-          <Form.Item name={'password'} label={newPass}>
+          <Form.Item
+            name={'password'}
+            label={t`form.editProfile.newPassword.label`}
+          >
             <Input.Password
               name={'password'}
-              placeholder={newPassPlaceholder}
+              placeholder={t`form.editProfile.newPassword.placeholder`}
               allowClear={true}
             />
           </Form.Item>
@@ -193,7 +179,7 @@ const EditProfileForm: React.FC = () => {
       <Col span={24}>
         <Form.Item name={'editProfile'}>
           <SubmitButton type={'primary'} style={{ width: '100%' }}>
-            {save}
+            {t`form.editProfile.save`}
           </SubmitButton>
         </Form.Item>
       </Col>
@@ -216,7 +202,6 @@ const EditProfileForm: React.FC = () => {
         <Form name={'edit-profile'} size={'middle'} layout={'vertical'}>
           <LoadingModal isLoading={formik.isSubmitting} />
           {renderEditName()}
-          {renderEditDesc()}
           {renderEditEmail()}
           {renderEditPassword()}
           {renderSavebutton()}

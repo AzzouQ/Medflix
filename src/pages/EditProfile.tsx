@@ -15,7 +15,7 @@ const EditProfie: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{t('EDIT_PROFILE_VIEW_TITLE')}</IonTitle>
+          <IonTitle>{t`header.title.editProfile`}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

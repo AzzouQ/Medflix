@@ -33,12 +33,8 @@ const ThumbnailUpload = ({ isLoading }: Props) => {
           <p className="ant-upload-drag-icon">
             <PictureOutlined />
           </p>
-          <p className="ant-upload-text">
-            {t('ADD_PICTURE_MESSAGE')}
-          </p>
-          <p className="ant-upload-hint">
-            {t('ADD_PICTURE_WARNING')}
-          </p>
+          <p className="ant-upload-text">{t`form.create.addPictureMessage`}</p>
+          <p className="ant-upload-hint">{t`form.create.addPictureWarning`}</p>
         </Dragger>
       </ImgCrop>
     </div>
