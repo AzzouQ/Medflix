@@ -11,13 +11,13 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { t } from '../i18n';
+import { t } from 'i18n';
 
-import AuthModal from '../components/AuthModal';
-import VideoCard from '../components/VideoCard';
-import Footer from '../components/Footer';
+import AuthModal from 'components/AuthModal';
+import VideoCard from 'components/VideoCard';
+import Footer from 'components/Footer';
 
-import { videos } from '../service/fakeData';
+import { videos } from 'service/fakeData';
 
 const Home: React.FC = () => {
   return (

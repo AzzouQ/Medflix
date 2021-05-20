@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { t } from '../i18n';
 
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import SignInForm from './SignInForm';

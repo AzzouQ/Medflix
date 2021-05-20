@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import firebase from 'firebase';
-import { IonButtons, IonToolbar, IonIcon } from '@ionic/react';
+import firebase from 'firebase/app';
+import { IonButtons, IonToolbar } from '@ionic/react';
+import { Progress, Button } from 'antd';
 import {
-  closeCircleOutline,
-  playCircleOutline,
-  pauseCircleOutline,
-} from 'ionicons/icons';
-import { Progress } from 'antd';
+  PauseOutlined,
+  CloseOutlined,
+  CaretRightOutlined,
+} from '@ant-design/icons';
 
-import { uploadActions, uploadSelectors } from '../redux';
+import { uploadActions, uploadSelectors } from '../slices';
 
 const ProgressBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -74,31 +74,36 @@ const ProgressBar: React.FC = () => {
   }, [uploadTask, uploadNext, uploadError, uploadComplete]);
 
   return (
-    <IonToolbar>
-      <IonButtons slot={'start'} style={{ marginLeft: 15, marginRight: 15 }}>
-        <IonIcon
-          icon={isUploadRunning ? pauseCircleOutline : playCircleOutline}
-          size={'large'}
-          color={'primary'}
-          onClick={uploadPauseResume}
+    <>
+      <IonToolbar style={{ justifyContent: 'center', alignContent: 'center' }}>
+        <IonButtons slot={'start'} style={{ marginLeft: 15, marginRight: 15 }}>
+          <Button
+            type={'primary'}
+            size={'middle'}
+            shape={'circle'}
+            icon={isUploadRunning ? <PauseOutlined /> : <CaretRightOutlined />}
+            onClick={uploadPauseResume}
+            style={{ marginRight: 5 }}
+          />
+          <Button
+            type={'primary'}
+            size={'middle'}
+            shape={'circle'}
+            icon={<CloseOutlined />}
+            onClick={uploadCancel}
+          />
+        </IonButtons>
+        <Progress
+          strokeColor={{
+            '0%': '#177ddc',
+            '100%': '#3dc2ff',
+          }}
+          percent={progress}
+          showInfo={false}
         />
-        <IonIcon
-          icon={closeCircleOutline}
-          size={'large'}
-          color={'primary'}
-          onClick={uploadCancel}
-        />
-      </IonButtons>
-      <Progress
-        strokeColor={{
-          '0%': '#3880ff',
-          '100%': '#3dc2ff',
-        }}
-        percent={progress}
-        showInfo={false}
-      />
-      <IonButtons slot={'end'} style={{ marginRight: 25 }} />
-    </IonToolbar>
+        <IonButtons slot={'end'} style={{ marginRight: 25 }} />
+      </IonToolbar>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
-import firebase, { auth, storage } from './index';
+import firebase, { auth, storage } from './firebase';
 import { UploadRequestOption } from 'rc-upload/es/interface';
-import { uploadActions } from '../../redux';
+import { uploadActions } from '../../slices';
 import getBlob from '../getBlob';
-import { Dispatch } from '@reduxjs/toolkit';
+import { Dispatch } from 'redux';
 
 export const videoUpload = async (
   { filename, file, onSuccess, onError, onProgress }: UploadRequestOption<any>,

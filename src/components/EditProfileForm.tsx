@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import React from 'react';

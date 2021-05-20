@@ -1,5 +1,5 @@
-import firebase from './firebase';
-import { t } from '../i18n';
+import firebase from 'service/firebase';
+import { t } from 'i18n';
 
 type FieldsType = {
   email?: 'email';

@@ -1,5 +1,5 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 export type UploadState = {
   uploadTask: firebase.storage.UploadTask | undefined;

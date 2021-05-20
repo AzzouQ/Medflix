@@ -1,11 +1,11 @@
-import { auth, db } from './index';
-import { setFcm } from './fcm';
+import { auth, database } from './firebase';
+// import { setFcm } from './fcm';
 
 export const signIn = async (email: string, password: string) => {
   const { user } = await auth.signInWithEmailAndPassword(email, password);
   const date = +new Date();
-  await db.ref(`/user/${user?.uid}`).update({ lastOnline: date });
-  await setFcm();
+  await database.ref(`/user/${user?.uid}`).update({ lastOnline: date });
+  // await setFcm();
 };
 
 export const signOut = async () => {
@@ -15,7 +15,7 @@ export const signOut = async () => {
 export const signUp = async (name: string, email: string, password: string) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
   const date = +new Date();
-  await db.ref(`/user/${user?.uid}`).set({
+  await database.ref(`/user/${user?.uid}`).set({
     name,
     creationDate: date,
     lastOnline: date,
@@ -24,5 +24,5 @@ export const signUp = async (name: string, email: string, password: string) => {
     following: [],
     followingNb: 0,
   });
-  await setFcm();
+  // await setFcm();
 };

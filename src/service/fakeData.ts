@@ -1,4 +1,4 @@
-const videos = [
+export const videos = [
   {
     title: 'Video name',
     preview: 'https://picsum.photos/400/200',
@@ -36,8 +36,19 @@ const videos = [
   },
 ];
 
-const user = {
+export const user = {
   name: 'Bastien',
 };
 
-export { videos, user };
+export const notification = {
+  notification: {
+    body: 'Allez vite le follow back',
+    title: 'Vous avez un nouvel abonné',
+  },
+  data: {
+    body: 'Allez vite le follow back',
+    title: 'Vous avez un nouvel abonné',
+    key_1: 'Value for key_1',
+    key_2: 'Value for key_2',
+  },
+};

@@ -14,12 +14,12 @@ import {
 } from '@ionic/react';
 import { Avatar, Button } from 'antd';
 import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
-import { t } from '../i18n';
+import { t } from 'i18n';
 
-import Footer from '../components/Footer';
-import VideoCard from '../components/VideoCard';
+import Footer from 'components/Footer';
+import VideoCard from 'components/VideoCard';
 
-import { user, videos } from '../service/fakeData';
+import { user, videos } from 'service/fakeData';
 
 const Profile: React.FC = () => {
   const { push } = useHistory();

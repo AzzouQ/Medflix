@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/messaging';
@@ -19,11 +19,12 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const db = firebase.database();
-const storage = firebase.storage();
-const messaging = firebase.messaging();
 const auth = firebase.auth();
+const database = firebase.database();
+const storage = firebase.storage();
+// if (firebase.messaging.isSupported()) {
+//   export const messaging = firebase.messaging();
+// }
 
-export { db, storage, messaging, auth };
-
+export { auth, database, storage };
 export default firebase;
