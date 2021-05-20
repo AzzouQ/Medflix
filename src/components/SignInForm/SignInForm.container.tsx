@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 
-import translateFirebaseError from 'service/translateFirebaseError';
+import { auth, database, translateError } from 'service/firebase';
 import { initializeMessaging } from 'service/firebase/messaging';
-
-import { auth, database } from 'service/firebase';
 
 import SignInForm from './SignInForm';
 
@@ -44,7 +42,7 @@ const SignInFormContainer: React.FC<Props> = ({
       }
       setModalOpen(false);
     } catch (error) {
-      const { field, message } = translateFirebaseError(error);
+      const { field, message } = translateError(error);
       setFieldError(field, message);
     } finally {
       setSubmitting(false);

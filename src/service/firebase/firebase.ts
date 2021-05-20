@@ -19,12 +19,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const auth = firebase.auth();
-const database = firebase.database();
-const storage = firebase.storage();
-// if (firebase.messaging.isSupported()) {
-//   export const messaging = firebase.messaging();
-// }
+export const auth = firebase.auth();
+export const database = firebase.database();
+export const storage = firebase.storage();
 
-export { auth, database, storage };
 export default firebase;

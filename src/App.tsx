@@ -7,7 +7,7 @@ import logger from 'redux-logger';
 import Router from 'Router';
 import { uploadReducer, userReducer } from 'slices';
 
-import './theme';
+import 'theme';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {

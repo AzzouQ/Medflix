@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IonModal } from '@ionic/react';
 import { Button } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { t } from '../i18n';
+import { t } from '../../i18n';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import SignInForm from '../SignInForm';
+import SignUpForm from '../SignUpForm';
 
-import SignInForm from './SignInForm';
-import SignUpForm from './SignUpForm';
+import type { AuthModalType } from './AuthModal.container';
 
-import { signOut } from '../service/firebase/auth';
+import { Styles } from './AuthModal.styles';
 
-const AuthModal: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
-
-  const [isLogged, setLogged] = useState(false);
-  firebase.auth().onAuthStateChanged((user) => setLogged(!!user));
-
+const AuthModal: React.FC<AuthModalType.Props> = ({
+  formModeState: [formMode, setFormMode],
+  isModalOpenState: [isModalOpen, setModalOpen],
+  isLoggedState: [isLogged],
+  onSignOut,
+}) => {
   return (
     <>
       <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
@@ -31,16 +29,16 @@ const AuthModal: React.FC = () => {
       {isLogged ? (
         <Button
           type={'primary'}
-          style={{ marginRight: 20 }}
+          style={Styles.button}
           icon={<LogoutOutlined />}
-          onClick={() => signOut()}
+          onClick={onSignOut}
         >
           {t`header.button.signOut`}
         </Button>
       ) : (
         <Button
           type={'primary'}
-          style={{ marginRight: 20 }}
+          style={Styles.button}
           icon={<LoginOutlined />}
           onClick={() => setModalOpen(true)}
         >

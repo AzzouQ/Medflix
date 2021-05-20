@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 
-import translateFirebaseError from 'service/translateFirebaseError';
+import { auth, database, translateError } from 'service/firebase';
 import { initializeMessaging } from 'service/firebase/messaging';
-
-import { auth, database } from 'service/firebase';
 
 import SignUpForm from './SignUpForm';
 
@@ -27,21 +25,6 @@ type Props = {
   setFormMode: (value: 'signIn' | 'signUp') => void;
 };
 
-// export const signUp = async (name: string, email: string, password: string) => {
-//   const { user } = await auth.createUserWithEmailAndPassword(email, password);
-//   const date = +new Date();
-//   await database.ref(`/user/${user?.uid}`).set({
-//     name,
-//     creationDate: date,
-//     lastOnline: date,
-//     followerNb: 0,
-//     followers: [],
-//     following: [],
-//     followingNb: 0,
-//   });
-//   await setFcm();
-// };
-
 const SignUpFormContainer: React.FC<Props> = ({
   setModalOpen,
   setFormMode,
@@ -60,8 +43,8 @@ const SignUpFormContainer: React.FC<Props> = ({
           name: name,
           createDate: +new Date(),
           updateDate: +new Date(),
-          subscribers: [],
-          subscriptions: [],
+          subscribers: null,
+          subscriptions: null,
           subscribersCount: 0,
           subscriptionsCount: 0,
         });
@@ -69,7 +52,7 @@ const SignUpFormContainer: React.FC<Props> = ({
       }
       setModalOpen(false);
     } catch (error) {
-      const { field, message } = translateFirebaseError(error);
+      const { field, message } = translateError(error);
       setFieldError(field, message);
     } finally {
       setSubmitting(false);

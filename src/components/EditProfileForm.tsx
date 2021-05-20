@@ -5,9 +5,8 @@ import { Form, Input, SubmitButton } from 'formik-antd';
 import React from 'react';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
-import { t } from '../i18n';
+import { t } from 'i18n';
 import LoadingModal from './LoadingModal';
-import { signOut } from '../service/firebase/auth';
 
 type EditProfileFormalues = {
   name: string;
@@ -109,7 +108,6 @@ const EditProfileForm: React.FC = () => {
       if (currentPassword && password) {
         await changePassword(currentPassword, password);
       }
-      signOut();
       push('/home');
     } catch (e) {
       console.log(e);

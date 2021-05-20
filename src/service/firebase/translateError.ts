@@ -7,7 +7,7 @@ type FieldsType = {
   name?: 'name';
 };
 
-const translateFirebaseError = ({ code }: firebase.auth.Error) => {
+const translateError = ({ code }: firebase.auth.Error) => {
   const { email, password }: FieldsType = {
     email: 'email',
     password: 'password',
@@ -130,4 +130,4 @@ const translateFirebaseError = ({ code }: firebase.auth.Error) => {
   }
 };
 
-export default translateFirebaseError;
+export default translateError;
