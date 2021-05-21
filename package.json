@@ -27,7 +27,7 @@
     "antd": "^4.15.1",
     "antd-img-crop": "^3.14.1",
     "axios": "^0.21.1",
-    "capacitor-video-player": "^2.4.7-2",
+    "capacitor-video-player": "2.4.7-1",
     "firebase": "8.6.1",
     "formik": "^2.2.6",
     "formik-antd": "^2.0.1",
