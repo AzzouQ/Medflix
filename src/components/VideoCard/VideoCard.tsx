@@ -10,7 +10,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { Button, Image, Avatar } from 'antd';
-import { UserOutlined, MoreOutlined } from '@ant-design/icons';
+import { UserOutlined, ShareAltOutlined } from '@ant-design/icons';
 
 import { Styles } from './VideoCard.styles';
 
@@ -38,7 +38,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
             <Image
               src={video.preview}
               height={200}
-              width={400}
+              width={340}
               preview={false}
             />
           </IonCardContent>
@@ -53,7 +53,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
               <IonCardSubtitle>{'Author'}</IonCardSubtitle>
             </IonCol>
             <IonCol size={'1'}>
-              <MoreOutlined style={Styles.icon} onClick={onShare} />
+              <ShareAltOutlined style={Styles.icon} onClick={onShare} />
             </IonCol>
           </IonRow>
         </IonCardHeader>
