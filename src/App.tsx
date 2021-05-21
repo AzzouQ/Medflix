@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
-import { IonApp } from '@ionic/react';
 import { Provider } from 'react-redux';
+import { IonApp } from '@ionic/react';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import Router from './Router';
-import { uploadReducer, userReducer } from './redux';
+import 'theme';
 
-import './theme';
+import Router from 'Router';
+import { userReducer, uploadReducer } from 'slices';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {
@@ -27,7 +27,6 @@ const App: React.FC = () => {
   return (
     <Provider store={rootStore.store}>
       <IonApp>
-        {/* <Notification /> */}
         <Router />
       </IonApp>
     </Provider>

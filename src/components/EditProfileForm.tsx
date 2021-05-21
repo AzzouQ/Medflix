@@ -1,13 +1,11 @@
 import { Col, Row } from 'antd';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Formik, FormikHelpers } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import React from 'react';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
-import { t } from '../i18n';
-import LoadingModal from './LoadingModal';
-import { signOut } from '../service/firebase/auth';
+import { t } from 'i18n';
 
 type EditProfileFormalues = {
   name: string;
@@ -109,7 +107,6 @@ const EditProfileForm: React.FC = () => {
       if (currentPassword && password) {
         await changePassword(currentPassword, password);
       }
-      signOut();
       push('/home');
     } catch (e) {
       console.log(e);
@@ -200,7 +197,6 @@ const EditProfileForm: React.FC = () => {
     >
       {(formik) => (
         <Form name={'edit-profile'} size={'middle'} layout={'vertical'}>
-          <LoadingModal isLoading={formik.isSubmitting} />
           {renderEditName()}
           {renderEditEmail()}
           {renderEditPassword()}

@@ -1,0 +1,15 @@
+diff --git a/node_modules/@ionic/react/dist/types/components/IonicReactProps.d.ts b/node_modules/@ionic/react/dist/types/components/IonicReactProps.d.ts
+index 0319e32..4a59293 100644
+--- a/node_modules/@ionic/react/dist/types/components/IonicReactProps.d.ts
++++ b/node_modules/@ionic/react/dist/types/components/IonicReactProps.d.ts
+@@ -1,7 +1,7 @@
++import { CSSProperties } from 'react';
++
+ export interface IonicReactProps {
+     class?: string;
+     className?: string;
+-    style?: {
+-        [key: string]: any;
+-    };
++    style?: CSSProperties;
+ }

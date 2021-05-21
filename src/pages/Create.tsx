@@ -6,7 +6,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import CreateForm from '../components/CreateForm';
-import FilePicker from '../components/FilePicker';
+// import FilePicker from '../components/FilePicker';
 import ThumbnailUpload from '../components/ThumbnailUpload';
 import { t } from '../i18n';
 
@@ -20,7 +20,7 @@ const Create: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <ThumbnailUpload isLoading={false} />
-        <FilePicker isLoading={false} />
+        {/* <FilePicker isLoading={false} /> */}
         <CreateForm />
       </IonContent>
     </IonPage>
