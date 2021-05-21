@@ -43,6 +43,7 @@ const Followers: React.FC = () => {
     fetchUsers();
   }, []);
 
+
   return (
     <IonPage>
       <IonHeader>

@@ -7,12 +7,13 @@ type FieldsType = {
   name?: 'name';
 };
 
-const translateError = ({ code }: firebase.auth.Error) => {
+export const translateError = ({ code }: firebase.auth.Error) => {
   const { email, password }: FieldsType = {
     email: 'email',
     password: 'password',
   };
-  const firebaseError = t`firebase.${code}`;
+
+  const firebaseError = t(`firebase.${code}`);
 
   switch (code) {
     case 'auth/weak-password':
@@ -129,5 +130,3 @@ const translateError = ({ code }: firebase.auth.Error) => {
       return { field: email, message: t`firebase.unknown` };
   }
 };
-
-export default translateError;

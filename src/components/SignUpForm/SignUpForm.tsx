@@ -1,12 +1,10 @@
 import React from 'react';
-import { IonCol, IonRow } from '@ionic/react';
+import { IonCol, IonLoading, IonRow } from '@ionic/react';
 import { Typography, Button } from 'antd';
 import { Formik } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
-
-import LoadingModal from 'components/LoadingModal';
 
 import { Styles } from './SignUpForm.styles';
 
@@ -17,11 +15,11 @@ const SignUpForm: React.FC<SignUpType.FormProps> = ({
   goToSignIn,
 }) => {
   const yupValidation = Yup.object({
-    name: Yup.string().required('Veuillez entrer un nom'),
+    name: Yup.string().required(t`form.name.required`),
     email: Yup.string()
-      .required('Veuillez entrer un email')
-      .email("L'email est invalide"),
-    password: Yup.string().required('Veuillez entrer un mot de passe'),
+      .required(t`form.email.required`)
+      .email(t`form.email.error`),
+    password: Yup.string().required(t`form.password.required`),
   });
 
   return (
@@ -33,7 +31,10 @@ const SignUpForm: React.FC<SignUpType.FormProps> = ({
       >
         {(formik) => (
           <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
-            <LoadingModal isLoading={formik.isSubmitting} />
+            <IonLoading
+              isOpen={formik.isSubmitting}
+              message={'Please wait...'}
+            />
             <IonRow>
               <IonCol size={'12'}>
                 <Typography.Title level={2} style={Styles.title}>

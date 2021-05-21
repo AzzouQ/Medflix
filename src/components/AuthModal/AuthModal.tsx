@@ -2,19 +2,19 @@ import React from 'react';
 import { IonModal } from '@ionic/react';
 import { Button } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { t } from '../../i18n';
+import { t } from 'i18n';
 
-import SignInForm from '../SignInForm';
-import SignUpForm from '../SignUpForm';
-
-import type { AuthModalType } from './AuthModal.container';
+import SignInForm from 'components/SignInForm';
+import SignUpForm from 'components/SignUpForm';
 
 import { Styles } from './AuthModal.styles';
 
+import type { AuthModalType } from './AuthModal.container';
+
 const AuthModal: React.FC<AuthModalType.Props> = ({
   formModeState: [formMode, setFormMode],
-  isModalOpenState: [isModalOpen, setModalOpen],
-  isLoggedState: [isLogged],
+  modalOpenState: [isModalOpen, setModalOpen],
+  loggedState: [isLogged],
   onSignOut,
 }) => {
   return (

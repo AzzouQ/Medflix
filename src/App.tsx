@@ -4,10 +4,10 @@ import { IonApp } from '@ionic/react';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import Router from 'Router';
-import { uploadReducer, userReducer } from 'slices';
-
 import 'theme';
+
+import Router from 'Router';
+import { userReducer, uploadReducer } from 'slices';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {

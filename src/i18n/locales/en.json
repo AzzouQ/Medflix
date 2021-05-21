@@ -29,22 +29,20 @@
     "email": {
       "label": "E-mail",
       "placeholder": "example@mail.com",
-      "error": "Please enter an e-mail",
-      "error2": "Invalid e-mail"
+      "required": "Please enter an e-mail",
+      "error": "Invalid e-mail"
     },
     "password": {
       "label": "Password",
       "placeholder": "p4sSwOrD",
-      "error": "Please enter your password"
+      "required": "Please enter your password"
     },
     "name": {
       "label": "Name",
       "placeholder": "John Doe",
-      "error": "Please enter a name"
+      "required": "Please enter a name"
     },
 
-    "ADD_VIDEO_TITLE": "Title",
-    "ADD_VIDEO_TITLE_PLACEHOLDER": "Title",
     "create": {
       "addPictureMessage": "Drag or click to add your thumbnail",
       "addPictureWarning": "PNG / JPEG files only are accepted",
@@ -65,12 +63,12 @@
       "oldPassword": {
         "label": "Current password",
         "placeholder": "p4sSwOrD",
-        "error": "Please enter your current password"
+        "required": "Please enter your current password"
       },
       "newPassword": {
         "label": "New password",
         "placeholder": "p4sSwOrD",
-        "error": "Please enter your new password"
+        "required": "Please enter your new password"
       },
       "save": "Save"
     },
@@ -78,7 +76,7 @@
     "signIn": {
       "title": "Sign in !",
       "save": "Connect",
-      "switch": "not registered yet ?"
+      "switch": "Not registered yet ?"
     },
 
     "signUp": {

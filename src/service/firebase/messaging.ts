@@ -40,16 +40,14 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
   } else if (firebase.messaging.isSupported()) {
     try {
       const token = await firebase.messaging().getToken({ vapidKey: vapidKey });
-      await database
-        .ref(`/user/${user.uid}/messaging`)
-        .update({ web: token });
+      await database.ref(`/user/${user.uid}/messaging`).update({ web: token });
     } catch ({ message }) {
       console.log(`Couldn't initialize Cloud Messaging for Web: ${message}`);
     }
   }
 };
 
-export const sendNotif = async (uid: string) => {
+export const pushMessaging = async (uid: string) => {
   try {
     const tokens = await database.ref(`/user/${uid}/messaging`).get();
     const payload = {

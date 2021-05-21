@@ -1,24 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { UseStateType } from 'types';
 
-// import { signOut } from '../service/firebase/auth';
-import { auth } from '../../service/firebase';
+import { auth } from 'service/firebase';
+
 import AuthModal from './AuthModal';
 
-type onSignOut = () => Promise<void>;
-type formMode = 'signIn' | 'signUp';
+import type { UseStateType } from 'types';
 
 export declare namespace AuthModalType {
   type Props = {
-    formModeState: [formMode, UseStateType<formMode>];
-    isModalOpenState: [boolean, UseStateType<boolean>];
-    isLoggedState: [boolean];
-    onSignOut: onSignOut;
+    formModeState: ['signIn' | 'signUp', UseStateType<'signIn' | 'signUp'>];
+    modalOpenState: [boolean, UseStateType<boolean>];
+    loggedState: [boolean];
+    onSignOut: () => Promise<void>;
   };
 }
 
 const AuthModalContainer: React.FC = () => {
-  const [formMode, setFormMode] = useState<formMode>('signIn');
+  const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [isLogged, setLogged] = useState<boolean>(false);
 
@@ -26,7 +24,7 @@ const AuthModalContainer: React.FC = () => {
     auth.onAuthStateChanged((user) => setLogged(!!user));
   }, []);
 
-  const onSignOut: onSignOut = useCallback(async () => {
+  const onSignOut = useCallback(async () => {
     await auth.signOut();
   }, []);
 
@@ -34,8 +32,8 @@ const AuthModalContainer: React.FC = () => {
     <AuthModal
       {...{
         formModeState: [formMode, setFormMode],
-        isModalOpenState: [isModalOpen, setModalOpen],
-        isLoggedState: [isLogged],
+        modalOpenState: [isModalOpen, setModalOpen],
+        loggedState: [isLogged],
         onSignOut,
       }}
     />

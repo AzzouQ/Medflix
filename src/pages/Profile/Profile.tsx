@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import {
   IonButtons,
   IonCol,
@@ -13,45 +12,36 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { Avatar, Button } from 'antd';
-import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
 import Footer from 'components/Footer';
 import VideoCard from 'components/VideoCard';
 
-import { user, videos } from 'service/fakeData';
+import { Styles } from './Profile.styles';
 
-const Profile: React.FC = () => {
-  const { push } = useHistory();
+import type { ProfileType } from './Profile.container';
+import UploadModal from 'components/UploadModal';
 
-  const goToUpload = () => {
-    push('/create');
-  };
-
-  const goToEditProfile = () => {
-    push('/editProfile');
-  };
-
+const Profile: React.FC<ProfileType.Props> = ({
+  user,
+  videos,
+  goToUpload,
+  goToEditProfile,
+}) => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot={'start'} style={{ marginLeft: 20 }}>
+          <IonButtons slot={'start'} style={Styles.button}>
             <Avatar size={'large'} icon={<UserOutlined />} />
             <IonTitle>{user.name}</IonTitle>
           </IonButtons>
           <IonButtons slot={'end'}>
+            <UploadModal />
             <Button
               type={'primary'}
-              style={{ marginRight: 20 }}
-              icon={<UploadOutlined />}
-              onClick={goToUpload}
-            >
-              {t`header.button.upload`}
-            </Button>
-            <Button
-              type={'primary'}
-              style={{ marginRight: 20 }}
+              style={Styles.button}
               icon={<EditOutlined />}
               onClick={goToEditProfile}
             >
@@ -63,8 +53,8 @@ const Profile: React.FC = () => {
 
       <IonContent fullscreen={true}>
         <IonGrid>
-          <IonList style={{ backgroundColor: 'transparent' }}>
-            <IonRow style={{ justifyContent: 'center' }}>
+          <IonList style={Styles.list}>
+            <IonRow style={Styles.container}>
               {videos.map((video, index) => (
                 <IonCol size={'auto'} key={index}>
                   <VideoCard video={video} />

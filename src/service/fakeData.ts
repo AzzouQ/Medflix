@@ -1,3 +1,11 @@
+export type VideoType = {
+  title: string;
+  preview: string;
+  url: string;
+};
+
+export type VideosType = VideoType[];
+
 export const videos = [
   {
     title: 'Video name',
@@ -35,6 +43,10 @@ export const videos = [
     url: 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4?alt=media&token=a8abafa7-5fd9-4179-be5f-1963a5b60d51',
   },
 ];
+
+export type UserType = {
+  name: string;
+};
 
 export const user = {
   name: 'Bastien',

@@ -29,18 +29,18 @@
     "email": {
       "label": "E-mail",
       "placeholder": "example@mail.com",
-      "error": "Veuillez entrer un email",
-      "error2": "L'email est invalide"
+      "required": "Veuillez entrer un email",
+      "error": "L'email est invalide"
     },
     "password": {
       "label": "Mot de passe",
       "placeholder": "p4sSwOrD",
-      "error": "Veuillez entrer un mot de passe"
+      "required": "Veuillez entrer un mot de passe"
     },
     "name": {
       "label": "Nom",
       "placeholder": "John Doe",
-      "error": "Veuillez entrer un nom"
+      "required": "Veuillez entrer un nom"
     },
 
     "create": {
@@ -63,12 +63,12 @@
       "oldPassword": {
         "label": "Mot de passe actuel",
         "placeholder": "p4sSwOrD",
-        "error": "Veuillez entrer votre mot de passe"
+        "required": "Veuillez entrer votre mot de passe"
       },
       "newPassword": {
         "label": "Nouveau mot de passe",
         "placeholder": "p4sSwOrD",
-        "error": "Veuillez entrer un nouveau mot de passe"
+        "required": "Veuillez entrer un nouveau mot de passe"
       },
       "save": "Enregistrer"
     },
@@ -138,7 +138,7 @@
     "auth/reserved-claims": "Une ou plusieurs revendications utilisateur personnalisées fournies à setCustomUserClaims() sont réservées. Par exemple, les revendications spécifiques OIDC telles que (sub, iat, iss, exp, aud, auth_time, etc.) ne doivent pas être utilisées comme clés pour les revendications personnalisées.",
     "auth/session-cookie-expired": "Le cookie de session Firebase fourni a expiré.",
     "auth/session-cookie-revoked": "Le cookie de session Firebase a été révoqué.",
-    "auth/uid-already-exists": "L' uid fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un uid unique.",
+    "auth/uid-already-exists": "L'uid fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un uid unique.",
     "auth/unauthorized-continue-uri": "Le domaine de l'URL de poursuite ne figure pas sur la liste blanche. Ajoutez le domaine à la liste blanche dans la console Firebase.",
     "auth/user-not-found": "Il n'existe aucun enregistrement d'utilisateur correspondant à l'identifiant fourni",
     "auth/weak-password": "Mot de passe trop faible",

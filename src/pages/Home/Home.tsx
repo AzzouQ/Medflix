@@ -17,9 +17,11 @@ import AuthModal from 'components/AuthModal';
 import VideoCard from 'components/VideoCard';
 import Footer from 'components/Footer';
 
-import { videos } from 'service/fakeData';
+import { Styles } from './Home.styles';
 
-const Home: React.FC = () => {
+import type { HomeType } from './Home.container';
+
+const Home: React.FC<HomeType.Props> = ({ videos }) => {
   return (
     <IonPage>
       <IonHeader>
@@ -35,8 +37,8 @@ const Home: React.FC = () => {
 
       <IonContent fullscreen={true}>
         <IonGrid>
-          <IonList style={{ backgroundColor: 'transparent' }}>
-            <IonRow style={{ justifyContent: 'center' }}>
+          <IonList style={Styles.list}>
+            <IonRow style={Styles.container}>
               {videos.map((video, index) => (
                 <IonCol size={'auto'} key={index}>
                   <VideoCard video={video} />

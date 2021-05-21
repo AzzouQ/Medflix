@@ -6,7 +6,6 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 import { t } from 'i18n';
-import LoadingModal from './LoadingModal';
 
 type EditProfileFormalues = {
   name: string;
@@ -198,7 +197,6 @@ const EditProfileForm: React.FC = () => {
     >
       {(formik) => (
         <Form name={'edit-profile'} size={'middle'} layout={'vertical'}>
-          <LoadingModal isLoading={formik.isSubmitting} />
           {renderEditName()}
           {renderEditEmail()}
           {renderEditPassword()}
