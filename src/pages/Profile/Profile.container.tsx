@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { videos, VideosType } from 'service/fakeData';
 import firebase, { auth, database } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices/user.slice';
 
 import Profile from './Profile';
 
+import type { VideoType } from 'types';
+
 export declare namespace ProfileType {
   type Props = {
     user: UserState | undefined;
-    videos: VideosType;
+    videos: VideoType[] | undefined;
     goToEditProfile: () => void;
   };
 }
@@ -19,11 +20,31 @@ export declare namespace ProfileType {
 const ProfileContainer: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
+  const [videos, setVideos] = useState<VideoType[]>();
+
   const { push } = useHistory();
 
   const goToEditProfile = () => {
     push('/editProfile');
   };
+
+  useEffect(() => {
+    const getMyVideos = async () => {
+      const videosIDsSnap = await database
+        .ref(`/users/${user?.uid}/videos`)
+        .get();
+      const videosIDs: string[] = Object.values(videosIDsSnap.val());
+      const videosSnap = await database.ref(`/videos`).get();
+      const videos: { [key: string]: VideoType } = videosSnap.val();
+      const myVideos = videosIDs.map((id) => {
+        return videos[id as string];
+      });
+      setVideos(myVideos);
+    };
+    if (user) {
+      getMyVideos();
+    }
+  }, [user]);
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {

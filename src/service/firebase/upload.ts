@@ -12,7 +12,7 @@ export type TaskManager = {
   onCancel: () => boolean;
 };
 
-export type VideoType = {
+type VideoType = {
   title: string;
   description: string;
 };

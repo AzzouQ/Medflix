@@ -16,11 +16,14 @@ import { Styles } from './VideoCard.styles';
 
 import type { VideoCardType } from './VideoCard.container';
 
+import { thumbnail } from 'assets';
+
 const VideoCard: React.FC<VideoCardType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],
   onStartPlaying,
   onShare,
   video,
+  ownerName,
 }) => {
   return (
     <>
@@ -35,12 +38,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
       <IonCard>
         <IonRow>
           <IonCardContent onClick={() => setModalOpen(true)}>
-            <Image
-              src={video.preview}
-              height={200}
-              width={340}
-              preview={false}
-            />
+            <Image src={thumbnail} height={200} width={340} preview={false} />
           </IonCardContent>
         </IonRow>
         <IonCardHeader>
@@ -50,7 +48,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
             </IonCol>
             <IonCol size={'9'}>
               <IonCardTitle>{video.title}</IonCardTitle>
-              <IonCardSubtitle>{'Author'}</IonCardSubtitle>
+              <IonCardSubtitle>{ownerName}</IonCardSubtitle>
             </IonCol>
             <IonCol size={'1'}>
               <ShareAltOutlined style={Styles.icon} onClick={onShare} />
