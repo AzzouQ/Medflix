@@ -6,4 +6,8 @@ export type UserType = {
   updateDate: string;
   subscribersCount: number;
   subscriptionsCount: number;
+  messaging: {
+    web: string;
+    mobile: string;
+  };
 };

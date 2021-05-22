@@ -19,8 +19,9 @@ import { t } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase, { auth, database } from 'service/firebase';
-import { listUser } from 'service/firebase/users';
+import { listFollowers } from 'service/firebase/users';
 import { userActions, userSelectors } from 'slices';
+import { UserType } from 'types';
 import { Styles } from './Followers.styles';
 
 const { Contacts } = Plugins;
@@ -42,7 +43,7 @@ type Contact = {
 const Followers: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
 
   const names = [
     'Nazim',
@@ -73,7 +74,7 @@ const Followers: React.FC = () => {
 
   useEffect(() => {
     async function fetchUsers() {
-      const _users = await listUser();
+      const _users = await listFollowers(user?.uid);
       if (_users.length > 0) setUsers(_users);
     }
 
@@ -168,9 +169,9 @@ const Followers: React.FC = () => {
           <IonGrid>
             <IonList style={{ backgroundColor: 'transparent' }}>
               <IonRow style={{ justifyContent: 'center' }}>
-                {users.map((fcm, index) => (
+                {users.map((user, index) => (
                   <IonCol size={'auto'} key={index}>
-                    <SubscribeCard user={{ fcm, name: names[index] }} />
+                    <SubscribeCard {...{ user }} />
                   </IonCol>
                 ))}
               </IonRow>

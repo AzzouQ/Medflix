@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-
 import firebase, { auth, database } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices/user.slice';
-
-import Profile from './Profile';
-
 import type { VideoType } from 'types';
+import Profile from './Profile';
 
 export declare namespace ProfileType {
   type Props = {
