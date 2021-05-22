@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { uploadSelectors } from 'slices';
-import type { UseStateType } from 'types';
 import UploadModal from './UploadModal';
 
+import type { UseStateType } from 'types';
 export declare namespace UploadModalType {
   type Props = {
     modalOpenState: [boolean, UseStateType<boolean>];

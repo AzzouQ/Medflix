@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonCol, IonLoading, IonRow } from '@ionic/react';
 import { Typography, Upload } from 'antd';
+import { PlusCircleTwoTone } from '@ant-design/icons';
 import { Formik } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
@@ -9,7 +10,6 @@ import { t } from 'i18n';
 import { Styles } from './UploadForm.styles';
 
 import type { UploadType } from './UploadForm.container';
-import { PlusCircleTwoTone } from '@ant-design/icons';
 
 const UploadForm: React.FC<UploadType.FormProps> = ({
   isDisabled,
@@ -75,7 +75,11 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
             <IonRow>
               <IonCol size={'12'}>
                 <Form.Item name={'signIn'}>
-                  <SubmitButton type={'primary'} block={true} disabled={isDisabled} >
+                  <SubmitButton
+                    type={'primary'}
+                    block={true}
+                    disabled={isDisabled}
+                  >
                     {t`-Upload`}
                   </SubmitButton>
                 </Form.Item>

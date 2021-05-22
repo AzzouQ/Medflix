@@ -1,9 +1,10 @@
-import { RcFile } from 'antd';
-import { UploadChangeParam } from 'antd/lib/upload';
 import React, { useCallback, useState } from 'react';
+import { RcFile, UploadChangeParam } from 'antd';
+
 import { translateError, useFirebaseUpload } from 'service/firebase';
-import type { FormikType } from 'types';
 import UploadForm from './UploadForm';
+
+import type { FormikType } from 'types';
 
 type OnChange = (info: UploadChangeParam) => void;
 

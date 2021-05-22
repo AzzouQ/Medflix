@@ -55,7 +55,6 @@ export const pushMessaging: pushMessagingProps = async (uid) => {
       registration_ids: Object.values(tokens.val()),
       collapse_key: 'type_a',
       notification: notification.notification,
-      data: notification.data,
     };
     await axios.post('https://fcm.googleapis.com/fcm/send', payload, {
       headers: {

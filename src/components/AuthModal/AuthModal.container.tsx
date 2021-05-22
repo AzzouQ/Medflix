@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
-
-import { auth } from 'service/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 
-import AuthModal from './AuthModal';
+import { auth } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices';
+
+import AuthModal from './AuthModal';
 
 import type { UseStateType } from 'types';
 

@@ -1,12 +1,7 @@
 export const notification = {
   notification: {
-    body: 'Allez vite le follow back',
-    title: 'Vous avez un nouvel abonné',
-  },
-  data: {
-    body: 'Allez vite le follow back',
-    title: 'Vous avez un nouvel abonné',
-    key_1: 'Value for key_1',
-    key_2: 'Value for key_2',
+    title: 'Medflix',
+    body: 'Vous avez une nouvelle notification',
+    icon: 'https://i.imgur.com/Wu5KM77.png',
   },
 };

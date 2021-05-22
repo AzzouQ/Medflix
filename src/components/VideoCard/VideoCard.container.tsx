@@ -6,10 +6,10 @@ import { useVideoPlayer } from 'react-video-player-hook';
 import { message } from 'antd';
 import { t } from 'i18n';
 
-import VideoCard from './VideoCard';
-
 import { database } from 'service/firebase';
 import { userSelectors } from 'slices';
+
+import VideoCard from './VideoCard';
 
 import type { UseStateType, VideoType } from 'types';
 

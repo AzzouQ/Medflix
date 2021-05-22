@@ -13,10 +13,9 @@ import { Button, Image, Avatar } from 'antd';
 import { UserOutlined, ShareAltOutlined } from '@ant-design/icons';
 
 import { Styles } from './VideoCard.styles';
+import { thumbnail } from 'assets';
 
 import type { VideoCardType } from './VideoCard.container';
-
-import { thumbnail } from 'assets';
 
 const VideoCard: React.FC<VideoCardType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],

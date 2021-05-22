@@ -1,5 +1,5 @@
 diff --git a/node_modules/antd/lib/index.d.ts b/node_modules/antd/lib/index.d.ts
-index 3c3aafc..03a047c 100644
+index 3c3aafc..900e34c 100644
 --- a/node_modules/antd/lib/index.d.ts
 +++ b/node_modules/antd/lib/index.d.ts
 @@ -121,6 +121,6 @@ export type { TooltipProps } from './tooltip';
@@ -7,7 +7,7 @@ index 3c3aafc..03a047c 100644
  export type { TypographyProps } from './typography';
  export { default as Typography } from './typography';
 -export type { UploadProps } from './upload';
-+export type { UploadProps, RcFile, RcCustomRequestOptions } from './upload';
++export type { UploadProps, RcFile, RcCustomRequestOptions, UploadChangeParam } from './upload';
  export { default as Upload } from './upload';
  export { default as version } from './version';
 diff --git a/node_modules/antd/lib/upload/index.d.ts b/node_modules/antd/lib/upload/index.d.ts
