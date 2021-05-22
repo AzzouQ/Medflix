@@ -1,12 +1,10 @@
-import React from 'react';
+import { CloudUploadOutlined, PlusCircleTwoTone } from '@ant-design/icons';
 import { IonModal, IonRow } from '@ionic/react';
 import { Button, Typography, Upload } from 'antd';
-import { CloudUploadOutlined, PlusCircleTwoTone } from '@ant-design/icons';
 import { t } from 'i18n';
-
-import { Styles } from './UploadModal.styles';
-
+import React from 'react';
 import type { UploadModalType } from './UploadModal.container';
+import { Styles } from './UploadModal.styles';
 
 const UploadModal: React.FC<UploadModalType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],

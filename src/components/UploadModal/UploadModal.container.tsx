@@ -24,6 +24,7 @@ const UploadModalContainer: React.FC = () => {
 
   const onChange = useCallback<OnChange>(
     (info) => {
+      setModalOpen(false);
       setFile(info.file as RcFile);
     },
     [setFile]

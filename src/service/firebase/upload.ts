@@ -47,6 +47,7 @@ export const useFirebaseUpload = () => {
         // onError
         (_error) => {
           message.error(t`-Une erreur s'est produite.`);
+          
         },
         // onComplete
         async () => {
@@ -56,6 +57,7 @@ export const useFirebaseUpload = () => {
               uploadActions.setComplete({
                 downloadUrl: downloadUrl,
                 metaData: uploadTask.snapshot.metadata,
+                state: firebase.storage.TaskState.SUCCESS
               })
             );
           } catch (error) {
