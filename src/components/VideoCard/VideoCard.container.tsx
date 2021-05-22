@@ -64,17 +64,17 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
   const onShare = useCallback(async () => {
     if (isPlatform('mobile')) {
       await Share.share({
-        title: 'Watch this video !',
-        text: 'Really awesome video you need to see right now !',
+        title: video.title,
+        text: video.description,
         url: video.url,
-        dialogTitle: 'Share your video',
+        dialogTitle: 'Share with your friends !',
       });
     } else {
       Clipboard.write({
         string: video.url,
       });
     }
-  }, [video.url]);
+  }, [video]);
 
   useEffect(() => {
     const getOwnerName = async () => {
