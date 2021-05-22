@@ -1,13 +1,11 @@
+import { RcFile } from 'antd';
+import { UploadChangeParam } from 'antd/lib/upload';
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RcFile, UploadChangeParam } from 'antd';
-
-import UploadModal from './UploadModal';
-
 import { useFirebaseUpload } from 'service/firebase/upload';
 import { uploadSelectors } from 'slices';
-
 import type { UseStateType } from 'types';
+import UploadModal from './UploadModal';
 
 type OnChange = (info: UploadChangeParam) => void;
 export declare namespace UploadModalType {
