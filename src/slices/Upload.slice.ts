@@ -1,62 +1,41 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import firebase from 'service/firebase';
 
+import type { TaskManager } from 'service/firebase';
+
 export type UploadState = {
-  uploadTask: firebase.storage.UploadTask | undefined;
-  onPlay: (() => void) | undefined;
-  onCancel: (() => Promise<void>) | undefined;
-  onNext: {
-    progress: number;
-    isRunning: boolean;
-  };
-  onError:
-    | {
-        error: firebase.storage.FirebaseStorageError;
-      }
-    | undefined;
-  onComplete:
-    | {
-        metaData: firebase.storage.FullMetadata;
-        downloadUrl: any;
-      }
-    | undefined;
+  progress: number;
+  state: firebase.storage.TaskState | undefined;
+  downloadURL: string | undefined;
+  metadata: firebase.storage.FullMetadata | undefined;
+  taskManager: TaskManager | undefined;
 };
 
 const initialState: UploadState = {
-  uploadTask: undefined,
-  onPlay: undefined,
-  onCancel: undefined,
-  onNext: {
-    progress: 0,
-    isRunning: false,
-  },
-  onError: undefined,
-  onComplete: undefined,
+  progress: 0,
+  state: undefined,
+  downloadURL: undefined,
+  metadata: undefined,
+  taskManager: undefined,
 };
 
 const uploadSlice = createSlice({
   name: 'Upload',
   initialState,
   reducers: {
-    setUploadTask: (state, action) => {
-      state.uploadTask = action.payload.uploadTask;
-    },
-    setPlay: (state, action) => {
-      state.onPlay = action.payload.onPlay;
-    },
-    setCancel: (state, action) => {
-      state.onCancel = action.payload.onCancel;
+    initUpload: (_state, action) => action.payload.upload,
+    setTaskManager: (state, action) => {
+      state.taskManager = action.payload.taskManager;
     },
     setNext: (state, action) => {
-      state.onNext = action.payload.uploadNext;
-    },
-    setError: (state, action) => {
-      state.onError = action.payload.uploadError;
+      state.progress = action.payload.progress;
+      state.state = action.payload.state;
     },
     setComplete: (state, action) => {
-      state.onComplete = action.payload.uploadComplete;
+      state.downloadURL = action.payload.downloadURL;
+      state.metadata = action.payload.metadata;
     },
-    resetUploadTask: () => initialState,
+    resetUpload: () => initialState,
   },
 });
 
@@ -67,24 +46,27 @@ const stateSelector = createSelector(
 
 export const uploadSelectors = {
   isRunning: createSelector(stateSelector, (state) => {
-    return !!state.uploadTask;
+    return (
+      state.state === firebase.storage.TaskState.RUNNING ||
+      state.state === firebase.storage.TaskState.PAUSED
+    );
   }),
-  getPlay: createSelector(stateSelector, (state) => {
-    return state.onPlay;
+  isPaused: createSelector(stateSelector, (state) => {
+    return state.state === firebase.storage.TaskState.PAUSED;
   }),
-  getCancel: createSelector(stateSelector, (state) => {
-    return state.onCancel;
-  }),
-  getNext: createSelector(stateSelector, (state) => {
-    return state.onNext;
-  }),
-  getError: createSelector(stateSelector, (state) => {
-    return state.onError?.error;
+  getProgress: createSelector(stateSelector, (state) => {
+    return state.progress;
   }),
   getComplete: createSelector(stateSelector, (state) => {
-    return state.onComplete;
+    return { downloadURL: state.downloadURL, metadata: state.metadata };
+  }),
+  getProgressBar: createSelector(stateSelector, (state) => {
+    return {
+      isPaused: state.state === firebase.storage.TaskState.PAUSED,
+      progress: state.progress,
+      taskManager: state.taskManager,
+    };
   }),
 };
 
-export const { actions: uploadActions, reducer: uploadReducer } =
-  uploadSlice;
+export const { actions: uploadActions, reducer: uploadReducer } = uploadSlice;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonReactRouter } from '@ionic/react-router';
 import {
   IonLabel,
   IonRouterOutlet,
@@ -30,52 +29,50 @@ const Router: React.FC = () => {
   };
 
   return (
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path={Links.Root}>
-            <Redirect to={Links.Home} />
-          </Route>
+    <IonTabs>
+      <IonRouterOutlet>
+        <Route exact path={Links.Root}>
+          <Redirect to={Links.Home} />
+        </Route>
 
-          <Route exact path={Links.Home}>
-            <Home />
-          </Route>
+        <Route exact path={Links.Home}>
+          <Home />
+        </Route>
 
-          <Route exact path={Links.Followers}>
-            <Followers />
-          </Route>
+        <Route exact path={Links.Followers}>
+          <Followers />
+        </Route>
 
-          <Route exact path={Links.Profile}>
-            <Profile />
-          </Route>
+        <Route exact path={Links.Profile}>
+          <Profile />
+        </Route>
 
-          <Route exact path={Links.Create}>
-            <Create />
-          </Route>
+        <Route exact path={Links.Create}>
+          <Create />
+        </Route>
 
-          <Route exact path={Links.EditProfile}>
-            <EditProfile />
-          </Route>
-        </IonRouterOutlet>
+        <Route exact path={Links.EditProfile}>
+          <EditProfile />
+        </Route>
+      </IonRouterOutlet>
 
-        <IonTabBar slot={'bottom'}>
-          <IonTabButton tab={'Home'} href={Links.Home}>
-            <HomeOutlined style={{ fontSize: 25 }} />
-            <IonLabel>{t`tab.home`}</IonLabel>
-          </IonTabButton>
+      <IonTabBar slot={'bottom'}>
+        <IonTabButton tab={'Home'} href={Links.Home}>
+          <HomeOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t`tab.home`}</IonLabel>
+        </IonTabButton>
 
-          <IonTabButton tab={'Followers'} href={Links.Followers}>
-            <TeamOutlined style={{ fontSize: 25 }} />
-            <IonLabel>{t('tab.followers')}</IonLabel>
-          </IonTabButton>
+        <IonTabButton tab={'Followers'} href={Links.Followers}>
+          <TeamOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t('tab.followers')}</IonLabel>
+        </IonTabButton>
 
-          <IonTabButton tab={'Profile'} href={Links.Profile}>
-            <UserOutlined style={{ fontSize: 25 }} />
-            <IonLabel>{t`tab.profile`}</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+        <IonTabButton tab={'Profile'} href={Links.Profile}>
+          <UserOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t`tab.profile`}</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   );
 };
 

@@ -1,20 +1,20 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RcCustomRequestOptions, RcFile } from 'antd';
-
-import { useFirebaseUpload } from 'service/firebase';
+import { RcFile, UploadChangeParam } from 'antd';
 
 import UploadModal from './UploadModal';
 
-import type { UseStateType } from 'types';
+import { useFirebaseUpload } from 'service/firebase/upload';
 import { uploadSelectors } from 'slices';
 
+import type { UseStateType } from 'types';
+
+type OnChange = (info: UploadChangeParam) => void;
 export declare namespace UploadModalType {
-  type OnStartUpload = (options: RcCustomRequestOptions) => Promise<void>;
   type Props = {
     modalOpenState: [boolean, UseStateType<boolean>];
     isRunning: boolean;
-    onStartUpload: OnStartUpload;
+    onChange: OnChange;
   };
 }
 
@@ -24,10 +24,9 @@ const UploadModalContainer: React.FC = () => {
 
   const { setFile } = useFirebaseUpload();
 
-  const onStartUpload: UploadModalType.OnStartUpload = useCallback(
-    async ({ file }: RcCustomRequestOptions) => {
-      setFile(file as RcFile);
-      setModalOpen(false);
+  const onChange = useCallback<OnChange>(
+    (info) => {
+      setFile(info.file as RcFile);
     },
     [setFile]
   );
@@ -37,7 +36,7 @@ const UploadModalContainer: React.FC = () => {
       {...{
         modalOpenState: [isModalOpen, setModalOpen],
         isRunning,
-        onStartUpload,
+        onChange,
       }}
     />
   );

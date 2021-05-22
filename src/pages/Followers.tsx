@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   IonButtons,
   IonCol,
@@ -13,13 +14,20 @@ import {
 } from '@ionic/react';
 import { t } from 'i18n';
 
+import { listUser } from 'service/firebase/users';
+
 import Footer from 'components/Footer';
 import AuthModal from 'components/AuthModal';
 import SubscribeCard from 'components/SubscribeCard';
+import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 
-import { listUser } from 'service/firebase/users';
+import { auth, database } from 'service/firebase';
+import { userActions, userSelectors } from 'slices';
 
 const Followers: React.FC = () => {
+  const dispatch = useDispatch();
+  const currentUser = auth.currentUser;
+  const user = useSelector(userSelectors.getUser);
   const [users, setUsers] = useState<string[]>([]);
 
   const names = [
@@ -33,6 +41,14 @@ const Followers: React.FC = () => {
     'Thomas',
     'Abdelkrim',
   ];
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await database.ref(`/user/${currentUser?.uid}`).get();
+      dispatch(userActions.setUser({ user: user.val() }));
+    }
+    getUser();
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -57,17 +73,21 @@ const Followers: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonGrid>
-          <IonList style={{ backgroundColor: 'transparent' }}>
-            <IonRow style={{ justifyContent: 'center' }}>
-              {users.map((fcm, index) => (
-                <IonCol size={'auto'} key={index}>
-                  <SubscribeCard user={{ fcm, name: names[index] }} />
-                </IonCol>
-              ))}
-            </IonRow>
-          </IonList>
-        </IonGrid>
+        {user ? (
+          <IonGrid>
+            <IonList style={{ backgroundColor: 'transparent' }}>
+              <IonRow style={{ justifyContent: 'center' }}>
+                {users.map((fcm, index) => (
+                  <IonCol size={'auto'} key={index}>
+                    <SubscribeCard user={{ fcm, name: names[index] }} />
+                  </IonCol>
+                ))}
+              </IonRow>
+            </IonList>
+          </IonGrid>
+        ) : (
+          <Unauthenticated />
+        )}
       </IonContent>
 
       <Footer />

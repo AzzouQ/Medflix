@@ -12,9 +12,9 @@ import { Styles } from './ProgressBar.styles';
 import type { ProgressBarType } from './ProgressBar.container';
 
 const ProgressBar: React.FC<ProgressBarType.Props> = ({
-  onPlay,
-  onCancel,
-  onNext: { isRunning, progress },
+  isPaused,
+  progress,
+  taskManager,
 }) => {
   return (
     <IonToolbar style={Styles.container}>
@@ -23,8 +23,8 @@ const ProgressBar: React.FC<ProgressBarType.Props> = ({
           type={'primary'}
           size={'middle'}
           shape={'circle'}
-          icon={isRunning ? <PauseOutlined /> : <CaretRightOutlined />}
-          onClick={onPlay}
+          icon={isPaused ? <CaretRightOutlined /> : <PauseOutlined />}
+          onClick={isPaused ? taskManager?.onResume : taskManager?.onPause}
           style={Styles.buttonSpace}
         />
         <Button
@@ -32,7 +32,7 @@ const ProgressBar: React.FC<ProgressBarType.Props> = ({
           size={'middle'}
           shape={'circle'}
           icon={<CloseOutlined />}
-          onClick={onCancel}
+          onClick={taskManager?.onCancel}
         />
       </IonButtons>
       <Progress

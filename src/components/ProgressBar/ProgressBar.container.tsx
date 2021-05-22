@@ -1,32 +1,31 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import ProgressBar from './ProgressBar';
+
 import { uploadSelectors } from 'slices';
 
-import ProgressBar from './ProgressBar';
+import type { TaskManager } from 'service/firebase';
 
 export declare namespace ProgressBarType {
   type Props = {
-    onPlay: () => void;
-    onCancel: () => Promise<void>;
-    onNext: {
-      progress: number;
-      isRunning: boolean;
-    };
+    isPaused: boolean;
+    progress: number;
+    taskManager: TaskManager | undefined;
   };
 }
 
 const ProgressBarContainer: React.FC = () => {
-  const onPlay = useSelector(uploadSelectors.getPlay)!;
-  const onCancel = useSelector(uploadSelectors.getCancel)!;
-  const onNext = useSelector(uploadSelectors.getNext)!;
+  const { isPaused, progress, taskManager } = useSelector(
+    uploadSelectors.getProgressBar
+  );
 
   return (
     <ProgressBar
       {...{
-        onPlay,
-        onCancel,
-        onNext,
+        isPaused,
+        progress,
+        taskManager,
       }}
     />
   );

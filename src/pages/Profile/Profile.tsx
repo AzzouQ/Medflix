@@ -11,19 +11,20 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Button, Typography } from 'antd';
+import { Avatar, Button } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
+
+import { auth } from 'service/firebase';
 
 import Footer from 'components/Footer';
 import VideoCard from 'components/VideoCard';
 import UploadModal from 'components/UploadModal';
+import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 
 import { Styles } from './Profile.styles';
 
 import type { ProfileType } from './Profile.container';
-import AuthModal from 'components/AuthModal';
-import { auth } from 'service/firebase';
 
 const Profile: React.FC<ProfileType.Props> = ({
   user,
@@ -34,9 +35,13 @@ const Profile: React.FC<ProfileType.Props> = ({
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot={'start'} style={Styles.buttons}>
+          <IonButtons slot={'start'}>
             {auth.currentUser && (
-              <Avatar size={'large'} icon={<UserOutlined />} />
+              <Avatar
+                size={'large'}
+                icon={<UserOutlined />}
+                style={Styles.buttons}
+              />
             )}
             <IonTitle>{user?.name ?? t`header.title.profile`}</IonTitle>
           </IonButtons>
@@ -70,18 +75,7 @@ const Profile: React.FC<ProfileType.Props> = ({
             </IonList>
           </IonGrid>
         ) : (
-          <IonGrid style={Styles.grid}>
-            <IonRow style={Styles.gridRow}>
-              <IonCol size={'12'}>
-                <IonRow style={Styles.unsignedRow}>
-                  <Typography.Title>{t`form.signIn.title`}</Typography.Title>
-                </IonRow>
-                <IonRow style={Styles.unsignedRow}>
-                  <AuthModal />
-                </IonRow>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+          <Unauthenticated />
         )}
       </IonContent>
 

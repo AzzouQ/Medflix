@@ -24,7 +24,7 @@ type Props = {
 };
 
 const VideoFormContainer: React.FC<Props> = ({ onReset, onDismiss }) => {
-//   const onComplete = useSelector(uploadSelectors.getComplete);
+  const onComplete = useSelector(uploadSelectors.getComplete);
   const videoFormSubmit: VideoType.FormSubmit = async (
     { title, description },
     { setFieldError, setSubmitting }
@@ -35,10 +35,10 @@ const VideoFormContainer: React.FC<Props> = ({ onReset, onDismiss }) => {
         owner: userId,
         title: title,
         description: description,
-        url: 'nComplete?.downloadUrl',
+        url: onComplete?.downloadURL,
         createDate: +new Date(),
       });
-    //   database.ref(`user/${userId}/video`).set();
+      //   database.ref(`user/${userId}/video`).set();
       onReset();
       onDismiss();
     } catch (error) {

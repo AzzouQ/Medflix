@@ -11,7 +11,7 @@ import type { UploadModalType } from './UploadModal.container';
 const UploadModal: React.FC<UploadModalType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],
   isRunning,
-  onStartUpload,
+  onChange,
 }) => {
   return (
     <>
@@ -19,7 +19,8 @@ const UploadModal: React.FC<UploadModalType.Props> = ({
         <IonRow style={Styles.container}>
           <Upload.Dragger
             accept={'video/*'}
-            customRequest={onStartUpload}
+            onChange={onChange}
+            beforeUpload={() => false}
             multiple={false}
             style={Styles.dragger}
           >

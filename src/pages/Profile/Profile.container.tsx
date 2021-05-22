@@ -20,7 +20,6 @@ const ProfileContainer: React.FC = () => {
   const dispatch = useDispatch();
   const currentUser = auth.currentUser;
   const user = useSelector(userSelectors.getUser);
-  console.log('User: ', user);
   const { push } = useHistory();
 
   const goToEditProfile = () => {

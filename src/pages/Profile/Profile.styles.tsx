@@ -13,17 +13,6 @@ const Styles: StylesType = {
   button: {
     marginRight: 20,
   },
-  grid: {
-    height: '100%',
-  },
-  gridRow: {
-    height: '100%',
-    alignContent: 'center',
-  },
-  unsignedRow: {
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
 };
 
 export { Styles };

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { IonApp } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
@@ -27,7 +28,9 @@ const App: React.FC = () => {
   return (
     <Provider store={rootStore.store}>
       <IonApp>
-        <Router />
+        <IonReactRouter>
+          <Router />
+        </IonReactRouter>
       </IonApp>
     </Provider>
   );
