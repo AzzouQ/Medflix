@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { isPlatform } from '@ionic/react';
 import { Plugins } from '@capacitor/core';
 import { useVideoPlayer } from 'react-video-player-hook';
+import { message } from 'antd';
+import { t } from 'i18n';
 
 import VideoCard from './VideoCard';
 
-import type { UseStateType } from 'types';
-import type { VideoType } from 'types/video';
 import { database } from 'service/firebase';
-import { useSelector } from 'react-redux';
 import { userSelectors } from 'slices';
+
+import type { UseStateType, VideoType } from 'types';
 
 const { Share, Clipboard } = Plugins;
 
@@ -73,6 +75,7 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
       Clipboard.write({
         string: video.url,
       });
+      message.success(t`-Le lien de la vidéo a été copier.`);
     }
   }, [video]);
 
