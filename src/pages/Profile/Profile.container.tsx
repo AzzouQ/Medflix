@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { videos, VideosType } from 'service/fakeData';
-import { auth, database } from 'service/firebase';
+import firebase, { auth, database } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices/user.slice';
 
 import Profile from './Profile';
@@ -18,7 +18,6 @@ export declare namespace ProfileType {
 
 const ProfileContainer: React.FC = () => {
   const dispatch = useDispatch();
-  const currentUser = auth.currentUser;
   const user = useSelector(userSelectors.getUser);
   const { push } = useHistory();
 
@@ -27,12 +26,19 @@ const ProfileContainer: React.FC = () => {
   };
 
   useEffect(() => {
-    async function getUser() {
-      const user = await database.ref(`/user/${currentUser?.uid}`).get();
-      dispatch(userActions.setUser({ user: user.val() }));
-    }
-    getUser();
-  }, [dispatch, currentUser]);
+    const initUser = async (currentUser: firebase.User) => {
+      const user = await database.ref(`/users/${currentUser!.uid}`).get();
+      dispatch(
+        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
+      );
+    };
+    !user &&
+      auth.onAuthStateChanged((currentUser) => {
+        if (currentUser) {
+          initUser(currentUser);
+        }
+      });
+  }, [dispatch, user]);
 
   return <Profile {...{ user, videos, goToEditProfile }} />;
 };

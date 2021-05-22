@@ -46,7 +46,7 @@ const SignUpFormContainer: React.FC<Props> = ({
         email,
         password
       );
-      await database.ref(`/user/${user!.uid}`).set({
+      await database.ref(`/users/${user!.uid}`).set({
         name: name,
         email: email,
         createDate: +new Date(),
@@ -55,8 +55,10 @@ const SignUpFormContainer: React.FC<Props> = ({
         subscriptionsCount: 0,
       });
       await initializeMessaging(user!);
-      const userInfos = await database.ref(`/user/${user!.uid}`).get();
-      dispatch(userActions.setUser({ user: userInfos.val() }));
+      const userInfos = await database.ref(`/users/${user!.uid}`).get();
+      dispatch(
+        userActions.initUser({ user: { ...userInfos.val(), uid: user!.uid } })
+      );
       setModalOpen(false);
     } catch (error) {
       const { field, message } = translateError(error);

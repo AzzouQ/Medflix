@@ -43,11 +43,13 @@ const SignInFormContainer: React.FC<Props> = ({
     try {
       const { user } = await auth.signInWithEmailAndPassword(email, password);
       await database
-        .ref(`/user/${user!.uid}`)
+        .ref(`/users/${user!.uid}`)
         .update({ updateDate: +new Date() });
       await initializeMessaging(user!);
-      const userInfos = await database.ref(`/user/${user!.uid}`).get();
-      dispatch(userActions.setUser({ user: userInfos.val() }));
+      const userInfos = await database.ref(`/users/${user!.uid}`).get();
+      dispatch(
+        userActions.initUser({ user: { ...userInfos.val(), uid: user!.uid } })
+      );
       setModalOpen(false);
     } catch (error) {
       const { field, message } = translateError(error);
