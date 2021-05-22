@@ -34,6 +34,7 @@ const uploadSlice = createSlice({
     setComplete: (state, action) => {
       state.downloadURL = action.payload.downloadURL;
       state.metadata = action.payload.metadata;
+      state.state = action.payload.state;
     },
     resetUpload: () => initialState,
   },

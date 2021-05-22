@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import UploadModal from './UploadModal';
-
 import { uploadSelectors } from 'slices';
-
 import type { UseStateType } from 'types';
+import UploadModal from './UploadModal';
 
 export declare namespace UploadModalType {
   type Props = {

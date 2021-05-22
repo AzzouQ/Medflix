@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Plugins } from '@capacitor/core';
 import {
   IonButtons,
   IonCol,
@@ -12,22 +11,17 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Plugins } from '@capacitor/core';
-import { t } from 'i18n';
-
-import Footer from 'components/Footer';
 import AuthModal from 'components/AuthModal';
+import Footer from 'components/Footer';
 import SubscribeCard from 'components/SubscribeCard';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
-
-import { listUser } from 'service/firebase/users';
+import { t } from 'i18n';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import firebase, { auth, database } from 'service/firebase';
-
-import { userSelectors, userActions } from 'slices';
-
+import { listUser } from 'service/firebase/users';
+import { userActions, userSelectors } from 'slices';
 import { Styles } from './Followers.styles';
-
-import type { UserType } from 'types';
 
 const { Contacts } = Plugins;
 
@@ -80,29 +74,74 @@ const Followers: React.FC = () => {
   useEffect(() => {
     async function fetchUsers() {
       const _users = await listUser();
-      setUsers(_users);
+      if (_users.length > 0) setUsers(_users);
     }
 
     fetchUsers();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    getContacts();
-  }, []);
+    if (user) getContacts();
+  });
+
+  const addAFollow = (newFollow: string) => {
+    const me = user?.uid;
+
+    return database.ref(`/users/`).transaction((snapshot) => {
+      if (!me) return snapshot;
+      if (snapshot) {
+        if (!snapshot[newFollow].subscribers)
+          snapshot[newFollow].subscribers = [me];
+        else
+          snapshot[newFollow].subscribers = new Set([
+            ...snapshot[newFollow].subscribers,
+            me,
+          ]);
+        if (!snapshot[me].subscriptions)
+          snapshot[me].subscriptions = [newFollow];
+        else
+          snapshot[me].subscriptions = new Set([
+            ...snapshot[me].subscriptions,
+            newFollow,
+          ]);
+        snapshot[me].subscriptionsCount = snapshot[me].subscriptions.length;
+        snapshot[newFollow].subscribersCount =
+          snapshot[newFollow].subscribers.length;
+      }
+      return snapshot;
+    });
+  };
+
+  const addToSubscriptions = async (newFollow: string[]) => {
+    newFollow.forEach(async (user) => {
+      await addAFollow(user);
+    });
+  };
 
   const getContacts = async (): Promise<void> => {
-    const values = await database.ref(`/users/`).get();
+    const values = await database.ref(`/users/`).once('value');
     const users = values.val();
+    const newFollow: string[] = [];
     try {
       const { granted } = await Contacts.getPermissions();
       if (granted) {
         const { contacts } = await Contacts.getContacts();
-        contacts.map((contact: Contact) =>
-          users.map((user: UserType) => {
-            contact.emails[0] === user.email && console.log('');
-            return null; //TODO follower user if not already followed
-          })
-        );
+        contacts.forEach((contact: Contact) => {
+          for (const key in users) {
+            if (Object.prototype.hasOwnProperty.call(users, key)) {
+              const element = users[key];
+              if (!contact.emails[0].address || !element.email) continue;
+              if (
+                contact.emails[0].address.toLowerCase() ===
+                element.email.toLowerCase()
+              )
+                newFollow.push(key);
+            }
+          }
+        });
+        addToSubscriptions(newFollow);
+      } else {
+        // TODO Ask user to turn on contact
       }
     } catch (error) {
       console.log(error);
