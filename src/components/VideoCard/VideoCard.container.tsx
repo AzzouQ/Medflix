@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { isPlatform } from '@ionic/react';
 import { Plugins } from '@capacitor/core';
 import { useVideoPlayer } from 'react-video-player-hook';
@@ -23,22 +23,30 @@ export declare namespace VideoCardType {
   };
 }
 
+type OnLog = (fromPlayerId: string, currentTime: number | undefined) => void;
+
 const VideoCardContainer: React.FC<Props> = ({ video }) => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const isExited = useRef(false);
 
-  const onCloseModal = useCallback(() => {
+  const onCloseModal = async () => {
+    await stopAllPlayers();
     setModalOpen(false);
-  }, [setModalOpen]);
+    isExited.current = true;
+  };
 
-  const onPause = useCallback(
-    async (fromPlayerId: string, currentTime: number | undefined) => {
-      console.log(`${fromPlayerId} paused at ${currentTime}`);
-    },
-    []
-  );
+  const onLog: OnLog = async (
+    fromPlayerId: string,
+    currentTime: number | undefined
+  ) => {
+    if (!isExited.current) {
+      console.log(`${fromPlayerId} is at ${currentTime}`);
+    }
+  };
 
-  const { initPlayer } = useVideoPlayer({
-    onPause: onPause,
+  const { initPlayer, stopAllPlayers } = useVideoPlayer({
+    onPause: onLog,
+    onPlay: onLog,
     onEnded: onCloseModal,
     onExit: onCloseModal,
   });

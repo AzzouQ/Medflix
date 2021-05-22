@@ -43,7 +43,6 @@ const Followers: React.FC = () => {
     fetchUsers();
   }, []);
 
-
   return (
     <IonPage>
       <IonHeader>
@@ -51,7 +50,7 @@ const Followers: React.FC = () => {
           <IonButtons slot={'start'}>
             <IonTitle>{t`header.title.followers`}</IonTitle>
           </IonButtons>
-          <IonButtons slot={'end'}>
+          <IonButtons slot={'end'} style={{ marginRight: 20 }}>
             <AuthModal />
           </IonButtons>
         </IonToolbar>

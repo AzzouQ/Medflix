@@ -1,31 +1,29 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
-import GravatarAPI from 'gravatar-api';
 
 export type UserState = {
-  user: {
-    id: string | null;
-    email: string | null;
-    name: string | null;
-  };
+  name: string;
+  email: string;
+  createDate: string;
+  updateDate: string;
+  subscribersCount: number;
+  subscriptionsCount: number;
+};
+
+const initialState: UserState = {
+  name: '',
+  email: '',
+  createDate: '',
+  updateDate: '',
+  subscribersCount: 0,
+  subscriptionsCount: 0,
 };
 
 const userSlice = createSlice({
   name: 'User',
-  initialState: {
-    user: { id: null, email: null, name: null },
-  } as UserState,
+  initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.user.id = action.payload.user._id;
-      state.user.email = action.payload.user.email;
-      state.user.name = action.payload.user.name;
-    },
-    setName: (state, action) => {
-      state.user.name = action.payload.name;
-    },
-    setEmail: (state, action) => {
-      state.user.email = action.payload.email;
-    },
+    setUser: (_state, action) => action.payload.user,
+    resetUser: () => initialState,
   },
 });
 
@@ -35,26 +33,8 @@ const stateSelector = createSelector(
 );
 
 export const userSelectors = {
-  isLogged: createSelector(stateSelector, (state) => {
-    return !!state.user.id;
-  }),
-  getId: createSelector(stateSelector, (state) => {
-    return state.user.id ?? undefined;
-  }),
-  getEmail: createSelector(stateSelector, (state) => {
-    return state.user.email ?? undefined;
-  }),
-  getName: createSelector(stateSelector, (state) => {
-    return state.user.name ?? undefined;
-  }),
-  getAvatar: createSelector(stateSelector, (state) => {
-    return GravatarAPI.imageUrl({
-      email: state.user.email,
-      parameters: {
-        size: 500,
-        default: 'identicon',
-      },
-    });
+  getUser: createSelector(stateSelector, (state) => {
+    return state;
   }),
 };
 

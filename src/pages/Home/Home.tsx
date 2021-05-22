@@ -29,7 +29,7 @@ const Home: React.FC<HomeType.Props> = ({ videos }) => {
           <IonButtons slot={'start'}>
             <IonTitle>{t`header.title.home`}</IonTitle>
           </IonButtons>
-          <IonButtons slot={'end'}>
+          <IonButtons slot={'end'} style={Styles.buttons}>
             <AuthModal />
           </IonButtons>
         </IonToolbar>

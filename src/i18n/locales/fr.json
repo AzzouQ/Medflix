@@ -16,7 +16,8 @@
       "home": "Dernières vidéos",
       "followers": "Abonnements",
       "create": "Créer",
-      "editProfile": "Gérer Profil"
+      "editProfile": "Gérer Profil",
+      "profile": "Profil"
     }
   },
 
@@ -87,6 +88,7 @@
   },
 
   "firebase": {
+    "auth/wrong-password": "Le mot de passe est incorrect.",
     "auth/claims-too-large": "La charge utile des revendications fournie à setCustomUserClaims() dépasse la taille maximale autorisée de 1 000 octets.",
     "auth/email-already-exists": "L'e-mail fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un e-mail unique.",
     "auth/email-already-in-use": "Mail déjà utilisé par un autre utilisateur",

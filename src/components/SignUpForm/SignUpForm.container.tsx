@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { auth, database, translateError } from 'service/firebase';
 import { initializeMessaging } from 'service/firebase/messaging';
 
 import SignUpForm from './SignUpForm';
+import { userActions } from 'slices';
 
 import type { FormikType, GoToType } from 'types';
 
@@ -29,6 +31,8 @@ const SignUpFormContainer: React.FC<Props> = ({
   setModalOpen,
   setFormMode,
 }) => {
+  const dispatch = useDispatch();
+
   const signUpFormSubmit: SignUpType.FormSubmit = async (
     { name, email, password },
     { setFieldError, setSubmitting }
@@ -38,18 +42,17 @@ const SignUpFormContainer: React.FC<Props> = ({
         email,
         password
       );
-      if (user) {
-        await database.ref(`/user/${user?.uid}`).set({
-          name: name,
-          createDate: +new Date(),
-          updateDate: +new Date(),
-          subscribers: null,
-          subscriptions: null,
-          subscribersCount: 0,
-          subscriptionsCount: 0,
-        });
-        await initializeMessaging(user);
-      }
+      await database.ref(`/user/${user!.uid}`).set({
+        name: name,
+        email: email,
+        createDate: +new Date(),
+        updateDate: +new Date(),
+        subscribersCount: 0,
+        subscriptionsCount: 0,
+      });
+      await initializeMessaging(user!);
+      const userInfos = await database.ref(`/user/${user!.uid}`).get();
+      dispatch(userActions.setUser({ user: userInfos.val() }));
       setModalOpen(false);
     } catch (error) {
       const { field, message } = translateError(error);

@@ -16,6 +16,7 @@ const vapidKey =
   'BM0a1iAARbJRo1jVs2Dh7tjrpv8XNnfQGWb528rY5dMLHe0K8IIaeRvsKxdlhsJM4X5IV6NpVXl8VsEpmOFjl0E';
 
 type initializeMessagingProps = (user: firebase.User) => Promise<void>;
+type pushMessagingProps = (uid: string) => Promise<void>;
 
 export const initializeMessaging: initializeMessagingProps = async (user) => {
   if (isPlatform('ios')) {
@@ -47,7 +48,7 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
   }
 };
 
-export const pushMessaging = async (uid: string) => {
+export const pushMessaging: pushMessagingProps = async (uid) => {
   try {
     const tokens = await database.ref(`/user/${uid}/messaging`).get();
     const payload = {

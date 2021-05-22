@@ -44,14 +44,6 @@ export const videos = [
   },
 ];
 
-export type UserType = {
-  name: string;
-};
-
-export const user = {
-  name: 'Bastien',
-};
-
 export const notification = {
   notification: {
     body: 'Allez vite le follow back',

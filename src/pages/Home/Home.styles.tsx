@@ -7,6 +7,9 @@ const Styles: StylesType = {
   container: {
     justifyContent: 'center',
   },
+  buttons: {
+    marginRight: 20,
+  },
 };
 
 export { Styles };

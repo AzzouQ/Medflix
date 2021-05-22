@@ -1,0 +1,41 @@
+diff --git a/node_modules/react-video-player-hook/dist/esm/useVideoPlayer.js b/node_modules/react-video-player-hook/dist/esm/useVideoPlayer.js
+index d86924e..84fd562 100644
+--- a/node_modules/react-video-player-hook/dist/esm/useVideoPlayer.js
++++ b/node_modules/react-video-player-hook/dist/esm/useVideoPlayer.js
+@@ -60,13 +60,13 @@ export function useVideoPlayer({ onReady, onPlay, onPause, onEnded, onExit }) {
+             if (readyListener)
+                 readyListener.remove();
+             if (playListener)
+-                readyListener.remove();
++                playListener.remove();
+             if (pauseListener)
+-                readyListener.remove();
++                pauseListener.remove();
+             if (endedListener)
+-                readyListener.remove();
++                endedListener.remove();
+             if (exitListener)
+-                readyListener.remove();
++                exitListener.remove();
+         };
+     }, []);
+     /**
+diff --git a/node_modules/react-video-player-hook/src/useVideoPlayer.ts b/node_modules/react-video-player-hook/src/useVideoPlayer.ts
+index afde017..ff187ca 100644
+--- a/node_modules/react-video-player-hook/src/useVideoPlayer.ts
++++ b/node_modules/react-video-player-hook/src/useVideoPlayer.ts
+@@ -112,10 +112,10 @@ export function useVideoPlayer({
+             });
+         return () => {
+             if(readyListener) readyListener.remove();
+-            if(playListener) readyListener.remove();
+-            if(pauseListener) readyListener.remove();
+-            if(endedListener) readyListener.remove();
+-            if(exitListener) readyListener.remove();
++            if(playListener) playListener.remove();
++            if(pauseListener) pauseListener.remove();
++            if(endedListener) endedListener.remove();
++            if(exitListener) exitListener.remove();
+         }
+     }, []);
+  

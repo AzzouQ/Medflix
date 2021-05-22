@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { auth, database, translateError } from 'service/firebase';
 import { initializeMessaging } from 'service/firebase/messaging';
 
 import SignInForm from './SignInForm';
+import { userActions } from 'slices';
 
 import type { FormikType, GoToType } from 'types';
 
@@ -28,18 +30,20 @@ const SignInFormContainer: React.FC<Props> = ({
   setModalOpen,
   setFormMode,
 }) => {
+  const dispatch = useDispatch();
+
   const signInFormSubmit: SignInType.FormSubmit = async (
     { email, password },
     { setFieldError, setSubmitting }
   ) => {
     try {
       const { user } = await auth.signInWithEmailAndPassword(email, password);
-      if (user) {
-        await database
-          .ref(`/user/${user.uid}`)
-          .update({ updateDate: +new Date() });
-        await initializeMessaging(user);
-      }
+      await database
+        .ref(`/user/${user!.uid}`)
+        .update({ updateDate: +new Date() });
+      await initializeMessaging(user!);
+      const userInfos = await database.ref(`/user/${user!.uid}`).get();
+      dispatch(userActions.setUser({ user: userInfos.val() }));
       setModalOpen(false);
     } catch (error) {
       const { field, message } = translateError(error);

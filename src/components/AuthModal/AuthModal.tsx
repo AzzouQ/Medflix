@@ -7,14 +7,12 @@ import { t } from 'i18n';
 import SignInForm from 'components/SignInForm';
 import SignUpForm from 'components/SignUpForm';
 
-import { Styles } from './AuthModal.styles';
-
 import type { AuthModalType } from './AuthModal.container';
 
 const AuthModal: React.FC<AuthModalType.Props> = ({
+  user,
   formModeState: [formMode, setFormMode],
   modalOpenState: [isModalOpen, setModalOpen],
-  loggedState: [isLogged],
   onSignOut,
 }) => {
   return (
@@ -26,19 +24,13 @@ const AuthModal: React.FC<AuthModalType.Props> = ({
           <SignUpForm setModalOpen={setModalOpen} setFormMode={setFormMode} />
         )}
       </IonModal>
-      {isLogged ? (
-        <Button
-          type={'primary'}
-          style={Styles.button}
-          icon={<LogoutOutlined />}
-          onClick={onSignOut}
-        >
+      {user ? (
+        <Button type={'primary'} icon={<LogoutOutlined />} onClick={onSignOut}>
           {t`header.button.signOut`}
         </Button>
       ) : (
         <Button
           type={'primary'}
-          style={Styles.button}
           icon={<LoginOutlined />}
           onClick={() => setModalOpen(true)}
         >
