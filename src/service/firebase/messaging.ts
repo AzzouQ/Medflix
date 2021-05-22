@@ -30,7 +30,7 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
         await capacitorMessaging.setAutoInit({ enabled: true });
         const { token } = await capacitorMessaging.getToken();
         await database
-          .ref(`/user/${user.uid}/messaging`)
+          .ref(`/users/${user.uid}/messaging`)
           .update({ mobile: token });
       }
     } catch ({ message }) {
@@ -41,7 +41,7 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
   } else if (firebase.messaging.isSupported()) {
     try {
       const token = await firebase.messaging().getToken({ vapidKey: vapidKey });
-      await database.ref(`/user/${user.uid}/messaging`).update({ web: token });
+      await database.ref(`/users/${user.uid}/messaging`).update({ web: token });
     } catch ({ message }) {
       console.log(`Couldn't initialize Cloud Messaging for Web: ${message}`);
     }
@@ -50,7 +50,7 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
 
 export const pushMessaging: pushMessagingProps = async (uid) => {
   try {
-    const tokens = await database.ref(`/user/${uid}/messaging`).get();
+    const tokens = await database.ref(`/users/${uid}/messaging`).get();
     const payload = {
       registration_ids: Object.values(tokens.val()),
       collapse_key: 'type_a',

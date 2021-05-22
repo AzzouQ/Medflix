@@ -34,7 +34,7 @@ export const useFirebaseUpload = () => {
     if (uploadData?.file && uploadData?.type) {
       console.log('Data: ', uploadData);
       const uploadTask = storage
-        .ref(`/video/${auth.currentUser!.uid}/${uploadData.file.uid}`)
+        .ref(`/videos/${auth.currentUser!.uid}/${uploadData.file.uid}`)
         .put(uploadData.file);
       dispatch(
         uploadActions.setTaskManager({
@@ -66,7 +66,7 @@ export const useFirebaseUpload = () => {
         async () => {
           try {
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
-            const videoID = await database.ref(`video/`).push({
+            const videoID = await database.ref(`/videos/`).push({
               owner: user!.uid,
               title: uploadData.type.title,
               description: uploadData.type.description,
@@ -74,10 +74,10 @@ export const useFirebaseUpload = () => {
               createDate: +new Date(),
             });
             const videosSnap = await database
-              .ref(`user/${user!.uid}/videos`)
+              .ref(`/users/${user!.uid}/videos`)
               .get();
             const videos = videosSnap.val();
-            await database.ref(`user/${user!.uid}`).update({
+            await database.ref(`/users/${user!.uid}`).update({
               videos: videos
                 ? [...Object.values(videos), videoID.key]
                 : [videoID.key],

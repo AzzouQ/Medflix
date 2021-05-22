@@ -62,7 +62,7 @@ const Followers: React.FC = () => {
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/user/${currentUser!.uid}`).get();
+      const user = await database.ref(`/users/${currentUser!.uid}`).get();
       dispatch(
         userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
       );
@@ -89,7 +89,7 @@ const Followers: React.FC = () => {
   }, []);
 
   const getContacts = async (): Promise<void> => {
-    const values = await database.ref(`user/`).get();
+    const values = await database.ref(`/users/`).get();
     const users = values.val();
     try {
       const { granted } = await Contacts.getPermissions();

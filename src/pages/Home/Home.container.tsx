@@ -19,8 +19,16 @@ const HomeContainer: React.FC = () => {
   const user = useSelector(userSelectors.getUser);
 
   useEffect(() => {
+    const getAllVideos = async () => {
+      const videos = await database.ref(`/videos`).get();
+      console.log('Les videos: ', videos.val());
+    };
+    getAllVideos();
+  }, []);
+
+  useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/user/${currentUser!.uid}`).get();
+      const user = await database.ref(`/users/${currentUser!.uid}`).get();
       dispatch(
         userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
       );
