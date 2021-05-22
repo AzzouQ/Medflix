@@ -7,9 +7,9 @@ import {
   IonRow,
 } from '@ionic/react';
 import { Button } from 'antd';
-import { t } from '../i18n';
+import { t } from 'i18n';
 
-// import { sendNotif } from '../service/firebase/fcm';
+import { pushMessaging } from 'service/firebase';
 
 type Props = {
   user: {
@@ -29,9 +29,9 @@ const SubscribeCard: React.FC<Props> = ({ user }) => {
           <IonCol size={'1'}>
             <Button
               type={'primary'}
-              // onClick={() => {
-              //   sendNotif(user.fcm);
-              // }}
+              onClick={() => {
+                pushMessaging(user.fcm);
+              }}
             >
               {user ? t`subscriptions.subscribe` : t`subscriptions.unsubscribe`}
             </Button>

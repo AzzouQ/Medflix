@@ -1,8 +1,12 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { auth, database, translateError } from 'service/firebase';
-import { initializeMessaging } from 'service/firebase/messaging';
+import {
+  auth,
+  database,
+  translateError,
+  initializeMessaging,
+} from 'service/firebase';
 
 import SignUpForm from './SignUpForm';
 import { userActions } from 'slices';
