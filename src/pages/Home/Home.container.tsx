@@ -1,27 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import firebase, { auth, database } from 'service/firebase';
-import { videos, VideosType } from 'service/fakeData';
 
 import { userActions, userSelectors } from 'slices';
 
 import Home from './Home';
 
+import type { VideoType } from 'types';
+
 export declare namespace HomeType {
   type Props = {
-    videos: VideosType;
+    videos: VideoType[] | undefined;
   };
 }
 
 const HomeContainer: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
+  const [videos, setVideos] = useState<VideoType[]>();
 
   useEffect(() => {
     const getAllVideos = async () => {
-      const videos = await database.ref(`/videos`).get();
-      console.log('Les videos: ', videos.val());
+      const videosSnap = await database.ref(`/videos`).get();
+      setVideos(Object.values(videosSnap.val()));
     };
     getAllVideos();
   }, []);

@@ -23,9 +23,11 @@ import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 import { listUser } from 'service/firebase/users';
 import firebase, { auth, database } from 'service/firebase';
 
-import { userSelectors, userActions, UserType } from 'slices';
+import { userSelectors, userActions } from 'slices';
 
 import { Styles } from './Followers.styles';
+
+import type { UserType } from 'types';
 
 const { Contacts } = Plugins;
 

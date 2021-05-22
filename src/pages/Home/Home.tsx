@@ -39,7 +39,7 @@ const Home: React.FC<HomeType.Props> = ({ videos }) => {
         <IonGrid>
           <IonList style={Styles.list}>
             <IonRow style={Styles.container}>
-              {videos.map((video, index) => (
+              {videos?.map((video, index) => (
                 <IonCol size={'auto'} key={index}>
                   <VideoCard video={video} />
                 </IonCol>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { isPlatform } from '@ionic/react';
 import { Plugins } from '@capacitor/core';
 import { useVideoPlayer } from 'react-video-player-hook';
@@ -6,7 +6,10 @@ import { useVideoPlayer } from 'react-video-player-hook';
 import VideoCard from './VideoCard';
 
 import type { UseStateType } from 'types';
-import type { VideoType } from 'service/fakeData';
+import type { VideoType } from 'types/video';
+import { database } from 'service/firebase';
+import { useSelector } from 'react-redux';
+import { userSelectors } from 'slices';
 
 const { Share, Clipboard } = Plugins;
 
@@ -20,14 +23,17 @@ export declare namespace VideoCardType {
     onStartPlaying: () => void;
     onShare: () => Promise<void>;
     video: VideoType;
+    ownerName: string;
   };
 }
 
 type OnLog = (fromPlayerId: string, currentTime: number | undefined) => void;
 
 const VideoCardContainer: React.FC<Props> = ({ video }) => {
+  const user = useSelector(userSelectors.getUser);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const isExited = useRef(false);
+  const [ownerName, setOwnerName] = useState<string>('Unknown');
 
   const onCloseModal = async () => {
     await stopAllPlayers();
@@ -70,6 +76,15 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
     }
   }, [video.url]);
 
+  useEffect(() => {
+    const getOwnerName = async () => {
+      const ownerNameSnap = await database.ref(`/users/${video.owner}`).get();
+      const ownerName = ownerNameSnap.val();
+      setOwnerName(ownerName ? ownerName.name : user?.name);
+    };
+    getOwnerName();
+  }, [user?.name, video.owner]);
+
   return (
     <VideoCard
       {...{
@@ -77,6 +92,7 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
         onShare,
         onStartPlaying,
         video,
+        ownerName,
       }}
     />
   );

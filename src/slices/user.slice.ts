@@ -1,14 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
-export type UserType = {
-  uid: string;
-  name: string;
-  email: string;
-  createDate: string;
-  updateDate: string;
-  subscribersCount: number;
-  subscriptionsCount: number;
-};
+import type { UserType } from 'types';
 
 export type UserState = UserType | null;
 
