@@ -1,5 +1,4 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import {
   IonLabel,
   IonRouterOutlet,
@@ -7,19 +6,17 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react';
-import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
-
-import Home from 'pages/Home';
-import Followers from 'pages/Followers';
-import Profile from 'pages/Profile';
 import EditProfile from 'pages/EditProfile';
+import Followers from 'pages/Followers';
+import Home from 'pages/Home';
+import Profile from 'pages/Profile';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 const Router: React.FC = () => {
   const Links = {
     Root: '/',
-    SignIn: '/signIn',
-    SignUp: '/signUp',
     Profile: '/profile',
     Home: '/home',
     EditProfile: '/editProfile',
@@ -29,7 +26,7 @@ const Router: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path={Links.Root}>
+        <Route path={Links.Root}>
           <Redirect to={Links.Home} />
         </Route>
 
