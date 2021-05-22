@@ -26,7 +26,7 @@ const Router: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route path={Links.Root}>
+        <Route exact path={Links.Root}>
           <Redirect to={Links.Home} />
         </Route>
 

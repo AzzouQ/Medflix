@@ -1,17 +1,1 @@
-{
-  "appId": "com.medflixofficial.app",
-  "appName": "Medflix",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "build",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {},
-  "server": {
-    "url": "http://192.168.1.18:8100",
-    "cleartext": true
-  }
-}
+{}
