@@ -9,6 +9,16 @@ const Styles: StylesType = {
   title: {
     textAlign: 'center',
   },
+  dragger: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    width: 300,
+    justifySelf: 'center',
+    alignSelf: 'center',
+  },
+  icon: {
+    fontSize: 30,
+  },
 };
 
 export { Styles };

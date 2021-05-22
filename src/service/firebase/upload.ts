@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { message, RcFile } from 'antd';
 import { t } from 'i18n';
 
-import firebase, { auth, storage } from './firebase';
-import { uploadActions } from 'slices';
+import firebase, { auth, database, storage } from './firebase';
+import { uploadActions, userSelectors } from 'slices';
 
 export type TaskManager = {
   onPause: () => boolean;
@@ -12,16 +12,30 @@ export type TaskManager = {
   onCancel: () => boolean;
 };
 
+export type VideoType = {
+  title: string;
+  description: string;
+};
+
+export type UploadType =
+  | {
+      type: VideoType;
+      file: RcFile;
+    }
+  | undefined;
+
 export const useFirebaseUpload = () => {
   const dispatch = useDispatch();
+  const user = useSelector(userSelectors.getUser);
   const unsubscribe = useRef<Function>();
-  const [file, setFile] = useState<RcFile>();
+  const [uploadData, startUpload] = useState<UploadType>(undefined);
 
   useEffect(() => {
-    if (file) {
+    if (uploadData?.file && uploadData?.type) {
+      console.log('Data: ', uploadData);
       const uploadTask = storage
-        .ref(`/video/${auth.currentUser!.uid}/${file.uid}`)
-        .put(file);
+        .ref(`/video/${auth.currentUser!.uid}/${uploadData.file.uid}`)
+        .put(uploadData.file);
       dispatch(
         uploadActions.setTaskManager({
           taskManager: {
@@ -52,22 +66,33 @@ export const useFirebaseUpload = () => {
         async () => {
           try {
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
-            dispatch(
-              uploadActions.setComplete({
-                downloadUrl: downloadUrl,
-                metaData: uploadTask.snapshot.metadata,
-              })
-            );
+            const videoID = await database.ref(`video/`).push({
+              owner: user!.uid,
+              title: uploadData.type.title,
+              description: uploadData.type.description,
+              url: downloadUrl,
+              createDate: +new Date(),
+            });
+            const videosSnap = await database
+              .ref(`user/${user!.uid}/videos`)
+              .get();
+            const videos = videosSnap.val();
+            await database.ref(`user/${user!.uid}`).update({
+              videos: videos
+                ? [...Object.values(videos), videoID.key]
+                : [videoID.key],
+            });
+            message.success(t`-Votre video a été publier.`);
           } catch (error) {
             console.log(error);
           } finally {
-            // TODO
-            console.log('Done.');
+            unsubscribe.current!();
+            dispatch(uploadActions.resetUpload());
           }
         }
       );
     }
-  }, [dispatch, file]);
+  }, [dispatch, uploadData, user]);
 
-  return { setFile };
+  return { startUpload };
 };

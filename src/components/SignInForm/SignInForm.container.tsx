@@ -47,7 +47,9 @@ const SignInFormContainer: React.FC<Props> = ({
         .update({ updateDate: +new Date() });
       await initializeMessaging(user!);
       const userInfos = await database.ref(`/user/${user!.uid}`).get();
-      dispatch(userActions.setUser({ user: userInfos.val() }));
+      dispatch(
+        userActions.initUser({ user: { ...userInfos.val(), uid: user!.uid } })
+      );
       setModalOpen(false);
     } catch (error) {
       const { field, message } = translateError(error);

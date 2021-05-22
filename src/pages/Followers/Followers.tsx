@@ -21,7 +21,7 @@ import SubscribeCard from 'components/SubscribeCard';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 
 import { listUser } from 'service/firebase/users';
-import { auth, database } from 'service/firebase';
+import firebase, { auth, database } from 'service/firebase';
 
 import { userSelectors, userActions, UserType } from 'slices';
 
@@ -45,7 +45,6 @@ type Contact = {
 
 const Followers: React.FC = () => {
   const dispatch = useDispatch();
-  const currentUser = auth.currentUser;
   const user = useSelector(userSelectors.getUser);
   const [users, setUsers] = useState<string[]>([]);
 
@@ -62,12 +61,19 @@ const Followers: React.FC = () => {
   ];
 
   useEffect(() => {
-    async function getUser() {
-      const user = await database.ref(`/user/${currentUser?.uid}`).get();
-      dispatch(userActions.setUser({ user: user.val() }));
-    }
-    getUser();
-  }, [dispatch, currentUser]);
+    const initUser = async (currentUser: firebase.User) => {
+      const user = await database.ref(`/user/${currentUser!.uid}`).get();
+      dispatch(
+        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
+      );
+    };
+    !user &&
+      auth.onAuthStateChanged((currentUser) => {
+        if (currentUser) {
+          initUser(currentUser);
+        }
+      });
+  }, [dispatch, user]);
 
   useEffect(() => {
     async function fetchUsers() {

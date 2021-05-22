@@ -11,7 +11,7 @@ import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
 import Home from 'pages/Home';
-import Followers from 'pages/Followers/Followers';
+import Followers from 'pages/Followers';
 import Profile from 'pages/Profile';
 import EditProfile from 'pages/EditProfile';
 
