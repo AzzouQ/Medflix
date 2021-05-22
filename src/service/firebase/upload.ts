@@ -53,11 +53,13 @@ export const useFirebaseUpload = () => {
         async () => {
           try {
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+            // await addVideo({url: downloadUrl})
+            console.log(uploadTask.snapshot.metadata)
             dispatch(
               uploadActions.setComplete({
                 downloadUrl: downloadUrl,
                 metaData: uploadTask.snapshot.metadata,
-                state: firebase.storage.TaskState.SUCCESS
+                state: uploadTask.snapshot.state
               })
             );
           } catch (error) {
