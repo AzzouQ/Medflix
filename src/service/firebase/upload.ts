@@ -1,72 +1,99 @@
-import firebase, { auth, storage } from './index';
-import { UploadRequestOption } from 'rc-upload/es/interface';
-import { uploadActions } from '../../redux';
-import getBlob from '../getBlob';
-import { Dispatch } from '@reduxjs/toolkit';
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { message, RcFile } from 'antd';
+import { t } from 'i18n';
 
-export const videoUpload = async (
-  { filename, file, onSuccess, onError, onProgress }: UploadRequestOption<any>,
-  dispatch: Dispatch<any>
-) => {
-  const { currentUser } = auth;
-  const uid = currentUser?.uid;
-  const name = `${new Date().getTime()}-medflix`;
+import firebase, { auth, database, storage } from './firebase';
+import { uploadActions, userSelectors } from 'slices';
 
-  if (file) console.log();
+export type TaskManager = {
+  onPause: () => boolean;
+  onResume: () => boolean;
+  onCancel: () => boolean;
+};
 
-  try {
-    const blob: any = await getBlob(file);
+type VideoType = {
+  title: string;
+  description: string;
+};
 
-    const storageRef = storage.ref(`/video/${uid}/${name}`);
+export type UploadType =
+  | {
+      type: VideoType;
+      file: RcFile;
+    }
+  | undefined;
 
-    const uploadTask = storageRef.put(file as Blob);
+export const useFirebaseUpload = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(userSelectors.getUser);
+  const unsubscribe = useRef<Function>();
+  const [uploadData, startUpload] = useState<UploadType>(undefined);
 
-    // dispatch
-    dispatch(uploadActions.setUpload({ blob: blob, uploadTask }));
-
-    uploadTask.on(
-      'state_changed',
-      function (snapshot) {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress: any =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-
-        if (onProgress)
-          // CONNECT ON PROGRESS
-          onProgress(progress);
-
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
+  useEffect(() => {
+    if (uploadData?.file && uploadData?.type) {
+      console.log('Data: ', uploadData);
+      const uploadTask = storage
+        .ref(`/videos/${auth.currentUser!.uid}/${uploadData.file.uid}`)
+        .put(uploadData.file);
+      dispatch(
+        uploadActions.setTaskManager({
+          taskManager: {
+            onPause: uploadTask.pause,
+            onResume: uploadTask.resume,
+            onCancel: uploadTask.cancel,
+          },
+        })
+      );
+      unsubscribe.current = uploadTask.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+        // onNext
+        (snapshot) => {
+          dispatch(
+            uploadActions.setNext({
+              progress: Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              ),
+              state: snapshot.state,
+            })
+          );
+        },
+        // onError
+        (_error) => {
+          message.error(t`-Une erreur s'est produite.`);
+          
+        },
+        // onComplete
+        async () => {
+          try {
+            const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+            const videoID = await database.ref(`/videos/`).push({
+              owner: user!.uid,
+              title: uploadData.type.title,
+              description: uploadData.type.description,
+              url: downloadUrl,
+              createDate: +new Date(),
+            });
+            const videosSnap = await database
+              .ref(`/users/${user!.uid}/videos`)
+              .get();
+            const videos = videosSnap.val();
+            await database.ref(`/users/${user!.uid}`).update({
+              videos: videos
+                ? [...Object.values(videos), videoID.key]
+                : [videoID.key],
+            });
+            message.success(t`-Votre video a été publier.`);
+          } catch (error) {
+            console.log(error);
+          } finally {
+            unsubscribe.current!();
+            dispatch(uploadActions.resetUpload());
+          }
         }
-      },
-      function (error) {
-        // Handle unsuccessful uploads
+      );
+    }
+  }, [dispatch, uploadData, user]);
 
-        // CONNECT ON ERROR
-        if (onError) onError(error);
-      },
-      function () {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        uploadTask.snapshot.ref
-          .getDownloadURL()
-          .then(function (downloadURL: any) {
-            console.log('File available at', downloadURL);
-
-            // CONNECT ON SUCCESS
-            if (onSuccess) onSuccess(downloadURL, blob);
-            // Pass any parameter you would like
-          });
-      }
-    );
-  } catch (e) {
-    console.log(e);
-  }
+  return { startUpload };
 };

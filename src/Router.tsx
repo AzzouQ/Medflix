@@ -1,81 +1,69 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { IonReactRouter } from '@ionic/react-router';
+import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
 } from '@ionic/react';
-import { home, people, person } from 'ionicons/icons';
-import { t } from './i18n';
-
-import Home from './pages/Home';
-import Followers from './pages/Followers';
-import Profile from './pages/Profile';
-import Create from './pages/Create';
-import EditProfile from './pages/EditProfile';
-
-const Links = {
-  Root: '/',
-  SignIn: '/signIn',
-  SignUp: '/signUp',
-  Profile: '/profile',
-  Home: '/home',
-  Create: '/create',
-  EditProfile: '/editProfile',
-  Followers: '/followers',
-};
+import { t } from 'i18n';
+import EditProfile from 'pages/EditProfile';
+import Followers from 'pages/Followers';
+import Home from 'pages/Home';
+import Profile from 'pages/Profile';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 const Router: React.FC = () => {
+  const Links = {
+    Root: '/',
+    Profile: '/profile',
+    Home: '/home',
+    EditProfile: '/editProfile',
+    Followers: '/followers',
+  };
+
   return (
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path={Links.Root}>
-            <Redirect to={Links.Home} />
-          </Route>
+    <IonTabs>
+      <IonRouterOutlet>
+        <Route exact path={Links.Root}>
+          <Redirect to={Links.Home} />
+        </Route>
 
-          <Route exact path={Links.Home}>
-            <Home />
-          </Route>
+        <Route exact path={Links.Home}>
+          <Home />
+        </Route>
 
-          <Route exact path={Links.Followers}>
-            <Followers />
-          </Route>
+        <Route exact path={Links.Followers}>
+          <Followers />
+        </Route>
 
-          <Route exact path={Links.Profile}>
-            <Profile />
-          </Route>
+        <Route exact path={Links.Profile}>
+          <Profile />
+        </Route>
 
-          <Route exact path={Links.Create}>
-            <Create />
-          </Route>
+        <Route exact path={Links.EditProfile}>
+          <EditProfile />
+        </Route>
+      </IonRouterOutlet>
 
-          <Route exact path={Links.EditProfile}>
-            <EditProfile />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot={'bottom'}>
-          <IonTabButton tab={'Home'} href={Links.Home}>
-            <IonIcon icon={home} />
-            <IonLabel>{t`tab.home`}</IonLabel>
-          </IonTabButton>
+      <IonTabBar slot={'bottom'}>
+        <IonTabButton tab={'Home'} href={Links.Home}>
+          <HomeOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t`tab.home`}</IonLabel>
+        </IonTabButton>
 
-          <IonTabButton tab={'Followers'} href={Links.Followers}>
-            <IonIcon icon={people} />
-            <IonLabel>{t('tab.followers')}</IonLabel>
-          </IonTabButton>
+        <IonTabButton tab={'Followers'} href={Links.Followers}>
+          <TeamOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t('tab.followers')}</IonLabel>
+        </IonTabButton>
 
-          <IonTabButton tab={'Profile'} href={Links.Profile}>
-            <IonIcon icon={person} />
-            <IonLabel>{t`tab.profile`}</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+        <IonTabButton tab={'Profile'} href={Links.Profile}>
+          <UserOutlined style={{ fontSize: 25 }} />
+          <IonLabel>{t`tab.profile`}</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   );
 };
 

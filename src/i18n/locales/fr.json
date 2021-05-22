@@ -14,7 +14,10 @@
     },
     "title": {
       "home": "Dernières vidéos",
-      "followers": "Abonnements"
+      "followers": "Abonnements",
+      "create": "Créer",
+      "editProfile": "Gérer Profil",
+      "profile": "Profil"
     }
   },
 
@@ -26,21 +29,57 @@
   "form": {
     "email": {
       "label": "E-mail",
-      "placeholder": "example@mail.com"
+      "placeholder": "example@mail.com",
+      "required": "Veuillez entrer un email",
+      "error": "L'email est invalide"
     },
     "password": {
       "label": "Mot de passe",
-      "placeholder": "p4sSwOrD"
+      "placeholder": "p4sSwOrD",
+      "required": "Veuillez entrer un mot de passe"
     },
     "name": {
       "label": "Nom",
-      "placeholder": "John Doe"
+      "placeholder": "John Doe",
+      "required": "Veuillez entrer un nom"
     },
+
+    "create": {
+      "addPictureMessage": "Déplacer ou cliquez pour ajouter votre miniature",
+      "addPictureWarning": "Uniquement les fichiers PNG / JPEG sont acceptés",
+      "addVideoMessage": "Déplacer ou cliquez pour ajouter votre vidéo",
+      "addVideoWarning": "Uniquement les fichiers MP4 sont acceptés",
+      "title": {
+        "label": "Titre",
+        "placeholder": "Titre"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Description"
+      },
+      "upload": "Upload"
+    },
+
+    "editProfile": {
+      "oldPassword": {
+        "label": "Mot de passe actuel",
+        "placeholder": "p4sSwOrD",
+        "required": "Veuillez entrer votre mot de passe"
+      },
+      "newPassword": {
+        "label": "Nouveau mot de passe",
+        "placeholder": "p4sSwOrD",
+        "required": "Veuillez entrer un nouveau mot de passe"
+      },
+      "save": "Enregistrer"
+    },
+
     "signIn": {
       "title": "Connectez-vous !",
       "save": "Me connecter",
       "switch": "Pas encore inscrit ?"
     },
+
     "signUp": {
       "title": "Bienvenue !",
       "save": "Créer mon compte",
@@ -48,38 +87,8 @@
     }
   },
 
-  "DESC_TITLE": "Description",
-  "DESC_PLACEHOLDER": "Description",
-
-  "OLD_PASSWORD_TITLE": "Ancien mot de passe",
-  "OLD_PASSWORD_PLACEHOLDER": "p4sSwOrD",
-  "OLD_PASSWORD_ERROR": "Veuillez entrer un mot de passe",
-
-  "NEW_PASSWORD_TITLE": "Nouveau mot de passe",
-  "NEW_PASSWORD_PLACEHOLDER": "p4sSwOrD",
-  "NEW_PASSWORD_ERROR": "Please enter your new password",
-
-  "SIGN_UP_VIEW_TITLE": "Inscription",
-  "SIGN_UP_TITLE": "Créer nouveau compte",
-
-  "PROFILE_VIEW_TITLE": "Profil",
-
-  "CREATE_VIEW_TITLE": "Créer",
-
-  "ADD_PICTURE_MESSAGE": "Déplacer ou cliquez pour ajouter votre miniature",
-  "ADD_PICTURE_WARNING": "Uniquement les fichiers PNG / JPEG sont acceptés",
-
-  "ADD_VIDEO_MESSAGE": "Déplacer ou cliquez pour ajouter votre vidéo",
-  "ADD_VIDEO_WARNING": "Uniquement les fichiers MP4 sont acceptés",
-
-  "ADD_VIDEO_TITLE": "Titre",
-  "ADD_VIDEO_TITLE_PLACEHOLDER": "Titre",
-
-  "EDIT_PROFILE_VIEW_TITLE": "Gérer Profil",
-
-  "SAVE": "Enregistrer",
-
   "firebase": {
+    "auth/wrong-password": "Le mot de passe est incorrect.",
     "auth/claims-too-large": "La charge utile des revendications fournie à setCustomUserClaims() dépasse la taille maximale autorisée de 1 000 octets.",
     "auth/email-already-exists": "L'e-mail fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un e-mail unique.",
     "auth/email-already-in-use": "Mail déjà utilisé par un autre utilisateur",
@@ -131,7 +140,7 @@
     "auth/reserved-claims": "Une ou plusieurs revendications utilisateur personnalisées fournies à setCustomUserClaims() sont réservées. Par exemple, les revendications spécifiques OIDC telles que (sub, iat, iss, exp, aud, auth_time, etc.) ne doivent pas être utilisées comme clés pour les revendications personnalisées.",
     "auth/session-cookie-expired": "Le cookie de session Firebase fourni a expiré.",
     "auth/session-cookie-revoked": "Le cookie de session Firebase a été révoqué.",
-    "auth/uid-already-exists": "L' uid fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un uid unique.",
+    "auth/uid-already-exists": "L'uid fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un uid unique.",
     "auth/unauthorized-continue-uri": "Le domaine de l'URL de poursuite ne figure pas sur la liste blanche. Ajoutez le domaine à la liste blanche dans la console Firebase.",
     "auth/user-not-found": "Il n'existe aucun enregistrement d'utilisateur correspondant à l'identifiant fourni",
     "auth/weak-password": "Mot de passe trop faible",

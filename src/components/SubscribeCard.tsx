@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IonCard,
   IonCardHeader,
@@ -7,15 +6,13 @@ import {
   IonRow,
 } from '@ionic/react';
 import { Button } from 'antd';
-import { t } from '../i18n';
-
-import { sendNotif } from '../service/firebase/fcm';
+import { t } from 'i18n';
+import React from 'react';
+import { pushMessaging } from 'service/firebase';
+import { UserType } from 'types';
 
 type Props = {
-  user: {
-    fcm: string;
-    name: string;
-  };
+  user: UserType;
 };
 
 const SubscribeCard: React.FC<Props> = ({ user }) => {
@@ -30,7 +27,7 @@ const SubscribeCard: React.FC<Props> = ({ user }) => {
             <Button
               type={'primary'}
               onClick={() => {
-                sendNotif(user.fcm);
+                pushMessaging(user.uid);
               }}
             >
               {user ? t`subscriptions.subscribe` : t`subscriptions.unsubscribe`}

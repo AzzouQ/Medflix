@@ -5,72 +5,90 @@
     "profile": "Profile"
   },
 
-  "SIGN_IN_VIEW_TITLE": "Sign In",
-  "SIGN_IN_TITLE": "Welcome !",
+  "header": {
+    "button": {
+      "signIn": "Connect",
+      "signOut": "Disconnect",
+      "upload": "Upload",
+      "edit": "Edit"
+    },
+    "title": {
+      "home": "Latest videos",
+      "followers": "Followers",
+      "create": "Create",
+      "editProfile": "Edit Profile",
+      "profile": "Profile"
+    }
+  },
 
-  "EMAIL": "E-mail",
-  "EMAIL_PLACEHOLDER": "example@mail.com",
-  "EMAIL_ERROR": "Please enter an e-mail",
-  "EMAIL_ERROR_2": "Invalid e-mail",
+  "subscriptions": {
+    "subscribe": "Follow",
+    "unsubscribe": "Unfollow"
+  },
 
-  "NAME": "Name",
-  "NAME_PLACEHOLDER": "John Doe",
-  "NAME_ERROR": "Please enter a name",
+  "form": {
+    "email": {
+      "label": "E-mail",
+      "placeholder": "example@mail.com",
+      "required": "Please enter an e-mail",
+      "error": "Invalid e-mail"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "p4sSwOrD",
+      "required": "Please enter your password"
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "John Doe",
+      "required": "Please enter a name"
+    },
 
-  "DESC_TITLE": "Description",
-  "DESC_PLACEHOLDER": "Description",
+    "create": {
+      "addPictureMessage": "Drag or click to add your thumbnail",
+      "addPictureWarning": "PNG / JPEG files only are accepted",
+      "addVideoMessage": "Drag or click to add your video",
+      "addVideoWarning": "MP4 files only are accepted",
+      "title": {
+        "label": "Titre",
+        "placeholder": "Titre"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Description"
+      },
+      "upload": "Upload"
+    },
 
-  "PASSWORD": "Password",
-  "PASSWORD_PLACEHOLDER": "p4sSwOrD",
-  "PASSWORD_ERROR": "Please enter your password",
-  "PASSWORD_ERROR_2": "Invalid password",
+    "editProfile": {
+      "oldPassword": {
+        "label": "Current password",
+        "placeholder": "p4sSwOrD",
+        "required": "Please enter your current password"
+      },
+      "newPassword": {
+        "label": "New password",
+        "placeholder": "p4sSwOrD",
+        "required": "Please enter your new password"
+      },
+      "save": "Save"
+    },
 
-  "OLD_PASSWORD_TITLE": "Old password",
-  "OLD_PASSWORD_PLACEHOLDER": "p4sSwOrD",
-  "OLD_PASSWORD_ERROR": "Please enter your old password",
+    "signIn": {
+      "title": "Sign in !",
+      "save": "Connect",
+      "switch": "Not registered yet ?"
+    },
 
-  "NEW_PASSWORD_TITLE": "New password",
-  "NEW_PASSWORD_PLACEHOLDER": "p4sSwOrD",
-  "NEW_PASSWORD_ERROR": "Please enter your new password",
-
-  "CREATE_ACCOUNT": "Create account",
-  "FORGOTTEN_PASSWORD": "Forgotten password",
-  "ALREADY_REGISTERED": "Already registered ?",
-
-  "SIGN_UP_VIEW_TITLE": "Sign up",
-  "SIGN_UP_TITLE": "Create new account",
-
-  "DISCONNECT": "Disconnect",
-  "CONNECT": "Connect",
-
-  "HOME_VIEW_TITLE": "Home",
-  "HOME_TITLE": "Latest videos",
-
-  "FOLLOWERS_VIEW_TITLE": "Followers",
-  "FOLLOW": "Follow",
-  "UNFOLLOW": "Unfollow",
-
-  "PROFILE_VIEW_TITLE": "Profile",
-
-  "UPLOAD": "Upload",
-  "EDIT": "Edit",
-
-  "CREATE_VIEW_TITLE": "Create",
-
-  "ADD_PICTURE_MESSAGE": "Drag or click to add your thumbnail",
-  "ADD_PICTURE_WARNING": "PNG / JPEG files only are accepted",
-
-  "ADD_VIDEO_MESSAGE": "Drag or click to add your video",
-  "ADD_VIDEO_WARNING": "MP4 files only are accepted",
-
-  "ADD_VIDEO_TITLE": "Title",
-  "ADD_VIDEO_TITLE_PLACEHOLDER": "Title",
-
-  "EDIT_PROFILE_VIEW_TITLE": "Edit Profile",
-
-  "SAVE": "Save",
+    "signUp": {
+      "title": "Welcome !",
+      "save": "Create new account",
+      "switch": "Already registered ?"
+    }
+  },
 
   "firebase": {
+    "auth/wrong-password": "The password is incorrect.",
     "auth/claims-too-large": "The claims payload supplied to setCustomUserClaims () exceeds the maximum allowable size of 1000 bytes.",
     "auth/email-already-exists": "The email provided is already in use by an existing user. Each user must have a unique email.",
     "auth/email-already-in-use": "Mail already in use by another user",
