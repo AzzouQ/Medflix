@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   IonButtons,
   IonCol,
@@ -11,15 +12,20 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { Plugins } from '@capacitor/core';
 import { t } from 'i18n';
 
 import Footer from 'components/Footer';
 import AuthModal from 'components/AuthModal';
 import SubscribeCard from 'components/SubscribeCard';
+import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 
 import { listUser } from 'service/firebase/users';
-import { Plugins } from '@capacitor/core';
 import { auth, database } from 'service/firebase';
+
+import { userSelectors, userActions, UserType } from 'slices';
+
+import { Styles } from './Followers.styles';
 
 const { Contacts } = Plugins;
 
@@ -37,16 +43,12 @@ type Contact = {
   birthday?: string;
 };
 
-type UserType = {
-  name: string;
-  createDate: string;
-  updateDate: string;
-  subscribersCount: number;
-  subscriptionsCount: number;
-  email: string;
-};
 const Followers: React.FC = () => {
+  const dispatch = useDispatch();
+  const currentUser = auth.currentUser;
+  const user = useSelector(userSelectors.getUser);
   const [users, setUsers] = useState<string[]>([]);
+
   const names = [
     'Nazim',
     'Bastien',
@@ -58,6 +60,14 @@ const Followers: React.FC = () => {
     'Thomas',
     'Abdelkrim',
   ];
+
+  useEffect(() => {
+    async function getUser() {
+      const user = await database.ref(`/user/${currentUser?.uid}`).get();
+      dispatch(userActions.setUser({ user: user.val() }));
+    }
+    getUser();
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -72,7 +82,6 @@ const Followers: React.FC = () => {
     getContacts();
   }, []);
 
-
   const getContacts = async (): Promise<void> => {
     const values = await database.ref(`user/`).get();
     const users = values.val();
@@ -82,8 +91,8 @@ const Followers: React.FC = () => {
         const { contacts } = await Contacts.getContacts();
         contacts.map((contact: Contact) =>
           users.map((user: UserType) => {
-            contact.emails[0] === user.email && console.log("");
-            //TODO follower user if not already followed
+            contact.emails[0] === user.email && console.log('');
+            return null; //TODO follower user if not already followed
           })
         );
       }
@@ -99,24 +108,30 @@ const Followers: React.FC = () => {
           <IonButtons slot={'start'}>
             <IonTitle>{t`header.title.followers`}</IonTitle>
           </IonButtons>
-          <IonButtons slot={'end'}>
-            <AuthModal />
-          </IonButtons>
+          {user && (
+            <IonButtons slot={'end'} style={Styles.buttons}>
+              <AuthModal />
+            </IonButtons>
+          )}
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonGrid>
-          <IonList style={{ backgroundColor: 'transparent' }}>
-            <IonRow style={{ justifyContent: 'center' }}>
-              {users.map((fcm, index) => (
-                <IonCol size={'auto'} key={index}>
-                  <SubscribeCard user={{ fcm, name: names[index] }} />
-                </IonCol>
-              ))}
-            </IonRow>
-          </IonList>
-        </IonGrid>
+        {user ? (
+          <IonGrid>
+            <IonList style={{ backgroundColor: 'transparent' }}>
+              <IonRow style={{ justifyContent: 'center' }}>
+                {users.map((fcm, index) => (
+                  <IonCol size={'auto'} key={index}>
+                    <SubscribeCard user={{ fcm, name: names[index] }} />
+                  </IonCol>
+                ))}
+              </IonRow>
+            </IonList>
+          </IonGrid>
+        ) : (
+          <Unauthenticated />
+        )}
       </IonContent>
 
       <Footer />

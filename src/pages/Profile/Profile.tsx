@@ -15,8 +15,6 @@ import { Avatar, Button } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
-import { auth } from 'service/firebase';
-
 import Footer from 'components/Footer';
 import VideoCard from 'components/VideoCard';
 import UploadModal from 'components/UploadModal';
@@ -36,7 +34,7 @@ const Profile: React.FC<ProfileType.Props> = ({
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            {auth.currentUser && (
+            {user && (
               <Avatar
                 size={'large'}
                 icon={<UserOutlined />}

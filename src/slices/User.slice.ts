@@ -1,6 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
-export type User = {
+export type UserType = {
   name: string;
   email: string;
   createDate: string;
@@ -9,7 +9,7 @@ export type User = {
   subscriptionsCount: number;
 };
 
-export type UserState = User | null;
+export type UserState = UserType | null;
 
 const initialState: UserState = null;
 
