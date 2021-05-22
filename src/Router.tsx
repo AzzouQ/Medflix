@@ -13,7 +13,6 @@ import { t } from 'i18n';
 import Home from 'pages/Home';
 import Followers from 'pages/Followers/Followers';
 import Profile from 'pages/Profile';
-import Create from 'pages/Create';
 import EditProfile from 'pages/EditProfile';
 
 const Router: React.FC = () => {
@@ -23,7 +22,6 @@ const Router: React.FC = () => {
     SignUp: '/signUp',
     Profile: '/profile',
     Home: '/home',
-    Create: '/create',
     EditProfile: '/editProfile',
     Followers: '/followers',
   };
@@ -45,10 +43,6 @@ const Router: React.FC = () => {
 
         <Route exact path={Links.Profile}>
           <Profile />
-        </Route>
-
-        <Route exact path={Links.Create}>
-          <Create />
         </Route>
 
         <Route exact path={Links.EditProfile}>
