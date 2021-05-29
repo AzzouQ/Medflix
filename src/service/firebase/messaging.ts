@@ -32,6 +32,8 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
         await database
           .ref(`/users/${user.uid}/messaging`)
           .update({ mobile: token });
+      } else {
+        console.log('User didn\'t grant notification permission')
       }
     } catch ({ message }) {
       console.log(
