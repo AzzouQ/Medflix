@@ -7,7 +7,6 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { t } from 'i18n';
-import EditProfile from 'pages/EditProfile';
 import Followers from 'pages/Followers';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
@@ -42,9 +41,6 @@ const Router: React.FC = () => {
           <Profile />
         </Route>
 
-        <Route exact path={Links.EditProfile}>
-          <EditProfile />
-        </Route>
       </IonRouterOutlet>
 
       <IonTabBar slot={'bottom'}>
