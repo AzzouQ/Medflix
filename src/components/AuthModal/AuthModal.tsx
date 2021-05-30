@@ -4,8 +4,8 @@ import { Button } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
-import SignInForm from 'components/SignInForm';
-import SignUpForm from 'components/SignUpForm';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 
 import type { AuthModalType } from './AuthModal.container';
 

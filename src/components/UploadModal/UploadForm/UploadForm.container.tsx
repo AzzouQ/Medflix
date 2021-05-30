@@ -63,7 +63,6 @@ const UploadFormContainer: React.FC<Props> = ({ setModalOpen }) => {
   const onRemove = useCallback(() => {
     setFile(null);
     setDisabled(true);
-    console.log('WESHEU');
   }, []);
 
   return (

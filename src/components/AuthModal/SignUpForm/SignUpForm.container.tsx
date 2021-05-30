@@ -8,20 +8,21 @@ import {
   initializeMessaging,
 } from 'service/firebase';
 
-import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 import { userActions } from 'slices';
 
 import type { FormikType, GoToType } from 'types';
 
-export declare namespace SignInType {
+export declare namespace SignUpType {
   type FormValues = {
+    name: string;
     email: string;
     password: string;
   };
   type FormSubmit = FormikType.onSubmit<FormValues>;
   type FormProps = {
-    signInFormSubmit: FormSubmit;
-    goToSignUp: GoToType;
+    formikSubmit: FormSubmit;
+    goToSignIn: GoToType;
   };
 }
 
@@ -30,21 +31,29 @@ type Props = {
   setFormMode: (value: 'signIn' | 'signUp') => void;
 };
 
-const SignInFormContainer: React.FC<Props> = ({
+const SignUpFormContainer: React.FC<Props> = ({
   setModalOpen,
   setFormMode,
 }) => {
   const dispatch = useDispatch();
 
-  const signInFormSubmit: SignInType.FormSubmit = async (
-    { email, password },
+  const formikSubmit: SignUpType.FormSubmit = async (
+    { name, email, password },
     { setFieldError, setSubmitting }
   ) => {
     try {
-      const { user } = await auth.signInWithEmailAndPassword(email, password);
-      await database
-        .ref(`/users/${user!.uid}`)
-        .update({ updateDate: +new Date() });
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await database.ref(`/users/${user!.uid}`).set({
+        name: name,
+        email: email,
+        createDate: +new Date(),
+        updateDate: +new Date(),
+        subscribersCount: 0,
+        subscriptionsCount: 0,
+      });
       await initializeMessaging(user!);
       const userInfos = await database.ref(`/users/${user!.uid}`).get();
       dispatch(
@@ -59,11 +68,11 @@ const SignInFormContainer: React.FC<Props> = ({
     }
   };
 
-  const goToSignUp: GoToType = useCallback(() => {
-    setFormMode('signUp');
+  const goToSignIn: GoToType = useCallback(() => {
+    setFormMode('signIn');
   }, [setFormMode]);
 
-  return <SignInForm {...{ signInFormSubmit, goToSignUp }} />;
+  return <SignUpForm {...{ formikSubmit, goToSignIn }} />;
 };
 
-export default SignInFormContainer;
+export default SignUpFormContainer;

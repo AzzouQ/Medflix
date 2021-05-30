@@ -11,13 +11,14 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Button } from 'antd';
-import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
 import Footer from 'components/Footer';
 import VideoCard from 'components/VideoCard';
 import UploadModal from 'components/UploadModal';
+import EditProfileModal from 'components/EditProfileModal';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 
 import { Styles } from './Profile.styles';
@@ -26,8 +27,7 @@ import type { ProfileType } from './Profile.container';
 
 const Profile: React.FC<ProfileType.Props> = ({
   user,
-  videos,
-  goToEditProfile,
+  videos
 }) => {
   return (
     <IonPage>
@@ -46,14 +46,7 @@ const Profile: React.FC<ProfileType.Props> = ({
           {user && (
             <IonButtons slot={'end'}>
               <UploadModal />
-              <Button
-                type={'primary'}
-                style={Styles.button}
-                icon={<EditOutlined />}
-                onClick={goToEditProfile}
-              >
-                {t`header.button.edit`}
-              </Button>
+              <EditProfileModal />
             </IonButtons>
           )}
         </IonToolbar>

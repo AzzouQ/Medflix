@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useLocation } from 'react-router-dom';
 import firebase, { auth, database } from 'service/firebase';
-
 import { userActions, userSelectors } from 'slices';
-
-import Home from './Home';
-
 import type { VideoType } from 'types';
+import Home from './Home';
 
 export declare namespace HomeType {
   type Props = {
@@ -16,6 +13,8 @@ export declare namespace HomeType {
 }
 
 const HomeContainer: React.FC = () => {
+  const { pathname } = useLocation();
+  const isFocus = pathname === '/home';
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [videos, setVideos] = useState<VideoType[]>();
@@ -23,10 +22,14 @@ const HomeContainer: React.FC = () => {
   useEffect(() => {
     const getAllVideos = async () => {
       const videosSnap = await database.ref(`/videos`).get();
-      setVideos(Object.values(videosSnap.val()));
+      if (videosSnap.val()) {
+        setVideos(Object.values(videosSnap.val()));
+      }
     };
-    getAllVideos();
-  }, []);
+    if (isFocus) {
+      getAllVideos();
+    }
+  }, [isFocus]);
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {

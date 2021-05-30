@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import firebase, { auth, database } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices/user.slice';
 import type { VideoType } from 'types';
@@ -18,6 +18,8 @@ const ProfileContainer: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [videos, setVideos] = useState<VideoType[]>();
+  const { pathname } = useLocation();
+  const isFocus = pathname === '/profile';
 
   const { push } = useHistory();
 
@@ -30,18 +32,20 @@ const ProfileContainer: React.FC = () => {
       const videosIDsSnap = await database
         .ref(`/users/${user?.uid}/videos`)
         .get();
-      const videosIDs: string[] = Object.values(videosIDsSnap.val());
-      const videosSnap = await database.ref(`/videos`).get();
-      const videos: { [key: string]: VideoType } = videosSnap.val();
-      const myVideos = videosIDs.map((id) => {
-        return videos[id as string];
-      });
-      setVideos(myVideos);
+      if (videosIDsSnap.val()) {
+        const videosIDs: string[] = Object.values(videosIDsSnap.val());
+        const videosSnap = await database.ref(`/videos`).get();
+        const videos: { [key: string]: VideoType } = videosSnap.val();
+        const myVideos = videosIDs.map((id) => {
+          return videos[id as string];
+        });
+        setVideos(myVideos);
+      }
     };
-    if (user) {
+    if (user && isFocus) {
       getMyVideos();
     }
-  }, [user]);
+  }, [user, isFocus]);
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {

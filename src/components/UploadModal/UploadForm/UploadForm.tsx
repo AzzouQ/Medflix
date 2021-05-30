@@ -17,27 +17,29 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
   onRemove,
   uploadFormSubmit,
 }) => {
+  const initialValues = {
+    title: '',
+    description: '',
+  };
+
   const yupValidation = Yup.object({
-    title: Yup.string().required(t`-Obligatoire`),
+    title: Yup.string().required(t`form.video.required`),
   });
 
   return (
     <IonRow style={Styles.container}>
       <Formik<UploadType.FormValues>
-        initialValues={{ title: '', description: '' }}
+        initialValues={initialValues}
         onSubmit={uploadFormSubmit}
         validationSchema={yupValidation}
       >
         {(formik) => (
           <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
-            <IonLoading
-              isOpen={formik.isSubmitting}
-              message={'Please wait...'}
-            />
+            <IonLoading isOpen={formik.isSubmitting} message={t`loading`} />
             <IonRow>
               <IonCol size={'12'}>
                 <Typography.Title level={2} style={Styles.title}>
-                  {t`-Video`}
+                  {t`form.upload.title`}
                 </Typography.Title>
               </IonCol>
             </IonRow>
@@ -48,27 +50,39 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 onRemove={onRemove}
                 beforeUpload={() => false}
                 maxCount={1}
-                name={t`-Ready to go`}
                 style={Styles.dragger}
               >
                 <PlusCircleTwoTone style={Styles.icon} />
                 <Typography.Title level={5}>
-                  {'Ajouter une vidéo'}
+                  {t`form.upload.dragger.title`}
                 </Typography.Title>
-                <Typography.Text>{'Cliquez ou faites glissez'}</Typography.Text>
+                <Typography.Text>{t`form.upload.dragger.subtitle`}</Typography.Text>
               </Upload.Dragger>
             </IonRow>
             <IonRow style={{ marginTop: 40 }}>
               <IonCol size={'12'}>
-                <Form.Item name={'title'} label={t`-Title`} required={true}>
-                  <Input name={'title'} placeholder={t`-Title`} />
+                <Form.Item
+                  name={'title'}
+                  label={t`form.video.label`}
+                  required={true}
+                >
+                  <Input
+                    name={'title'}
+                    placeholder={t`form.video.placeholder`}
+                  />
                 </Form.Item>
               </IonCol>
             </IonRow>
             <IonRow>
               <IonCol size={'12'}>
-                <Form.Item name={'description'} label={t`-Description`}>
-                  <Input name={'description'} placeholder={t`-Description`} />
+                <Form.Item
+                  name={'description'}
+                  label={t`form.description.label`}
+                >
+                  <Input
+                    name={'description'}
+                    placeholder={t`form.description.placeholder`}
+                  />
                 </Form.Item>
               </IonCol>
             </IonRow>
@@ -80,7 +94,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                     block={true}
                     disabled={isDisabled}
                   >
-                    {t`-Upload`}
+                    {t`form.upload.save`}
                   </SubmitButton>
                 </Form.Item>
               </IonCol>

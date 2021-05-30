@@ -5,8 +5,6 @@ import axios from 'axios';
 
 import firebase, { database } from './firebase';
 
-import { notification } from 'service/fakeData';
-
 const { PushNotifications } = Plugins;
 
 const SERVER_KEY =
@@ -32,6 +30,8 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
         await database
           .ref(`/users/${user.uid}/messaging`)
           .update({ mobile: token });
+      } else {
+        console.log("User didn't grant notification permission");
       }
     } catch ({ message }) {
       console.log(
@@ -50,14 +50,18 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
 
 export const pushMessaging: pushMessagingProps = async (uid) => {
   try {
-    console.log(uid)
+    console.log(uid);
     const tokens = await database.ref(`/users/${uid}/messaging`).get();
 
-    console.log(tokens.val())
+    console.log(tokens.val());
     const payload = {
       registration_ids: Object.values(tokens.val()),
       collapse_key: 'type_a',
-      notification: notification.notification,
+      notification: {
+        title: 'Medflix',
+        body: 'Vous avez une nouvelle notification',
+        icon: 'https://i.imgur.com/Wu5KM77.png',
+      },
     };
     await axios.post('https://fcm.googleapis.com/fcm/send', payload, {
       headers: {
