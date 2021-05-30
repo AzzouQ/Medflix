@@ -48,18 +48,6 @@ const Followers: React.FC = () => {
   const { pathname } = useLocation();
   const isFocus = pathname === '/followers';
 
-  const names = [
-    'Nazim',
-    'Bastien',
-    'Jean-Louis',
-    'Paul',
-    'Robert',
-    'Dr.Raoult',
-    'Bertrand',
-    'Thomas',
-    'Abdelkrim',
-  ];
-
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {
       const user = await database.ref(`/users/${currentUser!.uid}`).get();

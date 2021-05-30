@@ -26,64 +26,64 @@
     "unsubscribe": "Unfollow"
   },
 
+  "loading": "Please wait...",
+
   "form": {
-    "email": {
-      "label": "E-mail",
-      "placeholder": "example@mail.com",
-      "required": "Please enter an e-mail",
-      "error": "Invalid e-mail"
-    },
-    "password": {
-      "label": "Password",
-      "placeholder": "p4sSwOrD",
-      "required": "Please enter your password"
-    },
     "name": {
       "label": "Name",
       "placeholder": "John Doe",
-      "required": "Please enter a name"
+      "required": "Please type a name"
     },
-
-    "create": {
-      "addPictureMessage": "Drag or click to add your thumbnail",
-      "addPictureWarning": "PNG / JPEG files only are accepted",
-      "addVideoMessage": "Drag or click to add your video",
-      "addVideoWarning": "MP4 files only are accepted",
-      "title": {
-        "label": "Titre",
-        "placeholder": "Titre"
-      },
-      "description": {
-        "label": "Description",
-        "placeholder": "Description"
-      },
-      "upload": "Upload"
+    "email": {
+      "label": "E-mail",
+      "placeholder": "example@mail.com",
+      "required": "Please type an e-mail",
+      "error": "Invalid e-mail"
     },
-
-    "editProfile": {
-      "oldPassword": {
-        "label": "Current password",
-        "placeholder": "p4sSwOrD",
-        "required": "Please enter your current password"
-      },
-      "newPassword": {
-        "label": "New password",
-        "placeholder": "p4sSwOrD",
-        "required": "Please enter your new password"
-      },
-      "save": "Save"
+    "currentPassword": {
+      "label": "Password",
+      "placeholder": "p4sSwOrD",
+      "required": "Please type a password"
+    },
+    "newPassword": {
+      "label": "New password",
+      "placeholder": "n4w p4sSwOrD",
+      "required": "Please type a new password"
+    },
+    "video": {
+      "label": "Title",
+      "placeholder": "My vidéo",
+      "required": "Please type a name"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Awesome video"
     },
 
     "signIn": {
       "title": "Sign in !",
-      "save": "Connect",
+      "save": "Sign me",
       "switch": "Not registered yet ?"
     },
 
     "signUp": {
       "title": "Welcome !",
-      "save": "Create new account",
+      "save": "Create my account",
       "switch": "Already registered ?"
+    },
+
+    "upload": {
+      "title": "Upload a video !",
+      "save": "Upload",
+      "dragger": {
+        "title": "Add a video",
+        "subtitle": "Click or drag"
+      }
+    },
+
+    "editProfile": {
+      "title": "Edit your profile !",
+      "save": "Save"
     }
   },
 

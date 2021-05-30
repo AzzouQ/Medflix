@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
-import UploadForm from 'components/UploadForm';
+import UploadForm from './UploadForm';
 import { Styles } from './UploadModal.styles';
 
 import type { UploadModalType } from './UploadModal.container';

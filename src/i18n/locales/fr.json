@@ -10,7 +10,7 @@
       "signIn": "Se connecter",
       "signOut": "Se déconnecter",
       "upload": "Publier",
-      "edit": "Gérer"
+      "edit": "Éditez"
     },
     "title": {
       "home": "Dernières vidéos",
@@ -26,52 +26,38 @@
     "unsubscribe": "Ne plus suivre"
   },
 
+  "loading": "Veuillez patientez...",
+
   "form": {
+    "name": {
+      "label": "Nom",
+      "placeholder": "John Doe",
+      "required": "Veuillez entrer un nom"
+    },
     "email": {
       "label": "E-mail",
       "placeholder": "example@mail.com",
       "required": "Veuillez entrer un email",
       "error": "L'email est invalide"
     },
-    "password": {
+    "currentPassword": {
       "label": "Mot de passe",
       "placeholder": "p4sSwOrD",
       "required": "Veuillez entrer un mot de passe"
     },
-    "name": {
-      "label": "Nom",
-      "placeholder": "John Doe",
-      "required": "Veuillez entrer un nom"
+    "newPassword": {
+      "label": "Nouveau mot de passe",
+      "placeholder": "n4w p4sSwOrD",
+      "required": "Veuillez entrer un nouveau mot de passe"
     },
-
-    "create": {
-      "addPictureMessage": "Déplacer ou cliquez pour ajouter votre miniature",
-      "addPictureWarning": "Uniquement les fichiers PNG / JPEG sont acceptés",
-      "addVideoMessage": "Déplacer ou cliquez pour ajouter votre vidéo",
-      "addVideoWarning": "Uniquement les fichiers MP4 sont acceptés",
-      "title": {
-        "label": "Titre",
-        "placeholder": "Titre"
-      },
-      "description": {
-        "label": "Description",
-        "placeholder": "Description"
-      },
-      "upload": "Upload"
+    "video": {
+      "label": "Titre",
+      "placeholder": "Ma vidéo",
+      "required": "Veuillez entrer un titre"
     },
-
-    "editProfile": {
-      "oldPassword": {
-        "label": "Mot de passe actuel",
-        "placeholder": "p4sSwOrD",
-        "required": "Veuillez entrer votre mot de passe"
-      },
-      "newPassword": {
-        "label": "Nouveau mot de passe",
-        "placeholder": "p4sSwOrD",
-        "required": "Veuillez entrer un nouveau mot de passe"
-      },
-      "save": "Enregistrer"
+    "description": {
+      "label": "Description",
+      "placeholder": "Super vidéo"
     },
 
     "signIn": {
@@ -84,6 +70,20 @@
       "title": "Bienvenue !",
       "save": "Créer mon compte",
       "switch": "Déjà inscrit ?"
+    },
+
+    "upload": {
+      "title": "Publier une vidéo !",
+      "save": "Publier",
+      "dragger": {
+        "title": "Ajoutez une vidéo",
+        "subtitle": "Cliquez ou faites glissez"
+      }
+    },
+
+    "edit": {
+      "title": "Éditez votre profil !",
+      "save": "Enregistrer"
     }
   },
 

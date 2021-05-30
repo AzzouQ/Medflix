@@ -6,15 +6,22 @@ import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
 
-import { Styles } from './SignInForm.styles';
+import { Styles } from './SignUpForm.styles';
 
-import type { SignInType } from './SignInForm.container';
+import type { SignUpType } from './SignUpForm.container';
 
-const SignInForm: React.FC<SignInType.FormProps> = ({
-  signInFormSubmit,
-  goToSignUp,
+const SignUpForm: React.FC<SignUpType.FormProps> = ({
+  formikSubmit,
+  goToSignIn,
 }) => {
+  const initialValues = {
+    name: '',
+    email: '',
+    password: '',
+  };
+
   const yupValidation = Yup.object({
+    name: Yup.string().required(t`form.name.required`),
     email: Yup.string()
       .required(t`form.email.required`)
       .email(t`form.email.error`),
@@ -23,22 +30,30 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
 
   return (
     <IonRow style={Styles.container}>
-      <Formik<SignInType.FormValues>
-        initialValues={{ email: '', password: '' }}
-        onSubmit={signInFormSubmit}
+      <Formik<SignUpType.FormValues>
+        initialValues={initialValues}
+        onSubmit={formikSubmit}
         validationSchema={yupValidation}
       >
         {(formik) => (
           <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
-            <IonLoading
-              isOpen={formik.isSubmitting}
-              message={'Please wait...'}
-            />
+            <IonLoading isOpen={formik.isSubmitting} message={t`loading`} />
             <IonRow>
               <IonCol size={'12'}>
                 <Typography.Title level={2} style={Styles.title}>
-                  {t`form.signIn.title`}
+                  {t`form.signUp.title`}
                 </Typography.Title>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol size={'12'}>
+                <Form.Item
+                  name={'name'}
+                  label={t`form.name.label`}
+                  required={true}
+                >
+                  <Input name={'name'} placeholder={t`form.name.placeholder`} />
+                </Form.Item>
               </IonCol>
             </IonRow>
             <IonRow>
@@ -59,12 +74,12 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
               <IonCol size={'12'}>
                 <Form.Item
                   name={'password'}
-                  label={t`form.password.label`}
+                  label={t`form.currentPassword.label`}
                   required={true}
                 >
                   <Input.Password
                     name={'password'}
-                    placeholder={t`form.password.placeholder`}
+                    placeholder={t`form.currentPassword.placeholder`}
                     allowClear={true}
                   />
                 </Form.Item>
@@ -74,7 +89,7 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
               <IonCol size={'12'}>
                 <Form.Item name={'signIn'}>
                   <SubmitButton type={'primary'} block={true}>
-                    {t`form.signIn.save`}
+                    {t`form.signUp.save`}
                   </SubmitButton>
                 </Form.Item>
               </IonCol>
@@ -82,8 +97,8 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
             <IonRow>
               <IonCol size={'12'}>
                 <Form.Item name={'signUp'}>
-                  <Button type={'default'} block={true} onClick={goToSignUp}>
-                    {t`form.signIn.switch`}
+                  <Button type={'default'} block={true} onClick={goToSignIn}>
+                    {t`form.signUp.switch`}
                   </Button>
                 </Form.Item>
               </IonCol>
@@ -95,4 +110,4 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

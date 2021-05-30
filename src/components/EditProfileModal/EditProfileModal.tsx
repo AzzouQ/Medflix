@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
 
-import EditProfileForm from 'components/EditProfileForm';
+import EditProfileForm from './EditProfileForm';
 import { Styles } from './EditProfileModal.styles';
 
 import type { EditProfileModalType } from './EditProfileModal.container';
