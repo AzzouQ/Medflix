@@ -1,4 +1,4 @@
-import React from 'react';
+import { UserOutlined } from '@ant-design/icons';
 import {
   IonButtons,
   IonCol,
@@ -11,39 +11,33 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { t } from 'i18n';
-
-import Footer from 'components/Footer';
-import VideoCard from 'components/VideoCard';
-import UploadModal from 'components/UploadModal';
+import { Avatar } from 'antd';
 import EditProfileModal from 'components/EditProfileModal';
+import Footer from 'components/Footer';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
-
+import UploadModal from 'components/UploadModal';
+import VideoCard from 'components/VideoCard';
+import { t } from 'i18n';
+import React from 'react';
+import type { ProfileType } from './Profile.container';
 import { Styles } from './Profile.styles';
 
-import type { ProfileType } from './Profile.container';
-
-const Profile: React.FC<ProfileType.Props> = ({
-  user,
-  videos
-}) => {
+const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            {user && (
+            {userData && (
               <Avatar
                 size={'large'}
                 icon={<UserOutlined />}
                 style={Styles.buttons}
               />
             )}
-            <IonTitle>{user?.name ?? t`header.title.profile`}</IonTitle>
+            <IonTitle>{userData?.name ?? t`header.title.profile`}</IonTitle>
           </IonButtons>
-          {user && (
+          {user && userData?.uid === user.uid && (
             <IonButtons slot={'end'}>
               <UploadModal />
               <EditProfileModal />
@@ -53,7 +47,7 @@ const Profile: React.FC<ProfileType.Props> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        {user ? (
+        {userData ? (
           <IonGrid>
             <IonList style={Styles.list}>
               <IonRow style={Styles.container}>
@@ -66,7 +60,7 @@ const Profile: React.FC<ProfileType.Props> = ({
             </IonList>
           </IonGrid>
         ) : (
-          <Unauthenticated />
+          <Unauthenticated /> // TODO 404
         )}
       </IonContent>
 
