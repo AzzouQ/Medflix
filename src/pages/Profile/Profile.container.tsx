@@ -16,7 +16,6 @@ export declare namespace ProfileType {
 
 const ProfileContainer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-
   const [userData, setUserData] = useState(undefined);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
@@ -27,22 +26,21 @@ const ProfileContainer: React.FC = () => {
   const { replace } = useHistory();
 
   useEffect(() => {
-    const getVideos = async (id: string | undefined) => {
-      if (id) {
-        const videosIDsSnap = await database.ref(`/users/${id}/videos`).get();
-        if (videosIDsSnap.val()) {
-          const videosIDs: string[] = Object.values(videosIDsSnap.val());
-          const videosSnap = await database.ref(`/videos`).get();
-          const videos: { [key: string]: VideoType } = videosSnap.val();
-          const myVideos = videosIDs.map((id) => {
-            return videos[id as string];
-          });
-          setVideos(myVideos);
-        }
+    const getVideos = async (id: string) => {
+      const videosIDsSnap = await database.ref(`/users/${id}/videos`).get();
+      if (videosIDsSnap.val()) {
+        const videosIDs: string[] = Object.values(videosIDsSnap.val());
+        const videosSnap = await database.ref(`/videos`).get();
+        const videos: { [key: string]: VideoType } = videosSnap.val();
+        const myVideos = videosIDs.map((id) => {
+          return videos[id as string];
+        });
+        setVideos(myVideos);
+      } else {
+        setVideos([]);
       }
     };
     if (isFocus && id) {
-      // Get someone else video
       getVideos(id);
     }
   }, [user, isFocus, id]);

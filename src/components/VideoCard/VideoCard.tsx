@@ -22,7 +22,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
   onStartPlaying,
   onShare,
   video,
-  ownerName,
+  owner,
 }) => {
   return (
     <>
@@ -43,11 +43,14 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
         <IonCardHeader>
           <IonRow>
             <IonCol size={'2'}>
-              <Avatar size={'large'} icon={<UserOutlined />} />
+              <a href={`/profile/${owner?.uid}`}>
+                <Avatar size={'large'} icon={<UserOutlined />} />
+              </a>
+              {/* <Avatar size={'large'} icon={<UserOutlined />} /> */}
             </IonCol>
             <IonCol size={'9'}>
               <IonCardTitle>{video.title}</IonCardTitle>
-              <IonCardSubtitle>{ownerName}</IonCardSubtitle>
+              <IonCardSubtitle>{owner?.name}</IonCardSubtitle>
             </IonCol>
             <IonCol size={'1'}>
               <ShareAltOutlined style={Styles.icon} onClick={onShare} />
