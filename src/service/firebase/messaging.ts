@@ -50,10 +50,8 @@ export const initializeMessaging: initializeMessagingProps = async (user) => {
 
 export const pushMessaging: pushMessagingProps = async (uid) => {
   try {
-    console.log(uid);
     const tokens = await database.ref(`/users/${uid}/messaging`).get();
 
-    console.log(tokens.val());
     const payload = {
       registration_ids: Object.values(tokens.val()),
       collapse_key: 'type_a',

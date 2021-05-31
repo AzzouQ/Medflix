@@ -11,7 +11,7 @@ import { userSelectors } from 'slices';
 
 import VideoCard from './VideoCard';
 
-import type { UseStateType, VideoType } from 'types';
+import type { UserType, UseStateType, VideoType } from 'types';
 
 const { Share, Clipboard } = Plugins;
 
@@ -25,7 +25,7 @@ export declare namespace VideoCardType {
     onStartPlaying: () => void;
     onShare: () => Promise<void>;
     video: VideoType;
-    ownerName: string;
+    owner: UserType | undefined;
   };
 }
 
@@ -35,7 +35,7 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
   const user = useSelector(userSelectors.getUser);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const isExited = useRef(false);
-  const [ownerName, setOwnerName] = useState<string>('Unknown');
+  const [owner, setOwner] = useState<UserType>();
 
   const onCloseModal = async () => {
     await stopAllPlayers();
@@ -80,12 +80,11 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
   }, [video]);
 
   useEffect(() => {
-    const getOwnerName = async () => {
-      const ownerNameSnap = await database.ref(`/users/${video.owner}`).get();
-      const ownerName = ownerNameSnap.val();
-      setOwnerName(ownerName ? ownerName.name : user?.name);
+    const getOwner = async () => {
+      const ownerSnap = await database.ref(`/users/${video.owner}`).get();
+      setOwner({ ...ownerSnap.val(), uid: ownerSnap.key });
     };
-    getOwnerName();
+    getOwner();
   }, [user?.name, video.owner]);
 
   return (
@@ -95,7 +94,7 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
         onShare,
         onStartPlaying,
         video,
-        ownerName,
+        owner: owner,
       }}
     />
   );

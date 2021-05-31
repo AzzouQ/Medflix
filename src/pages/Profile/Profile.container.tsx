@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import { generatePath, useHistory, useLocation, useParams } from 'react-router';
 import firebase, { auth, database } from 'service/firebase';
 import { userActions, userSelectors, UserState } from 'slices/user.slice';
-import type { VideoType } from 'types';
+import type { UserType, VideoType } from 'types';
 import Profile from './Profile';
 
 export declare namespace ProfileType {
   type Props = {
     user: UserState | undefined;
     videos: VideoType[] | undefined;
-    goToEditProfile: () => void;
+    userData: UserType | undefined;
   };
 }
 
 const ProfileContainer: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [userData, setUserData] = useState(undefined);
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [videos, setVideos] = useState<VideoType[]>();
   const { pathname } = useLocation();
-  const isFocus = pathname === '/profile';
+  const isFocus = pathname.startsWith('/profile/');
 
-  const { push } = useHistory();
-
-  const goToEditProfile = () => {
-    push('/editProfile');
-  };
+  const { replace } = useHistory();
 
   useEffect(() => {
-    const getMyVideos = async () => {
-      const videosIDsSnap = await database
-        .ref(`/users/${user?.uid}/videos`)
-        .get();
+    const getVideos = async (id: string) => {
+      const videosIDsSnap = await database.ref(`/users/${id}/videos`).get();
       if (videosIDsSnap.val()) {
         const videosIDs: string[] = Object.values(videosIDsSnap.val());
         const videosSnap = await database.ref(`/videos`).get();
@@ -40,12 +36,34 @@ const ProfileContainer: React.FC = () => {
           return videos[id as string];
         });
         setVideos(myVideos);
+      } else {
+        setVideos([]);
       }
     };
-    if (user && isFocus) {
-      getMyVideos();
+    if (isFocus && id) {
+      getVideos(id);
     }
-  }, [user, isFocus]);
+  }, [user, isFocus, id]);
+
+  useEffect(() => {
+    const getUserData = async (urlId: string) => {
+      try {
+        const user = await database.ref(`/users/${urlId}`).get();
+        if (!user.val()) {
+          setUserData(undefined);
+        } else {
+          setUserData({ ...user.val(), uid: user.key });
+        }
+      } catch (err) {
+        setUserData(undefined);
+        console.log(err);
+        //TODO Handle invalid urlId
+      }
+    };
+    if (isFocus && id) {
+      getUserData(id);
+    }
+  }, [user, isFocus, id]);
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {
@@ -53,16 +71,22 @@ const ProfileContainer: React.FC = () => {
       dispatch(
         userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
       );
+      if (id === 'undefined') {
+        replace({
+          pathname: generatePath('/profile/:id', { id: currentUser!.uid }),
+        });
+      }
     };
+
     !user &&
       auth.onAuthStateChanged((currentUser) => {
         if (currentUser) {
           initUser(currentUser);
         }
       });
-  }, [dispatch, user]);
+  }, [dispatch, user, id, replace]);
 
-  return <Profile {...{ user, videos, goToEditProfile }} />;
+  return <Profile {...{ user, videos, userData }} />;
 };
 
 export default ProfileContainer;
