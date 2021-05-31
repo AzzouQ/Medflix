@@ -52,6 +52,7 @@ const SignInFormContainer: React.FC<Props> = ({
       );
       setModalOpen(false);
     } catch (error) {
+      console.log(error.code);
       const { field, message } = translateError(error);
       setFieldError(field, message);
     } finally {

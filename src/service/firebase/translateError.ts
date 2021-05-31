@@ -55,10 +55,12 @@ export const translateError = ({ code }: firebase.auth.Error) => {
     case 'auth/id-token-expired':
     case 'auth/email-already-exists':
     case 'auth/claims-too-large':
+    case 'auth/too-many-requests':
       return { field: 'email', message: t(`firebase.${code}`) };
     case 'auth/invalid-password-hash':
     case 'auth/invalid-password':
     case 'auth/weak-password':
+    case 'auth/wrong-password':
       return { field: 'password', message: t(`firebase.${code}`) };
     default:
       return { field: 'email', message: t`firebase.unknown` };

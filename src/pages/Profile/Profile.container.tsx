@@ -24,11 +24,7 @@ const ProfileContainer: React.FC = () => {
   const { pathname } = useLocation();
   const isFocus = pathname.startsWith('/profile/');
 
-  const { push, replace } = useHistory();
-
-  const goToEditProfile = () => {
-    push('/editProfile');
-  };
+  const { replace } = useHistory();
 
   useEffect(() => {
     const getVideos = async (id: string | undefined) => {
@@ -50,6 +46,7 @@ const ProfileContainer: React.FC = () => {
       getVideos(id);
     }
   }, [user, isFocus, id]);
+
   useEffect(() => {
     const getUserData = async (urlId: string) => {
       try {
@@ -65,11 +62,10 @@ const ProfileContainer: React.FC = () => {
         //TODO Handle invalid urlId
       }
     };
-
     if (isFocus && id) {
       getUserData(id);
     }
-  }, [isFocus, id]);
+  }, [user, isFocus, id]);
 
   useEffect(() => {
     const initUser = async (currentUser: firebase.User) => {
@@ -92,7 +88,7 @@ const ProfileContainer: React.FC = () => {
       });
   }, [dispatch, user, id, replace]);
 
-  return <Profile {...{ user, videos, goToEditProfile, userData }} />;
+  return <Profile {...{ user, videos, userData }} />;
 };
 
 export default ProfileContainer;

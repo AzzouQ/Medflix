@@ -37,9 +37,10 @@ const EditProfileFormContainer: React.FC<Props> = ({ setModalOpen }) => {
     try {
       if (name !== user?.name) {
         await database.ref(`/users/${user!.uid}`).update({ name });
-      } else if (currentPassword) {
+      }
+      if (currentPassword) {
         const credential = firebase.auth.EmailAuthProvider.credential(
-          email!,
+          user!.email!,
           currentPassword
         );
         await auth.currentUser?.reauthenticateWithCredential(credential);
@@ -50,14 +51,14 @@ const EditProfileFormContainer: React.FC<Props> = ({ setModalOpen }) => {
         if (newPassword) {
           await auth.currentUser?.updatePassword(newPassword);
         }
-      } else if (name !== user?.name) {
-        await database.ref(`/users/${user!.uid}`).update({ name });
       }
       const userInfos = await database.ref(`/users/${user!.uid}`).get();
-      dispatch(userActions.initUser({ user: userInfos.val() }));
+      dispatch(
+        userActions.initUser({ user: { ...userInfos.val(), uid: user!.uid } })
+      );
       setModalOpen(false);
     } catch (error) {
-      console.log('Formik Error: ', JSON.stringify(error, null, 2));
+      console.log(error.code);
       const { field, message } = translateError(error);
       setFieldError(field, message);
     } finally {
