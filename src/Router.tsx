@@ -1,4 +1,6 @@
-import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   IonLabel,
   IonRouterOutlet,
@@ -6,13 +8,13 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react';
+import { HomeOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { t } from 'i18n';
-import Followers from 'pages/Followers';
+
 import Home from 'pages/Home';
+import Followers from 'pages/Followers';
 import Profile from 'pages/Profile';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+
 import { userSelectors } from 'slices';
 
 const Router: React.FC = () => {

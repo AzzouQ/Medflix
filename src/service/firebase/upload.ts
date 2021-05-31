@@ -59,8 +59,7 @@ export const useFirebaseUpload = () => {
         },
         // onError
         (_error) => {
-          message.error(t`-Une erreur s'est produite.`);
-          
+          message.error(t`-Une erreur s'est produite.`);          
         },
         // onComplete
         async () => {

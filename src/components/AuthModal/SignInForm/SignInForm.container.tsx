@@ -1,14 +1,17 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+
 import {
   auth,
   database,
-  initializeMessaging,
   translateError,
+  initializeMessaging,
 } from 'service/firebase';
-import { userActions } from 'slices';
-import type { FormikType, GoToType } from 'types';
+
 import SignInForm from './SignInForm';
+import { userActions } from 'slices';
+
+import type { FormikType, GoToType } from 'types';
 
 export declare namespace SignInType {
   type FormValues = {
