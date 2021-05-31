@@ -54,7 +54,6 @@ const ProfileContainer: React.FC = () => {
     const getUserData = async (urlId: string) => {
       try {
         const user = await database.ref(`/users/${urlId}`).get();
-        console.log(user.val());
         if (!user.val()) {
           setUserData(undefined);
         } else {
@@ -87,7 +86,6 @@ const ProfileContainer: React.FC = () => {
 
     !user &&
       auth.onAuthStateChanged((currentUser) => {
-        console.log('onAuthChanged');
         if (currentUser) {
           initUser(currentUser);
         }

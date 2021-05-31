@@ -53,7 +53,6 @@ const EditProfileFormContainer: React.FC<Props> = ({ setModalOpen }) => {
       } else if (name !== user?.name) {
         await database.ref(`/users/${user!.uid}`).update({ name });
       }
-      console.log('currentPassword: ', currentPassword);
       const userInfos = await database.ref(`/users/${user!.uid}`).get();
       dispatch(userActions.initUser({ user: userInfos.val() }));
       setModalOpen(false);

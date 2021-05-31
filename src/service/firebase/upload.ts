@@ -32,7 +32,6 @@ export const useFirebaseUpload = () => {
 
   useEffect(() => {
     if (uploadData?.file && uploadData?.type) {
-      console.log('Data: ', uploadData);
       const uploadTask = storage
         .ref(`/videos/${auth.currentUser!.uid}/${uploadData.file.uid}`)
         .put(uploadData.file);
