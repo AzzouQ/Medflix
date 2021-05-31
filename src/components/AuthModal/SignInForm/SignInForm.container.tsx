@@ -17,7 +17,7 @@ export declare namespace SignInType {
   };
   type FormSubmit = FormikType.onSubmit<FormValues>;
   type FormProps = {
-    signInFormSubmit: FormSubmit;
+    formikSubmit: FormSubmit;
     goToSignUp: GoToType;
   };
 }
@@ -33,7 +33,7 @@ const SignInFormContainer: React.FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const signInFormSubmit: SignInType.FormSubmit = async (
+  const formikSubmit: SignInType.FormSubmit = async (
     { email, password },
     { setFieldError, setSubmitting }
   ) => {
@@ -60,7 +60,7 @@ const SignInFormContainer: React.FC<Props> = ({
     setFormMode('signUp');
   }, [setFormMode]);
 
-  return <SignInForm {...{ signInFormSubmit, goToSignUp }} />;
+  return <SignInForm {...{ formikSubmit, goToSignUp }} />;
 };
 
 export default SignInFormContainer;

@@ -54,7 +54,12 @@ const ProfileContainer: React.FC = () => {
     const getUserData = async (urlId: string) => {
       try {
         const user = await database.ref(`/users/${urlId}`).get();
-        setUserData({ ...user.val(), uid: user.key });
+        console.log(user.val());
+        if (!user.val()) {
+          setUserData(undefined);
+        } else {
+          setUserData({ ...user.val(), uid: user.key });
+        }
       } catch (err) {
         setUserData(undefined);
         console.log(err);
