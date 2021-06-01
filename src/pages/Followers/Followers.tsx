@@ -58,6 +58,26 @@ const Followers: React.FC = () => {
     }
   }, [user, isFocus]);
 
+  const isFollow = async (followToCheck: string) => {
+    const me = user?.uid;
+    return new Promise(async (resolve, reject) => {
+      if (!me) {
+        throw new Error('User disconnect');
+      }
+
+      try {
+         const subscriptions = await database.ref(`/users/${me}/subscriptions`).once('value')
+         if (subscriptions.val() && subscriptions.val().includes(followToCheck)) {
+            resolve(true)
+         } else {
+          reject(false)
+         }
+      } catch (err) {
+        reject(false)
+      }
+    });
+  };
+
   const removeFollow = useCallback(
     (followToRemove: string) => {
       const me = user?.uid;
