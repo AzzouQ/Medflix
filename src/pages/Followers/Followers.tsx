@@ -58,55 +58,60 @@ const Followers: React.FC = () => {
     }
   }, [user, isFocus]);
 
-  const isFollow = async (followToCheck: string) => {
-    const me = user?.uid;
-    return new Promise(async (resolve, reject) => {
-      if (!me) {
-        throw new Error('User disconnect');
-      }
+  // const isFollow = async (followToCheck: string) => {
+  //   const me = user?.uid;
+  //   return new Promise(async (resolve, reject) => {
+  //     if (!me) {
+  //       throw new Error('User disconnect');
+  //     }
 
-      try {
-         const subscriptions = await database.ref(`/users/${me}/subscriptions`).once('value')
-         if (subscriptions.val() && subscriptions.val().includes(followToCheck)) {
-            resolve(true)
-         } else {
-          reject(false)
-         }
-      } catch (err) {
-        reject(false)
-      }
-    });
-  };
+  //     try {
+  //       const subscriptions = await database
+  //         .ref(`/users/${me}/subscriptions`)
+  //         .once('value');
+  //       if (
+  //         subscriptions.val() &&
+  //         subscriptions.val().includes(followToCheck)
+  //       ) {
+  //         resolve(true);
+  //       } else {
+  //         reject(false);
+  //       }
+  //     } catch (err) {
+  //       reject(false);
+  //     }
+  //   });
+  // };
 
-  const removeFollow = useCallback(
-    (followToRemove: string) => {
-      const me = user?.uid;
+  // const removeFollow = useCallback(
+  //   (followToRemove: string) => {
+  //     const me = user?.uid;
 
-      if (!me) {
-        throw new Error('User disconnect');
-      }
-      return database.ref(`/users/`).transaction((snapshot) => {
-        if (snapshot) {
-          const subscribers = snapshot[followToRemove].subscribers.filter(
-            (sub: string) => sub !== me
-          );
-          snapshot[followToRemove].subscribers = subscribers;
+  //     if (!me) {
+  //       throw new Error('User disconnect');
+  //     }
+  //     return database.ref(`/users/`).transaction((snapshot) => {
+  //       if (snapshot) {
+  //         const subscribers = snapshot[followToRemove].subscribers.filter(
+  //           (sub: string) => sub !== me
+  //         );
+  //         snapshot[followToRemove].subscribers = subscribers;
 
-          const subscriptions = snapshot[me].subscriptions.filter(
-            (sub: string) => sub !== followToRemove
-          );
-          snapshot[me].subscriptions = subscriptions;
+  //         const subscriptions = snapshot[me].subscriptions.filter(
+  //           (sub: string) => sub !== followToRemove
+  //         );
+  //         snapshot[me].subscriptions = subscriptions;
 
-          snapshot[me].subscriptionsCount =
-            snapshot[me]?.subscriptions?.length || 0;
-          snapshot[followToRemove].subscribersCount =
-            snapshot[followToRemove]?.subscribers?.length || 0;
-        }
-        return snapshot;
-      });
-    },
-    [user]
-  );
+  //         snapshot[me].subscriptionsCount =
+  //           snapshot[me]?.subscriptions?.length || 0;
+  //         snapshot[followToRemove].subscribersCount =
+  //           snapshot[followToRemove]?.subscribers?.length || 0;
+  //       }
+  //       return snapshot;
+  //     });
+  //   },
+  //   [user]
+  // );
 
   const addAFollow = useCallback(
     (newFollow: string) => {
