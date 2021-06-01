@@ -17,11 +17,11 @@ import SubscribeCard from 'components/SubscribeCard';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 import { t } from 'i18n';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import firebase, { auth, database } from 'service/firebase';
+import { database } from 'service/firebase';
 import { listFollowers } from 'service/firebase/users';
-import { userActions, userSelectors } from 'slices';
+import { userSelectors } from 'slices';
 import { UserType } from 'types';
 import { Styles } from './Followers.styles';
 
@@ -42,26 +42,10 @@ type Contact = {
 };
 
 const Followers: React.FC = () => {
-  const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [users, setUsers] = useState<UserType[]>([]);
   const { pathname } = useLocation();
   const isFocus = pathname === '/followers';
-
-  useEffect(() => {
-    const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/users/${currentUser!.uid}`).get();
-      dispatch(
-        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
-      );
-    };
-    !user &&
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          initUser(currentUser);
-        }
-      });
-  }, [dispatch, user]);
 
   useEffect(() => {
     async function fetchUsers() {

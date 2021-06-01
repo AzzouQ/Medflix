@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import firebase, { auth, database, translateError } from 'service/firebase';
@@ -65,21 +65,6 @@ const EditProfileFormContainer: React.FC<Props> = ({ setModalOpen }) => {
       setSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/users/${currentUser!.uid}`).get();
-      dispatch(
-        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
-      );
-    };
-    !user &&
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          initUser(currentUser);
-        }
-      });
-  }, [dispatch, user]);
 
   return <EditProfileForm {...{ formikSubmit, user }} />;
 };
