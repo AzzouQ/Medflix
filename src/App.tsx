@@ -9,6 +9,7 @@ import 'theme';
 
 import Router from 'Router';
 import { userReducer, uploadReducer } from 'slices';
+import AuthProvider from 'components/AuthProvider';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {
@@ -28,9 +29,11 @@ const App: React.FC = () => {
   return (
     <Provider store={rootStore.store}>
       <IonApp>
-        <IonReactRouter>
-          <Router />
-        </IonReactRouter>
+        <AuthProvider>
+          <IonReactRouter>
+            <Router />
+          </IonReactRouter>
+        </AuthProvider>
       </IonApp>
     </Provider>
   );

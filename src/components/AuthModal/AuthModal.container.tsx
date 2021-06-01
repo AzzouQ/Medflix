@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { auth } from 'service/firebase';
-import { userActions, userSelectors, UserState } from 'slices';
+import { userSelectors, UserState } from 'slices';
 
 import AuthModal from './AuthModal';
 
@@ -18,15 +18,13 @@ export declare namespace AuthModalType {
 }
 
 const AuthModalContainer: React.FC = () => {
-  const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [formMode, setFormMode] = useState<'signIn' | 'signUp'>('signIn');
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const onSignOut = useCallback(async () => {
     await auth.signOut();
-    dispatch(userActions.resetUser());
-  }, [dispatch]);
+  }, []);
 
   return (
     <AuthModal

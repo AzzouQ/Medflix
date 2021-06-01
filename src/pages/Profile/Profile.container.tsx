@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { generatePath, useHistory, useLocation, useParams } from 'react-router';
-import firebase, { auth, database } from 'service/firebase';
-import { userActions, userSelectors, UserState } from 'slices/user.slice';
+import { database } from 'service/firebase';
+import { userSelectors, UserState } from 'slices/user.slice';
 import type { UserType, VideoType } from 'types';
 import Profile from './Profile';
 
@@ -17,7 +17,6 @@ export declare namespace ProfileType {
 const ProfileContainer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [userData, setUserData] = useState(undefined);
-  const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [videos, setVideos] = useState<VideoType[]>();
   const { pathname } = useLocation();
@@ -66,25 +65,12 @@ const ProfileContainer: React.FC = () => {
   }, [user, isFocus, id]);
 
   useEffect(() => {
-    const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/users/${currentUser!.uid}`).get();
-      dispatch(
-        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
-      );
-      if (id === 'undefined') {
-        replace({
-          pathname: generatePath('/profile/:id', { id: currentUser!.uid }),
-        });
-      }
-    };
-
-    !user &&
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          initUser(currentUser);
-        }
+    if (id === 'undefined' && user) {
+      replace({
+        pathname: generatePath('/profile/:id', { id: user!.uid }),
       });
-  }, [dispatch, user, id, replace]);
+    }
+  }, [user, id, replace]);
 
   return <Profile {...{ user, videos, userData }} />;
 };

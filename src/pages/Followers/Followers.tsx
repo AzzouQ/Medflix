@@ -17,11 +17,11 @@ import SubscribeCard from 'components/SubscribeCard';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 import { t } from 'i18n';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import firebase, { auth, database } from 'service/firebase';
+import { database } from 'service/firebase';
 import { listFollowers } from 'service/firebase/users';
-import { userActions, userSelectors } from 'slices';
+import { userSelectors } from 'slices';
 import { UserType } from 'types';
 import { Styles } from './Followers.styles';
 
@@ -42,26 +42,10 @@ type Contact = {
 };
 
 const Followers: React.FC = () => {
-  const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const [users, setUsers] = useState<UserType[]>([]);
   const { pathname } = useLocation();
   const isFocus = pathname === '/followers';
-
-  useEffect(() => {
-    const initUser = async (currentUser: firebase.User) => {
-      const user = await database.ref(`/users/${currentUser!.uid}`).get();
-      dispatch(
-        userActions.initUser({ user: { ...user.val(), uid: currentUser!.uid } })
-      );
-    };
-    !user &&
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          initUser(currentUser);
-        }
-      });
-  }, [dispatch, user]);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -73,6 +57,56 @@ const Followers: React.FC = () => {
       fetchUsers();
     }
   }, [user, isFocus]);
+
+  const isFollow = async (followToCheck: string) => {
+    const me = user?.uid;
+    return new Promise(async (resolve, reject) => {
+      if (!me) {
+        throw new Error('User disconnect');
+      }
+
+      try {
+         const subscriptions = await database.ref(`/users/${me}/subscriptions`).once('value')
+         if (subscriptions.val() && subscriptions.val().includes(followToCheck)) {
+            resolve(true)
+         } else {
+          reject(false)
+         }
+      } catch (err) {
+        reject(false)
+      }
+    });
+  };
+
+  const removeFollow = useCallback(
+    (followToRemove: string) => {
+      const me = user?.uid;
+
+      if (!me) {
+        throw new Error('User disconnect');
+      }
+      return database.ref(`/users/`).transaction((snapshot) => {
+        if (snapshot) {
+          const subscribers = snapshot[followToRemove].subscribers.filter(
+            (sub: string) => sub !== me
+          );
+          snapshot[followToRemove].subscribers = subscribers;
+
+          const subscriptions = snapshot[me].subscriptions.filter(
+            (sub: string) => sub !== followToRemove
+          );
+          snapshot[me].subscriptions = subscriptions;
+
+          snapshot[me].subscriptionsCount =
+            snapshot[me]?.subscriptions?.length || 0;
+          snapshot[followToRemove].subscribersCount =
+            snapshot[followToRemove]?.subscribers?.length || 0;
+        }
+        return snapshot;
+      });
+    },
+    [user]
+  );
 
   const addAFollow = useCallback(
     (newFollow: string) => {
@@ -97,9 +131,10 @@ const Followers: React.FC = () => {
               ...snapshot[me].subscriptions,
               newFollow,
             ]);
-          snapshot[me].subscriptionsCount = snapshot[me].subscriptions.length;
+          snapshot[me].subscriptionsCount =
+            snapshot[me]?.subscriptions?.length || 0;
           snapshot[newFollow].subscribersCount =
-            snapshot[newFollow].subscribers.length;
+            snapshot[newFollow]?.subscribers?.length || 0;
         }
         return snapshot;
       });
