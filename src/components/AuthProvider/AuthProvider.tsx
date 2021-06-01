@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import firebase, { auth, database } from 'service/firebase';
 import { userActions } from 'slices';
 
-const FirebaseWrapperContainer: React.FC = ({ children }) => {
+const AuthProvider: React.FC = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const FirebaseWrapperContainer: React.FC = ({ children }) => {
   return <>{children}</>;
 };
 
-export default FirebaseWrapperContainer;
+export default AuthProvider;

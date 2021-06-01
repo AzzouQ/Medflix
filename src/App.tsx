@@ -9,7 +9,7 @@ import 'theme';
 
 import Router from 'Router';
 import { userReducer, uploadReducer } from 'slices';
-import FirebaseWrapperContainer from 'components/FirebaseWrapper';
+import AuthProvider from 'components/AuthProvider';
 
 const App: React.FC = () => {
   const rootStore = useMemo(() => {
@@ -29,11 +29,11 @@ const App: React.FC = () => {
   return (
     <Provider store={rootStore.store}>
       <IonApp>
-        <FirebaseWrapperContainer>
+        <AuthProvider>
           <IonReactRouter>
             <Router />
           </IonReactRouter>
-        </FirebaseWrapperContainer>
+        </AuthProvider>
       </IonApp>
     </Provider>
   );
