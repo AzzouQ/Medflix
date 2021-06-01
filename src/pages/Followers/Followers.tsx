@@ -58,6 +58,36 @@ const Followers: React.FC = () => {
     }
   }, [user, isFocus]);
 
+  const removeFollow = useCallback(
+    (followToRemove: string) => {
+      const me = user?.uid;
+
+      if (!me) {
+        throw new Error('User disconnect');
+      }
+      return database.ref(`/users/`).transaction((snapshot) => {
+        if (snapshot) {
+          const subscribers = snapshot[followToRemove].subscribers.filter(
+            (sub: string) => sub !== me
+          );
+          snapshot[followToRemove].subscribers = subscribers;
+
+          const subscriptions = snapshot[me].subscriptions.filter(
+            (sub: string) => sub !== followToRemove
+          );
+          snapshot[me].subscriptions = subscriptions;
+
+          snapshot[me].subscriptionsCount =
+            snapshot[me]?.subscriptions?.length || 0;
+          snapshot[followToRemove].subscribersCount =
+            snapshot[followToRemove]?.subscribers?.length || 0;
+        }
+        return snapshot;
+      });
+    },
+    [user]
+  );
+
   const addAFollow = useCallback(
     (newFollow: string) => {
       const me = user?.uid;
@@ -81,9 +111,10 @@ const Followers: React.FC = () => {
               ...snapshot[me].subscriptions,
               newFollow,
             ]);
-          snapshot[me].subscriptionsCount = snapshot[me].subscriptions.length;
+          snapshot[me].subscriptionsCount =
+            snapshot[me]?.subscriptions?.length || 0;
           snapshot[newFollow].subscribersCount =
-            snapshot[newFollow].subscribers.length;
+            snapshot[newFollow]?.subscribers?.length || 0;
         }
         return snapshot;
       });
