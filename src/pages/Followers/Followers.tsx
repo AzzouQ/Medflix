@@ -190,6 +190,7 @@ const Followers: React.FC = () => {
           <IonButtons slot={'start'}>
             <IonTitle>{t`header.title.followers`}</IonTitle>
           </IonButtons>
+
           {user && (
             <IonButtons slot={'end'} style={Styles.buttons}>
               <AuthModal />

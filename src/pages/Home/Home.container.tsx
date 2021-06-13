@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { database } from 'service/firebase';
 import Home from './Home';
 
 import type { VideoType } from 'types';
+import { searchVideo } from 'service/firebase/algolia';
 
 export declare namespace HomeType {
   type Props = {
     videos: VideoType[] | undefined;
+    searchText: string;
+    setSearchText: React.Dispatch<React.SetStateAction<string>>;
   };
 }
 
 const HomeContainer: React.FC = () => {
   const { pathname } = useLocation();
   const isFocus = pathname === '/home';
-  const [videos, setVideos] = useState<VideoType[]>();
+  const [videos, setVideos] = useState();
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const getAllVideos = async () => {
-      const videosSnap = await database.ref(`/videos`).get();
-      if (videosSnap.val()) {
-        setVideos(Object.values(videosSnap.val()));
-      }
+      searchVideo(searchText).then(({ hits }) => {
+        setVideos(hits as any);
+      });
     };
+
     if (isFocus) {
       getAllVideos();
     }
-  }, [isFocus]);
+  }, [isFocus, searchText]);
 
-  return <Home {...{ videos }} />;
+  return <Home {...{ videos, searchText, setSearchText }} />;
 };
 
 export default HomeContainer;

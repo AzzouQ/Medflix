@@ -8,6 +8,7 @@ import {
   IonList,
   IonPage,
   IonRow,
+  IonSearchbar,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -21,13 +22,34 @@ import { Styles } from './Home.styles';
 
 import type { HomeType } from './Home.container';
 
-const Home: React.FC<HomeType.Props> = ({ videos }) => {
+const Home: React.FC<HomeType.Props> = ({
+  videos,
+  searchText,
+  setSearchText,
+}) => {
+  const VideoList = () => {
+    return (
+      <>
+        {videos?.map((video, index) => (
+          <IonCol size={'auto'} key={index}>
+            <VideoCard video={video} />
+          </IonCol>
+        ))}
+      </>
+    );
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
             <IonTitle>{t`header.title.home`}</IonTitle>
+
+            <IonSearchbar
+              value={searchText}
+              onIonChange={(e) => setSearchText(e.detail.value!)}
+            />
           </IonButtons>
           <IonButtons slot={'end'} style={Styles.buttons}>
             <AuthModal />
@@ -39,11 +61,7 @@ const Home: React.FC<HomeType.Props> = ({ videos }) => {
         <IonGrid>
           <IonList style={Styles.list}>
             <IonRow style={Styles.container}>
-              {videos?.map((video, index) => (
-                <IonCol size={'auto'} key={index}>
-                  <VideoCard video={video} />
-                </IonCol>
-              ))}
+              <VideoList />
             </IonRow>
           </IonList>
         </IonGrid>
