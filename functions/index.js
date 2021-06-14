@@ -24,8 +24,8 @@ admin.initializeApp();
 //  Google Cloud environment variables.
 const algoliasearch = require("algoliasearch").default;
 const client = algoliasearch(
-  functions.config().algolia.app_id,
-  functions.config().algolia.api_key,
+    functions.config().algolia.app_id,
+    functions.config().algolia.api_key,
 );
 
 // Name fo the algolia index
@@ -33,17 +33,17 @@ const ALGOLIA_POSTS_INDEX_NAME = "medflix";
 
 // Updates the search index when new videos entries are created or updated.
 exports.indexentry = functions.database
-  .ref("/videos/{videoId}")
-  .onWrite(async (data, context) => {
-    const index = client.initIndex(ALGOLIA_POSTS_INDEX_NAME);
-    const firebaseObject = {
-      title: data.after.val().title,
-      createDate: data.after.val().createDate,
-      description: data.after.val().description,
-      owner: data.after.val().owner,
-      url: data.after.val().url,
-      objectID: context.params.videoId,
-    };
+    .ref("/videos/{videoId}")
+    .onWrite(async (data, context) => {
+      const index = client.initIndex(ALGOLIA_POSTS_INDEX_NAME);
+      const firebaseObject = {
+        title: data.after.val().title,
+        createDate: data.after.val().createDate,
+        description: data.after.val().description,
+        owner: data.after.val().owner,
+        url: data.after.val().url,
+        objectID: context.params.videoId,
+      };
 
-    await index.saveObject(firebaseObject);
-  });
+      await index.saveObject(firebaseObject);
+    });
