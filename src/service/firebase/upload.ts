@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { message, RcFile } from 'antd';
 import { t } from 'i18n';
-
-import firebase, { auth, database, storage } from './firebase';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { uploadActions, userSelectors } from 'slices';
+import firebase, { auth, database, storage } from './firebase';
 
 export type TaskManager = {
   onPause: () => boolean;
@@ -59,7 +58,7 @@ export const useFirebaseUpload = () => {
         },
         // onError
         (_error) => {
-          message.error(t`-Une erreur s'est produite.`);          
+          message.error(t`-Une erreur s'est produite.`);
         },
         // onComplete
         async () => {
@@ -71,6 +70,9 @@ export const useFirebaseUpload = () => {
               description: uploadData.type.description,
               url: downloadUrl,
               createDate: +new Date(),
+              like: 0,
+              view: 0,
+              report: 0,
             });
             const videosSnap = await database
               .ref(`/users/${user!.uid}/videos`)

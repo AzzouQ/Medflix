@@ -34,8 +34,10 @@ const ProfileContainer: React.FC = () => {
         const videos: { [key: string]: VideoType } = videosSnap.val();
         console.log(JSON.stringify(videos, null, 2));
         const myVideos = videosIDs.map((id) => {
-          return videos[id as string];
+          return { ...videos[id as string], objectID: id };
         });
+
+        console.log(myVideos);
         setVideos(myVideos);
       } else {
         setVideos([]);

@@ -6,10 +6,9 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCol,
-  IonModal,
   IonRow,
 } from '@ionic/react';
-import { Button, Image, Avatar } from 'antd';
+import { Image, Avatar } from 'antd';
 import { UserOutlined, ShareAltOutlined } from '@ant-design/icons';
 
 import { Styles } from './VideoCard.styles';
@@ -20,23 +19,16 @@ import type { VideoCardType } from './VideoCard.container';
 const VideoCard: React.FC<VideoCardType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],
   onStartPlaying,
+  onCardClick,
   onShare,
   video,
   owner,
 }) => {
   return (
     <>
-      <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
-        <IonRow style={Styles.container}>
-          <Button type={'primary'} onClick={onStartPlaying}>
-            {'Play'}
-          </Button>
-        </IonRow>
-        <div id={'fullscreen-video'} slot={'fixed'}></div>
-      </IonModal>
       <IonCard>
         <IonRow>
-          <IonCardContent onClick={() => setModalOpen(true)}>
+          <IonCardContent onClick={onCardClick}>
             <Image src={thumbnail} height={200} width={340} preview={false} />
           </IonCardContent>
         </IonRow>
