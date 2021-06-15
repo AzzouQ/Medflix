@@ -77,7 +77,7 @@ const Followers: React.FC = () => {
               <IonRow style={{ justifyContent: 'center' }}>
                 {videos?.map((video, index) => (
                   <IonCol size={'auto'} key={index}>
-                    <VideoCard video={video} />
+                    <VideoCard video={video} mode="WATCH" />
                   </IonCol>
                 ))}
               </IonRow>
