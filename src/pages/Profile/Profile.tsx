@@ -1,3 +1,4 @@
+import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import {
   IonButtons,
@@ -12,13 +13,14 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { Avatar } from 'antd';
+import { t } from 'i18n';
+
 import EditProfileModal from 'components/EditProfileModal';
 import Footer from 'components/Footer';
 import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 import UploadModal from 'components/UploadModal';
 import VideoCard from 'components/VideoCard';
-import { t } from 'i18n';
-import React from 'react';
+
 import type { ProfileType } from './Profile.container';
 import { Styles } from './Profile.styles';
 
@@ -30,6 +32,7 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
           <IonButtons slot={'start'}>
             {userData && (
               <Avatar
+                src={userData.imageUrl}
                 size={'large'}
                 icon={<UserOutlined />}
                 style={Styles.buttons}

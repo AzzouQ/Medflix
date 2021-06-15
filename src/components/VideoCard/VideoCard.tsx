@@ -44,9 +44,12 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
           <IonRow>
             <IonCol size={'2'}>
               <a href={`/profile/${owner?.uid}`}>
-                <Avatar size={'large'} icon={<UserOutlined />} />
+                <Avatar
+                  size={'large'}
+                  icon={<UserOutlined />}
+                  src={owner?.imageUrl}
+                />
               </a>
-              {/* <Avatar size={'large'} icon={<UserOutlined />} /> */}
             </IonCol>
             <IonCol size={'9'}>
               <IonCardTitle>{video.title}</IonCardTitle>

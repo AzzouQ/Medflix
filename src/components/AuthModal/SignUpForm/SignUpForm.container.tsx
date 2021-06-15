@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import GravatarAPI from 'gravatar-api';
 
 import {
   auth,
@@ -46,6 +47,13 @@ const SignUpFormContainer: React.FC<Props> = ({
         email,
         password
       );
+      const imageUrl = await GravatarAPI.imageUrl({
+        email: email,
+        parameters: {
+          size: 500,
+          default: 'identicon',
+        },
+      });
       await database.ref(`/users/${user!.uid}`).set({
         name: name,
         email: email,
@@ -53,6 +61,7 @@ const SignUpFormContainer: React.FC<Props> = ({
         updateDate: +new Date(),
         subscribersCount: 0,
         subscriptionsCount: 0,
+        imageUrl: imageUrl,
       });
       await initializeMessaging(user!);
       const userInfos = await database.ref(`/users/${user!.uid}`).get();
