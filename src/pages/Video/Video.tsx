@@ -1,4 +1,9 @@
-import { UserOutlined } from '@ant-design/icons';
+import {
+  FrownOutlined,
+  LikeOutlined,
+  UserOutlined,
+  DislikeOutlined,
+} from '@ant-design/icons';
 import {
   IonButtons,
   IonContent,
@@ -7,17 +12,24 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar } from 'antd';
-import EditProfileModal from 'components/EditProfileModal';
+import { Avatar, Button, Typography } from 'antd';
 import Footer from 'components/Footer';
-import UploadModal from 'components/UploadModal';
 import VideoCard from 'components/VideoCard';
-import { t } from 'i18n';
 import React from 'react';
 import type { VideoView } from './Video.container';
 import { Styles } from './Video.styles';
 
-const Video: React.FC<VideoView.Props> = ({ user, video, userData }) => {
+const Video: React.FC<VideoView.Props> = ({
+  user,
+  video,
+  userData,
+  onReport,
+  onLike,
+  likeLoading,
+  isLiked,
+  reportLoading,
+  isReport,
+}) => {
   return (
     <IonPage>
       <IonHeader>
@@ -30,19 +42,40 @@ const Video: React.FC<VideoView.Props> = ({ user, video, userData }) => {
                 style={Styles.buttons}
               />
             )}
-            <IonTitle>{video.title ?? t`header.title.profile`}</IonTitle>
+            <IonTitle>Watch</IonTitle>
           </IonButtons>
-          {user && (
-            <IonButtons slot={'end'}>
-              <UploadModal />
-              <EditProfileModal />
-            </IonButtons>
-          )}
+
+          <IonButtons slot={'end'}>
+            <Button
+              type={'primary'}
+              icon={isLiked ? <DislikeOutlined /> : <LikeOutlined />}
+              onClick={onLike}
+              loading={likeLoading}
+              style={Styles.button}
+            >
+              {isLiked ? 'Unlike' : 'Like'}
+            </Button>
+            <Button
+              type={'primary'}
+              icon={<FrownOutlined />}
+              onClick={onReport}
+              loading={reportLoading}
+            >
+              {isReport ? 'Unreport' : 'Report'}
+            </Button>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen={true}>
         <VideoCard video={video} mode="WATCH" />
+
+        <Typography.Title>Description {video.description}</Typography.Title>
+        <div style={{ flexDirection: 'column' }}>
+          <Typography.Title level={2}>View {video.view}</Typography.Title>
+          <Typography.Title level={3}>Like {video.like}</Typography.Title>
+          <Typography.Title level={4}>Report {video.report}</Typography.Title>
+        </div>
       </IonContent>
       <Footer />
     </IonPage>

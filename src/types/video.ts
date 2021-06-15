@@ -5,4 +5,7 @@ export type VideoType = {
   url: string;
   createDate: string;
   objectID: string;
+  view: number;
+  like: number;
+  report: number;
 };

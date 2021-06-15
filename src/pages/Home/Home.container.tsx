@@ -23,7 +23,6 @@ const HomeContainer: React.FC = () => {
   useEffect(() => {
     const getAllVideos = async () => {
       searchVideo(searchText).then(({ hits }) => {
-        console.log(hits);
         setVideos(hits as VideoType[]);
       });
     };

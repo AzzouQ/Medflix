@@ -42,6 +42,9 @@ exports.indexentry = functions.database
         description: data.after.val().description,
         owner: data.after.val().owner,
         url: data.after.val().url,
+        like: data.after.val().like,
+        view: data.after.val().view,
+        report: data.after.val().report,
         objectID: context.params.videoId,
       };
 

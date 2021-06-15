@@ -64,8 +64,11 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
   });
 
   const onStartPlaying = useCallback(async () => {
+    database.ref(`/videos/${video.objectID}/view`).transaction((viewCount) => {
+      return viewCount + 1;
+    });
     await initPlayer('fullscreen', video.url, 'fullscreen-video', 'div');
-  }, [initPlayer, video.url]);
+  }, [initPlayer, video.url, video.objectID]);
 
   const onShare = useCallback(async () => {
     if (isPlatform('mobile')) {
@@ -92,7 +95,6 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
   }, [user?.name, video.owner]);
 
   const onCardClick = () => {
-    console.log('onStartPlaying');
     if (mode === 'REDIRECT') history.push('/watch/' + video.objectID);
     else if (mode === 'WATCH') onStartPlaying();
   };
