@@ -23,6 +23,7 @@ import VideoCard from 'components/VideoCard';
 
 import type { ProfileType } from './Profile.container';
 import { Styles } from './Profile.styles';
+import SubscribeCard from 'components/SubscribeCard';
 
 const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
   return (
@@ -40,12 +41,18 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
             )}
             <IonTitle>{userData?.name ?? t`header.title.profile`}</IonTitle>
           </IonButtons>
-          {user && userData?.uid === user.uid && (
-            <IonButtons slot={'end'}>
-              <UploadModal />
-              <EditProfileModal />
-            </IonButtons>
-          )}
+          <IonButtons slot={'end'}>
+            {user && userData && userData?.uid === user.uid ? (
+              <>
+                <UploadModal />
+                <EditProfileModal />
+              </>
+            ) : userData ? (
+              <SubscribeCard {...{ userData }} />
+            ) : (
+              <></>
+            )}
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 

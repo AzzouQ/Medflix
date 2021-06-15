@@ -28,9 +28,11 @@ const ProfileContainer: React.FC = () => {
     const getVideos = async (id: string) => {
       const videosIDsSnap = await database.ref(`/users/${id}/videos`).get();
       if (videosIDsSnap.val()) {
+        console.log(JSON.stringify(videosIDsSnap.val(), null, 2));
         const videosIDs: string[] = Object.values(videosIDsSnap.val());
         const videosSnap = await database.ref(`/videos`).get();
         const videos: { [key: string]: VideoType } = videosSnap.val();
+        console.log(JSON.stringify(videos, null, 2));
         const myVideos = videosIDs.map((id) => {
           return videos[id as string];
         });
