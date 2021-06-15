@@ -17,13 +17,14 @@ export declare namespace HomeType {
 const HomeContainer: React.FC = () => {
   const { pathname } = useLocation();
   const isFocus = pathname === '/home';
-  const [videos, setVideos] = useState();
+  const [videos, setVideos] = useState<VideoType[]>();
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const getAllVideos = async () => {
       searchVideo(searchText).then(({ hits }) => {
-        setVideos(hits as any);
+        console.log(hits);
+        setVideos(hits as VideoType[]);
       });
     };
 

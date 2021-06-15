@@ -1,28 +1,23 @@
 import { UserOutlined } from '@ant-design/icons';
 import {
   IonButtons,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonList,
   IonPage,
-  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { Avatar } from 'antd';
 import EditProfileModal from 'components/EditProfileModal';
 import Footer from 'components/Footer';
-import Unauthenticated from 'components/Unauthenticated/Unauthenticated';
 import UploadModal from 'components/UploadModal';
 import VideoCard from 'components/VideoCard';
 import { t } from 'i18n';
 import React from 'react';
-import type { ProfileType } from './Profile.container';
-import { Styles } from './Profile.styles';
+import type { VideoView } from './Video.container';
+import { Styles } from './Video.styles';
 
-const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
+const Video: React.FC<VideoView.Props> = ({ user, video, userData }) => {
   return (
     <IonPage>
       <IonHeader>
@@ -35,9 +30,9 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
                 style={Styles.buttons}
               />
             )}
-            <IonTitle>{userData?.name ?? t`header.title.profile`}</IonTitle>
+            <IonTitle>{video.title ?? t`header.title.profile`}</IonTitle>
           </IonButtons>
-          {user && userData?.uid === user.uid && (
+          {user && (
             <IonButtons slot={'end'}>
               <UploadModal />
               <EditProfileModal />
@@ -47,26 +42,11 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        {userData ? (
-          <IonGrid>
-            <IonList style={Styles.list}>
-              <IonRow style={Styles.container}>
-                {videos?.map((video, index) => (
-                  <IonCol size={'auto'} key={index}>
-                    <VideoCard video={video} mode="REDIRECT" />
-                  </IonCol>
-                ))}
-              </IonRow>
-            </IonList>
-          </IonGrid>
-        ) : (
-          <Unauthenticated /> // TODO 404
-        )}
+        <VideoCard video={video} mode="WATCH" />
       </IonContent>
-
       <Footer />
     </IonPage>
   );
 };
 
-export default Profile;
+export default Video;

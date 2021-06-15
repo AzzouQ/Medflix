@@ -14,6 +14,7 @@ import { t } from 'i18n';
 import Home from 'pages/Home';
 import Followers from 'pages/Followers';
 import Profile from 'pages/Profile';
+import Video from 'pages/Video';
 
 import { userSelectors } from 'slices';
 
@@ -26,6 +27,7 @@ const Router: React.FC = () => {
     Home: '/home',
     EditProfile: '/editProfile',
     Followers: '/followers',
+    Video: '/watch',
   };
 
   return (
@@ -46,6 +48,8 @@ const Router: React.FC = () => {
         <Route exact path={`${Links.Profile}/:id`}>
           <Profile />
         </Route>
+
+        <Route exact path={`${Links.Video}/:id`} component={Video} />
       </IonRouterOutlet>
 
       <IonTabBar slot={'bottom'}>

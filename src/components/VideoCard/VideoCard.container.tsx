@@ -12,15 +12,18 @@ import { userSelectors } from 'slices';
 import VideoCard from './VideoCard';
 
 import type { UserType, UseStateType, VideoType } from 'types';
+import { useHistory } from 'react-router';
 
 const { Share, Clipboard } = Plugins;
 
 type Props = {
   video: VideoType;
+  mode: 'REDIRECT' | 'WATCH';
 };
 
 export declare namespace VideoCardType {
   type Props = {
+    onCardClick: () => void;
     modalOpenState: [boolean, UseStateType<boolean>];
     onStartPlaying: () => void;
     onShare: () => Promise<void>;
@@ -31,11 +34,12 @@ export declare namespace VideoCardType {
 
 type OnLog = (fromPlayerId: string, currentTime: number | undefined) => void;
 
-const VideoCardContainer: React.FC<Props> = ({ video }) => {
+const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
   const user = useSelector(userSelectors.getUser);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const isExited = useRef(false);
   const [owner, setOwner] = useState<UserType>();
+  const history = useHistory();
 
   const onCloseModal = async () => {
     await stopAllPlayers();
@@ -60,7 +64,7 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
   });
 
   const onStartPlaying = useCallback(async () => {
-    await initPlayer('fullscreen', video.url, 'fullscreen-video', 'ion-modal');
+    await initPlayer('fullscreen', video.url, 'fullscreen-video', 'div');
   }, [initPlayer, video.url]);
 
   const onShare = useCallback(async () => {
@@ -87,16 +91,27 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
     getOwner();
   }, [user?.name, video.owner]);
 
+  const onCardClick = () => {
+    console.log('onStartPlaying');
+    if (mode === 'REDIRECT') history.push('/watch/' + video.objectID);
+    else if (mode === 'WATCH') onStartPlaying();
+  };
+
   return (
-    <VideoCard
-      {...{
-        modalOpenState: [isModalOpen, setModalOpen],
-        onShare,
-        onStartPlaying,
-        video,
-        owner: owner,
-      }}
-    />
+    <>
+      <div id={'fullscreen-video'} slot={'fixed'}></div>
+
+      <VideoCard
+        {...{
+          modalOpenState: [isModalOpen, setModalOpen],
+          onShare,
+          onStartPlaying,
+          video,
+          owner: owner,
+          onCardClick,
+        }}
+      />
+    </>
   );
 };
 
