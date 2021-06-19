@@ -14,6 +14,8 @@ import type { UploadType } from './UploadForm.container';
 const UploadForm: React.FC<UploadType.FormProps> = ({
   isDisabled,
   onChange,
+  onChangeImage,
+  onRemoveImage,
   onRemove,
   uploadFormSubmit,
 }) => {
@@ -54,9 +56,25 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
               >
                 <PlusCircleTwoTone style={Styles.icon} />
                 <Typography.Title level={5}>
-                  {t`form.upload.dragger.title`}
+                  {t`form.upload.dragger.video.title`}
                 </Typography.Title>
-                <Typography.Text>{t`form.upload.dragger.subtitle`}</Typography.Text>
+                <Typography.Text>{t`form.upload.dragger.video.subtitle`}</Typography.Text>
+              </Upload.Dragger>
+            </IonRow>
+            <IonRow style={Styles.container}>
+              <Upload.Dragger
+                accept={'image/*'}
+                onChange={onChangeImage}
+                onRemove={onRemoveImage}
+                beforeUpload={() => false}
+                maxCount={1}
+                style={Styles.dragger}
+              >
+                <PlusCircleTwoTone style={Styles.icon} />
+                <Typography.Title level={5}>
+                  {t`form.upload.dragger.image.title`}
+                </Typography.Title>
+                <Typography.Text>{t`form.upload.dragger.image.subtitle`}</Typography.Text>
               </Upload.Dragger>
             </IonRow>
             <IonRow style={{ marginTop: 40 }}>

@@ -5,6 +5,8 @@ import Home from './Home';
 
 import type { VideoType } from 'types';
 import { searchVideo } from 'service/firebase/algolia';
+import { uploadSelectors } from 'slices';
+import { useSelector } from 'react-redux';
 
 export declare namespace HomeType {
   type Props = {
@@ -15,6 +17,8 @@ export declare namespace HomeType {
 }
 
 const HomeContainer: React.FC = () => {
+  const refresh = useSelector(uploadSelectors.getComplete);
+
   const { pathname } = useLocation();
   const isFocus = pathname === '/home';
   const [videos, setVideos] = useState<VideoType[]>();
@@ -30,7 +34,7 @@ const HomeContainer: React.FC = () => {
     if (isFocus) {
       getAllVideos();
     }
-  }, [isFocus, searchText]);
+  }, [isFocus, searchText, refresh]);
 
   return <Home {...{ videos, searchText, setSearchText }} />;
 };

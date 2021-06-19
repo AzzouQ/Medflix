@@ -76,8 +76,14 @@
       "title": "Publier une vidéo !",
       "save": "Publier",
       "dragger": {
-        "title": "Ajoutez une vidéo",
-        "subtitle": "Cliquez ou faites glissez"
+        "video": {
+          "title": "Ajoutez une vidéo",
+          "subtitle": "Cliquez ou faites glissez"
+        },
+        "image": {
+          "title": "Ajoutez une miniature",
+          "subtitle": "Cliquez ou faites glissez"
+        }
       }
     },
 

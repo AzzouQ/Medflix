@@ -7,5 +7,6 @@ export type VideoType = {
   objectID: string;
   view: number;
   like: number;
+  thumbnail: string;
   report: number;
 };

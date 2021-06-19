@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { generatePath, useHistory, useLocation, useParams } from 'react-router';
 import { database } from 'service/firebase';
+import { uploadSelectors } from 'slices';
 import { userSelectors, UserState } from 'slices/user.slice';
 import type { UserType, VideoType } from 'types';
 import Profile from './Profile';
@@ -18,6 +19,7 @@ const ProfileContainer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [userData, setUserData] = useState(undefined);
   const user = useSelector(userSelectors.getUser);
+  const refresh = useSelector(uploadSelectors.getComplete);
   const [videos, setVideos] = useState<VideoType[]>();
   const { pathname } = useLocation();
   const isFocus = pathname.startsWith('/profile/');
@@ -46,7 +48,7 @@ const ProfileContainer: React.FC = () => {
     if (isFocus && id) {
       getVideos(id);
     }
-  }, [user, isFocus, id]);
+  }, [user, isFocus, id, refresh]);
 
   useEffect(() => {
     const getUserData = async (urlId: string) => {

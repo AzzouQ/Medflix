@@ -75,9 +75,15 @@
     "upload": {
       "title": "Upload a video !",
       "save": "Upload",
-      "dragger": {
-        "title": "Add a video",
-        "subtitle": "Click or drag"
+      "dragger":  {
+        "video": {
+          "title": "Add a video",
+          "subtitle": "Click or drag"
+        },
+        "image": {
+          "title": "Add a thumbnail",
+          "subtitle": "Click or drag"
+        }
       }
     },
 
