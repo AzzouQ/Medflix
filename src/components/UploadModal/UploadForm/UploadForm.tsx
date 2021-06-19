@@ -29,7 +29,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
   });
 
   return (
-    <IonRow style={Styles.container}>
+    <IonCol style={Styles.container}>
       <Formik<UploadType.FormValues>
         initialValues={initialValues}
         onSubmit={uploadFormSubmit}
@@ -120,7 +120,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
           </Form>
         )}
       </Formik>
-    </IonRow>
+    </IonCol>
   );
 };
 
