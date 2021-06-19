@@ -31,7 +31,7 @@ const HomeContainer: React.FC = () => {
       });
     };
 
-    if (isFocus) {
+    if (isFocus && !refresh) {
       getAllVideos();
     }
   }, [isFocus, searchText, refresh]);

@@ -102,13 +102,17 @@ export const useFirebaseUpload = () => {
                 ? [...Object.values(videos), videoID.key]
                 : [videoID.key],
             });
+
+            dispatch(uploadActions.setComplete({ downloadURL: downloadUrl }));
+
             message.success(t`-Votre video a été publier.`);
           } catch (error) {
             console.log(error);
           } finally {
+            dispatch(uploadActions.resetUpload());
+
             unsubscribe.current!();
             unsubscribeImage.current!();
-            dispatch(uploadActions.resetUpload());
           }
         }
       );
