@@ -24,7 +24,7 @@ import Unauthenticated from 'components/Unauthenticated';
 import VideoCard from 'components/VideoCard';
 
 import { Styles } from './Followers.styles';
-import { useSubsSearch } from 'service/firebase/algolia';
+import { useSubsSearch } from 'service/algolia/algolia';
 
 const Followers: React.FC = () => {
   const user = useSelector(userSelectors.getUser);

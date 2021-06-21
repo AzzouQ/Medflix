@@ -3,7 +3,7 @@ import React from 'react';
 import Home from './Home';
 
 import type { VideoType } from 'types';
-import { useAlgoliaSearch } from 'service/firebase/algolia';
+import { useAlgoliaSearch } from 'service/algolia/algolia';
 
 export declare namespace HomeType {
   type Props = {
