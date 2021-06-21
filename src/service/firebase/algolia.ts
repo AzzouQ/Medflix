@@ -18,3 +18,23 @@ export const useAlgoliaSearch = () => {
 
   return [searchResult, search, setSearch] as const;
 };
+
+export const useSubsSearch = () => {
+  const [subs, setSubs] = useState<string[]>([]);
+  const [searchResult, setSearchResult] = useState<VideoType[]>([]);
+
+  useEffect(() => {
+    if (subs.length > 0) {
+      const addOwnerTag = subs.map((val) => 'owner:' + val)
+      const filters = addOwnerTag.join(' OR ');
+
+    index.search("", {
+      filters
+    }).then(({hits}) => {
+      setSearchResult(hits as VideoType[]);
+    });
+    }
+  }, [subs]);
+
+  return [searchResult, setSubs] as const;
+};
