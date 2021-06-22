@@ -1,4 +1,5 @@
 export type VideoType = {
+  flagged: boolean;
   owner: string;
   title: string;
   description: string;

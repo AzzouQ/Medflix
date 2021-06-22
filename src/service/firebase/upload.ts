@@ -84,6 +84,7 @@ export const useFirebaseUpload = () => {
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
             const videoID = await database.ref(`/videos/`).push({
               thumbnail: thumbnailDownloadUrl,
+              flagged: false,
               owner: user!.uid,
               title: uploadData.type.title,
               description: uploadData.type.description,
