@@ -59,7 +59,9 @@
       "label": "Description",
       "placeholder": "Super vidéo"
     },
-
+    "password": {
+      "required": "Le mot de passe est requis"
+    },
     "signIn": {
       "title": "Connectez-vous !",
       "save": "Me connecter",
