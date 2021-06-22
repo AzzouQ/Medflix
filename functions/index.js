@@ -17,6 +17,23 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const nodemailer = require("nodemailer");
+
+const mail = functions.config().nodemail.mail;
+const password = functions.config().nodemail.password;
+
+const REPORT_PERCENTAGE = 0.1;
+
+const mailTransport = nodemailer.createTransport({
+  host: "smtp.mail.com",
+  port: 587,
+  secure: false, // upgrade later with STARTTLS
+  auth: {
+    user: mail,
+    pass: password,
+  },
+});
+
 admin.initializeApp();
 
 // Authenticate to Algolia Database.
@@ -31,11 +48,45 @@ const client = algoliasearch(
 // Name fo the algolia index
 const ALGOLIA_POSTS_INDEX_NAME = "medflix";
 
+const index = client.initIndex(ALGOLIA_POSTS_INDEX_NAME);
+
+/**
+ * Send mail if too much report.
+ * @param {Object} videoObject Object that represent all the info of a video
+ * @return {null}
+ */
+async function sendMail(videoObject) {
+  const mailOptions = {
+    from: "chichke@mail.com",
+    to: "bastien.silhol@epitech.eu",
+  };
+    // Building Email message.
+  mailOptions.subject = "Report";
+  mailOptions.text = `title: ${videoObject.title}\n
+                      id: ${videoObject.objectID}\n
+                      url: ${videoObject.url}\n
+                      like: ${videoObject.like}\n
+                      view: ${videoObject.view}\n
+                      owner: ${videoObject.owner}\n`;
+
+  try {
+    await mailTransport.sendMail(mailOptions);
+  } catch (error) {
+    functions.logger.error(
+        "There was an error while sending the email:",
+        error,
+    );
+  }
+  return null;
+}
 // Updates the search index when new videos entries are created or updated.
 exports.indexentry = functions.database
     .ref("/videos/{videoId}")
     .onWrite(async (data, context) => {
-      const index = client.initIndex(ALGOLIA_POSTS_INDEX_NAME);
+      if (data.before.val().flagged !== data.after.val().flagged) {
+        return null;
+      }
+
       const firebaseObject = {
         title: data.after.val().title,
         createDate: data.after.val().createDate,
@@ -49,4 +100,14 @@ exports.indexentry = functions.database
       };
 
       await index.saveObject(firebaseObject);
+
+      if (firebaseObject.report > firebaseObject.view * REPORT_PERCENTAGE &&
+         !data.before.val().flagged) {
+        sendMail(firebaseObject);
+        return data.after.ref.update({
+          flagged: true,
+        });
+      }
+
+      return null;
     });
