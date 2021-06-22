@@ -94,6 +94,7 @@ exports.indexentry = functions.database
         owner: data.after.val().owner,
         url: data.after.val().url,
         like: data.after.val().like,
+        thumbnail: data.after.val().thumbnail,
         view: data.after.val().view,
         report: data.after.val().report,
         objectID: context.params.videoId,
