@@ -87,7 +87,7 @@
       }
     },
 
-    "editProfile": {
+    "edit": {
       "title": "Edit your profile !",
       "save": "Save"
     }

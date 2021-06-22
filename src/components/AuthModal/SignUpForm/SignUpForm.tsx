@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
+import CloseModalContainer from 'components/CloseModal';
 
 import { Styles } from './SignUpForm.styles';
 
@@ -13,6 +14,7 @@ import type { SignUpType } from './SignUpForm.container';
 const SignUpForm: React.FC<SignUpType.FormProps> = ({
   formikSubmit,
   goToSignIn,
+  setModalOpen,
 }) => {
   const initialValues = {
     name: '',
@@ -30,6 +32,7 @@ const SignUpForm: React.FC<SignUpType.FormProps> = ({
 
   return (
     <IonRow style={Styles.container}>
+      <CloseModalContainer {...{ setModalOpen }} />
       <Formik<SignUpType.FormValues>
         initialValues={initialValues}
         onSubmit={formikSubmit}

@@ -24,6 +24,7 @@ export declare namespace SignUpType {
   type FormProps = {
     formikSubmit: FormSubmit;
     goToSignIn: GoToType;
+    setModalOpen: (value: boolean) => void;
   };
 }
 
@@ -81,7 +82,7 @@ const SignUpFormContainer: React.FC<Props> = ({
     setFormMode('signIn');
   }, [setFormMode]);
 
-  return <SignUpForm {...{ formikSubmit, goToSignIn }} />;
+  return <SignUpForm {...{ formikSubmit, goToSignIn, setModalOpen }} />;
 };
 
 export default SignUpFormContainer;

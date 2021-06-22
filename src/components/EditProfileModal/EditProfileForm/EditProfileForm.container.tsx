@@ -19,6 +19,7 @@ export declare namespace EditProfileFormType {
   type FormProps = {
     formikSubmit: FormSubmit;
     user: UserState;
+    setModalOpen: (value: boolean) => void;
   };
 }
 
@@ -66,7 +67,7 @@ const EditProfileFormContainer: React.FC<Props> = ({ setModalOpen }) => {
     }
   };
 
-  return <EditProfileForm {...{ formikSubmit, user }} />;
+  return <EditProfileForm {...{ formikSubmit, user, setModalOpen }} />;
 };
 
 export default EditProfileFormContainer;
