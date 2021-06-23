@@ -67,7 +67,14 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
     database.ref(`/videos/${video.objectID}/view`).transaction((viewCount) => {
       return viewCount + 1;
     });
-    await initPlayer('fullscreen', video.url, 'fullscreen-video', 'div');
+    await initPlayer(
+      'embedded',
+      video.url,
+      'fullscreen-video',
+      'div',
+      800,
+      400
+    );
   }, [initPlayer, video.url, video.objectID]);
 
   const onShare = useCallback(async () => {
