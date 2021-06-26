@@ -3,7 +3,7 @@ import type { StylesType } from 'types';
 const Styles: StylesType = {
   closeButton: {
     position: 'absolute',
-    top: 10,
+    top: 50,
     right: 10,
   },
 };

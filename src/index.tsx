@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FacebookLogin } from '@capacitor-community/facebook-login';
+import { registerWebPlugin } from '@capacitor/core';
 
 import App from './App';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+
+registerWebPlugin(FacebookLogin);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

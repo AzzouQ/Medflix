@@ -15,6 +15,7 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
   formikSubmit,
   goToSignUp,
   onGoogle,
+  onFacebook,
   setModalOpen,
 }) => {
   const initialValues = {
@@ -95,15 +96,17 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
               </IonCol>
             </IonRow>
             <IonRow>
-              <IonCol size={'12'}>
+              <IonCol size={'6'}>
                 <Form.Item name={'google'}>
-                  <Button
-                    type={'primary'}
-                    style={{ backgroundColor: 'white' }}
-                    block={true}
-                    onClick={onGoogle}
-                  >
+                  <Button type={'primary'} block={true} onClick={onGoogle}>
                     {t`Google`}
+                  </Button>
+                </Form.Item>
+              </IonCol>
+              <IonCol size={'6'}>
+                <Form.Item name={'facebook'}>
+                  <Button type={'primary'} block={true} onClick={onFacebook}>
+                    {t`Facebook`}
                   </Button>
                 </Form.Item>
               </IonCol>

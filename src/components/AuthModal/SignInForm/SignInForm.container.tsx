@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Plugins } from '@capacitor/core';
 import GravatarAPI from 'gravatar-api';
+import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
 
 import firebase, {
   auth,
@@ -25,6 +26,7 @@ export declare namespace SignInType {
     formikSubmit: FormSubmit;
     goToSignUp: GoToType;
     onGoogle: GoToType;
+    onFacebook: GoToType;
     setModalOpen: (value: boolean) => void;
   };
 }
@@ -107,7 +109,54 @@ const SignInFormContainer: React.FC<Props> = ({
     }
   };
 
-  return <SignInForm {...{ formikSubmit, goToSignUp, onGoogle, setModalOpen }} />;
+  const onFacebook: GoToType = async () => {
+    try {
+      const response: FacebookLoginResponse = await Plugins.FacebookLogin.login(
+        { permissions: ['public_profile', 'email'] }
+      );
+      const credential = firebase.auth.FacebookAuthProvider.credential(
+        response.accessToken?.token ?? ''
+      );
+      console.log('HAVE BEEN UPDATED ?');
+      const { user } = await auth.signInWithCredential(credential);
+      const userInfosSnap = await database.ref(`/users/${user!.uid}`).get();
+      const userInfos = userInfosSnap.val();
+      if (userInfos) {
+        await database
+          .ref(`/users/${user!.uid}`)
+          .update({ updateDate: +new Date() });
+      } else {
+        await database.ref(`/users/${user!.uid}`).set({
+          name: user?.displayName,
+          email: user?.email,
+          createDate: +new Date(),
+          updateDate: +new Date(),
+          subscribersCount: 0,
+          subscriptionsCount: 0,
+          imageUrl: await GravatarAPI.imageUrl({
+            email: user?.email,
+            parameters: {
+              size: 500,
+              default: 'identicon',
+            },
+          }),
+        });
+      }
+      await initializeMessaging(user!);
+      dispatch(
+        userActions.initUser({ user: { ...userInfos, uid: user!.uid } })
+      );
+      setModalOpen(false);
+    } catch (error) {
+      console.log('response: ', error);
+    }
+  };
+
+  return (
+    <SignInForm
+      {...{ formikSubmit, goToSignUp, onGoogle, onFacebook, setModalOpen }}
+    />
+  );
 };
 
 export default SignInFormContainer;

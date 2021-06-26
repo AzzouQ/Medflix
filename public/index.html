@@ -6,7 +6,10 @@
 
     <base href="/" />
 
-    <meta name="google-signin-client_id" content="953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com" />
+    <meta
+      name="google-signin-client_id"
+      content="953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com"
+    />
 
     <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="light dark" />
@@ -38,4 +41,26 @@
   <body>
     <div id="root"></div>
   </body>
+
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '4359858914025573',
+        cookie: true, // enable cookies to allow the server to access the session
+        xfbml: true, // parse social plugins on this page
+        version: 'v5.0', // use graph api current version
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  </script>
 </html>
