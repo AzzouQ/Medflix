@@ -37,15 +37,34 @@ const VideoContainer: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [reportLoading, setReportLoading] = useState(false);
   const [isReport, setIsReport] = useState(false);
+
+  const vid = video?.objectID;
+  const uid = user?.uid;
+
   useEffect(() => {
-    const getReport = (uid: string) => {
+    const getVideo = async (id: string) => {
+      const videoSnap = await database.ref(`/videos/${id}`).get();
+      if (videoSnap.val()) {
+        setVideo({ ...videoSnap.val(), objectID: videoSnap.key });
+      } else {
+        setVideo(undefined);
+      }
+    };
+
+    if (isFocus && id) {
+      getVideo(id);
+    }
+  }, [isFocus, id]);
+
+  useEffect(() => {
+    const getReport = () => {
       setReportLoading(true);
       const report = database.ref(`/users/${uid}/report`);
       report
         .once('value')
         .then((data) => {
           if (data.val()) {
-            if (data.val().includes(video?.objectID)) setIsReport(true);
+            if (data.val().includes(vid)) setIsReport(true);
           } else setIsReport(false);
         })
         .catch((error) => {
@@ -56,14 +75,14 @@ const VideoContainer: React.FC = () => {
         });
     };
 
-    const getLike = (uid: string) => {
+    const getLike = () => {
       setLikeLoading(true);
       const like = database.ref(`/users/${uid}/like`);
       like
         .once('value')
         .then((data) => {
           if (data.val()) {
-            if (data.val().includes(video?.objectID)) setIsLiked(true);
+            if (data.val().includes(vid)) setIsLiked(true);
           } else setIsLiked(false);
         })
         .catch((error) => {
@@ -74,40 +93,60 @@ const VideoContainer: React.FC = () => {
         });
     };
 
-    const getVideo = async (id: string) => {
-      const videoSnap = await database.ref(`/videos/${id}`).get();
-      if (videoSnap.val()) {
-        setVideo({ ...videoSnap.val(), objectID: videoSnap.key });
-      } else {
-        setVideo(undefined);
-      }
-    };
-    if (isFocus && id) {
-      getVideo(id);
-      if (user) getLike(user?.uid);
-      if (user) getReport(user?.uid);
+    if (uid && vid) {
+      getLike();
+      getReport();
     }
-  }, [user, isFocus, id, video?.objectID]);
+  }, [uid, vid]);
+
+  useEffect(() => {
+    if (vid) {
+      const listenLike = database.ref(`/videos/${vid}/like`);
+      const listenReport = database.ref(`/videos/${vid}/report`);
+      const listenView = database.ref(`/videos/${vid}/view`);
+
+      listenLike.on('value', (snap) => {
+        const newValue: number = snap.val();
+        if (newValue != null) {
+          setVideo((values) => ({ ...values!, like: newValue }));
+        }
+      });
+
+      listenReport.on('value', (snap) => {
+        const newValue: number = snap.val();
+        if (newValue != null)
+          setVideo((values) => ({ ...values!, report: newValue }));
+      });
+
+      listenView.on('value', (snap) => {
+        const newValue: number = snap.val();
+        if (newValue != null)
+          setVideo((values) => ({ ...values!, view: newValue }));
+      });
+
+      return () => {
+        listenLike.off();
+        listenReport.off();
+        listenView.off();
+      };
+    }
+  }, [vid]);
 
   const report = () => {
-    const videoId = video!.objectID;
+    const videoId = vid!;
     const uid = user!.uid;
-    let reportCount: number;
     setReportLoading(true);
     const videoRef = database.ref();
     videoRef
       .transaction((post) => {
         if (post) {
-          reportCount = post.videos[videoId].report++;
           if (!post.users[uid].report) post.users[uid].report = [];
           post.users[uid].report.push(videoId);
+          post.videos[videoId].report++;
         }
         return post;
       })
       .then((response) => {
-        reportCount++;
-        const newState: VideoType = { ...video!, report: reportCount };
-        setVideo(newState);
         setIsReport(true);
       })
       .catch((error) => {
@@ -119,27 +158,24 @@ const VideoContainer: React.FC = () => {
   };
 
   const unreport = () => {
-    const videoId = video!.objectID;
+    const videoId = vid!;
     const uid = user!.uid;
-
-    let reportCount: number;
 
     setReportLoading(true);
     const videoRef = database.ref();
     videoRef
       .transaction((post) => {
         if (post) {
-          reportCount = post.videos[videoId].report--;
           if (!post.users[uid].report) post.users[uid].report = [];
           const vIndex = post.users[uid].report.indexOf(videoId);
-          if (vIndex > -1) post.users[uid].report.splice(vIndex, 1);
+          if (vIndex > -1) {
+            post.users[uid].report.splice(vIndex, 1);
+            post.videos[videoId].report--;
+          }
         }
         return post;
       })
       .then((response) => {
-        reportCount--;
-        const newState: VideoType = { ...video!, report: reportCount };
-        setVideo(newState);
         setIsReport(false);
       })
       .catch((error) => {
@@ -151,24 +187,20 @@ const VideoContainer: React.FC = () => {
   };
 
   const like = () => {
-    const videoId = video!.objectID;
+    const videoId = vid!;
     const uid = user!.uid;
-    let likeCount: number;
     setLikeLoading(true);
     const videoRef = database.ref();
     videoRef
       .transaction((post) => {
         if (post) {
-          likeCount = post.videos[videoId].like++;
           if (!post.users[uid].like) post.users[uid].like = [];
           post.users[uid].like.push(videoId);
+          post.videos[videoId].like++;
         }
         return post;
       })
       .then((response) => {
-        likeCount++;
-        const newState: VideoType = { ...video!, like: likeCount };
-        setVideo(newState);
         setIsLiked(true);
       })
       .catch((error) => {
@@ -180,27 +212,24 @@ const VideoContainer: React.FC = () => {
   };
 
   const unlike = () => {
-    const videoId = video!.objectID;
+    const videoId = vid!;
     const uid = user!.uid;
-
-    let likeCount: number;
 
     setLikeLoading(true);
     const videoRef = database.ref();
     videoRef
       .transaction((post) => {
         if (post) {
-          likeCount = post.videos[videoId].like--;
           if (!post.users[uid].like) post.users[uid].like = [];
           const vIndex = post.users[uid].like.indexOf(videoId);
-          if (vIndex > -1) post.users[uid].like.splice(vIndex, 1);
+          if (vIndex > -1) {
+            post.users[uid].like.splice(vIndex, 1);
+            post.videos[videoId].like--;
+          }
         }
         return post;
       })
       .then((response) => {
-        likeCount--;
-        const newState: VideoType = { ...video!, like: likeCount };
-        setVideo(newState);
         setIsLiked(false);
       })
       .catch((error) => {
@@ -247,10 +276,10 @@ const VideoContainer: React.FC = () => {
         //TODO Handle invalid urlId
       }
     };
-    if (isFocus && video) {
+    if (isFocus && video?.owner) {
       getUserData(video.owner);
     }
-  }, [user, isFocus, video]);
+  }, [user, isFocus, video?.owner]);
 
   if (!userData || !video) return <Loading text={'Loading video data...'} />;
   return (

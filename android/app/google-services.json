@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "953812443127-3b8535ralgptkmhavn4plknnj0am7sqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medflixofficial.app",
+            "certificate_hash": "0114c67b6353134f1f9c288b45016e059d52ba0b"
+          }
+        },
+        {
           "client_id": "953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com",
           "client_type": 3
         }

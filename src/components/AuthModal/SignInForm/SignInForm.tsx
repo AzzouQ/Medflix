@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
+import CloseModalContainer from 'components/CloseModal';
 
 import { Styles } from './SignInForm.styles';
 
@@ -13,6 +14,9 @@ import type { SignInType } from './SignInForm.container';
 const SignInForm: React.FC<SignInType.FormProps> = ({
   formikSubmit,
   goToSignUp,
+  onGoogle,
+  onFacebook,
+  setModalOpen,
 }) => {
   const initialValues = {
     email: '',
@@ -28,6 +32,7 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
 
   return (
     <IonRow style={Styles.container}>
+      <CloseModalContainer {...{ setModalOpen }} />
       <Formik<SignInType.FormValues>
         initialValues={initialValues}
         onSubmit={formikSubmit}
@@ -86,6 +91,22 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
                 <Form.Item name={'signUp'}>
                   <Button type={'default'} block={true} onClick={goToSignUp}>
                     {t`form.signIn.switch`}
+                  </Button>
+                </Form.Item>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol size={'6'}>
+                <Form.Item name={'google'}>
+                  <Button type={'primary'} block={true} onClick={onGoogle}>
+                    {t`Google`}
+                  </Button>
+                </Form.Item>
+              </IonCol>
+              <IonCol size={'6'}>
+                <Form.Item name={'facebook'}>
+                  <Button type={'primary'} block={true} onClick={onFacebook}>
+                    {t`Facebook`}
                   </Button>
                 </Form.Item>
               </IonCol>

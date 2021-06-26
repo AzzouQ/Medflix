@@ -6,8 +6,11 @@ import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 
 import com.getcapacitor.community.fcm.FCMPlugin;
+import com.getcapacitor.community.facebooklogin.FacebookLogin;
 import com.jeep.plugin.capacitor.CapacitorVideoPlayer;
-import ch.byrds.capacitor.contacts.Contacts;
+import com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth;
+
+//com.getcapacitor.community.facebooklogin.FacebookLogin.class
 
 import java.util.ArrayList;
 
@@ -21,7 +24,8 @@ public class MainActivity extends BridgeActivity {
 
       add(FCMPlugin.class);
       add(CapacitorVideoPlayer.class);
-      add(Contacts.class);
+      add(GoogleAuth.class);
+      add(FacebookLogin.class);
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
     }});

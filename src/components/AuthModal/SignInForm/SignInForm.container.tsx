@@ -1,7 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { Plugins } from '@capacitor/core';
+import GravatarAPI from 'gravatar-api';
+import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
 
-import {
+import firebase, {
   auth,
   database,
   translateError,
@@ -22,6 +25,9 @@ export declare namespace SignInType {
   type FormProps = {
     formikSubmit: FormSubmit;
     goToSignUp: GoToType;
+    onGoogle: GoToType;
+    onFacebook: GoToType;
+    setModalOpen: (value: boolean) => void;
   };
 }
 
@@ -63,7 +69,94 @@ const SignInFormContainer: React.FC<Props> = ({
     setFormMode('signUp');
   }, [setFormMode]);
 
-  return <SignInForm {...{ formikSubmit, goToSignUp }} />;
+  const onGoogle: GoToType = async () => {
+    try {
+      const response = await Plugins.GoogleAuth.signIn();
+      const credential = firebase.auth.GoogleAuthProvider.credential(
+        response.authentication.idToken
+      );
+      const { user } = await auth.signInWithCredential(credential);
+      const userInfosSnap = await database.ref(`/users/${user!.uid}`).get();
+      const userInfos = userInfosSnap.val();
+      if (userInfos) {
+        await database
+          .ref(`/users/${user!.uid}`)
+          .update({ updateDate: +new Date() });
+      } else {
+        await database.ref(`/users/${user!.uid}`).set({
+          name: user?.displayName,
+          email: user?.email,
+          createDate: +new Date(),
+          updateDate: +new Date(),
+          subscribersCount: 0,
+          subscriptionsCount: 0,
+          imageUrl: await GravatarAPI.imageUrl({
+            email: user?.email,
+            parameters: {
+              size: 500,
+              default: 'identicon',
+            },
+          }),
+        });
+      }
+      await initializeMessaging(user!);
+      dispatch(
+        userActions.initUser({ user: { ...userInfos, uid: user!.uid } })
+      );
+      setModalOpen(false);
+    } catch (error) {
+      console.log('response: ', error);
+    }
+  };
+
+  const onFacebook: GoToType = async () => {
+    try {
+      const response: FacebookLoginResponse = await Plugins.FacebookLogin.login(
+        { permissions: ['public_profile', 'email'] }
+      );
+      const credential = firebase.auth.FacebookAuthProvider.credential(
+        response.accessToken?.token ?? ''
+      );
+      console.log('HAVE BEEN UPDATED ?');
+      const { user } = await auth.signInWithCredential(credential);
+      const userInfosSnap = await database.ref(`/users/${user!.uid}`).get();
+      const userInfos = userInfosSnap.val();
+      if (userInfos) {
+        await database
+          .ref(`/users/${user!.uid}`)
+          .update({ updateDate: +new Date() });
+      } else {
+        await database.ref(`/users/${user!.uid}`).set({
+          name: user?.displayName,
+          email: user?.email,
+          createDate: +new Date(),
+          updateDate: +new Date(),
+          subscribersCount: 0,
+          subscriptionsCount: 0,
+          imageUrl: await GravatarAPI.imageUrl({
+            email: user?.email,
+            parameters: {
+              size: 500,
+              default: 'identicon',
+            },
+          }),
+        });
+      }
+      await initializeMessaging(user!);
+      dispatch(
+        userActions.initUser({ user: { ...userInfos, uid: user!.uid } })
+      );
+      setModalOpen(false);
+    } catch (error) {
+      console.log('response: ', error);
+    }
+  };
+
+  return (
+    <SignInForm
+      {...{ formikSubmit, goToSignUp, onGoogle, onFacebook, setModalOpen }}
+    />
+  );
 };
 
 export default SignInFormContainer;

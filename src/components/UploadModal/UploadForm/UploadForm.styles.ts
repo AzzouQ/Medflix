@@ -10,11 +10,12 @@ const Styles: StylesType = {
     textAlign: 'center',
   },
   dragger: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    width: 300,
+    width: 150,
+    minHeight: 100,
     justifySelf: 'center',
     alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   icon: {
     fontSize: 30,

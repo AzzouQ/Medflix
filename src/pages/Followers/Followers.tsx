@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import {
@@ -23,36 +23,30 @@ import Footer from 'components/Footer';
 import Unauthenticated from 'components/Unauthenticated';
 import VideoCard from 'components/VideoCard';
 
-import type { VideoType } from 'types';
 import { Styles } from './Followers.styles';
+import { useSubsSearch } from 'service/algolia/algolia';
 
 const Followers: React.FC = () => {
   const user = useSelector(userSelectors.getUser);
   const { pathname } = useLocation();
   const isFocus = pathname === '/followers';
-  const [videos, setVideos] = useState<VideoType[]>();
-
+  const [videos, setSubs] = useSubsSearch()
   useEffect(() => {
     const getVideos = async () => {
       const videosIDsSnap = await database
         .ref(`/users/${user?.uid}/subscriptions`)
         .get();
       if (videosIDsSnap.val()) {
-        const videosIDs: string[] = Object.values(videosIDsSnap.val());
-        const videosSnap = await database.ref(`/videos`).get();
-        const videos: { [key: string]: VideoType } = videosSnap.val();
-        const myVideos = videosIDs.map((id) => {
-          return videos[id as string];
-        });
-        setVideos(myVideos);
+
+        setSubs(videosIDsSnap.val());
       } else {
-        setVideos([]);
+        setSubs([]);
       }
     };
-    if (isFocus) {
+    if (isFocus && user) {
       getVideos();
     }
-  }, [user, isFocus]);
+  }, [user, isFocus, setSubs]);
 
   return (
     <IonPage>
@@ -77,7 +71,7 @@ const Followers: React.FC = () => {
               <IonRow style={{ justifyContent: 'center' }}>
                 {videos?.map((video, index) => (
                   <IonCol size={'auto'} key={index}>
-                    <VideoCard video={video} mode="WATCH" />
+                    <VideoCard video={video} mode="REDIRECT" />
                   </IonCol>
                 ))}
               </IonRow>

@@ -29,7 +29,12 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
       <IonCard>
         <IonRow>
           <IonCardContent onClick={onCardClick}>
-            <Image src={thumbnail} height={200} width={340} preview={false} />
+            <Image
+              src={video.thumbnail || thumbnail}
+              height={200}
+              width={320}
+              preview={false}
+            />
           </IonCardContent>
         </IonRow>
         <IonCardHeader>

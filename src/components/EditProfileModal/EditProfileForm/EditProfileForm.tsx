@@ -6,12 +6,15 @@ import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
 
+import CloseModalContainer from 'components/CloseModal';
+
 import { Styles } from './EditProfileForm.styles';
 import type { EditProfileFormType } from './EditProfileForm.container';
 
 const EditProfileForm: React.FC<EditProfileFormType.FormProps> = ({
   formikSubmit,
   user,
+  setModalOpen,
 }) => {
   const initialValues = {
     name: user?.name ?? undefined,
@@ -40,6 +43,7 @@ const EditProfileForm: React.FC<EditProfileFormType.FormProps> = ({
 
   return (
     <IonRow style={Styles.container}>
+      <CloseModalContainer {...{ setModalOpen }} />
       <Formik<EditProfileFormType.FormValues>
         initialValues={initialValues}
         onSubmit={formikSubmit}
@@ -59,10 +63,13 @@ const EditProfileForm: React.FC<EditProfileFormType.FormProps> = ({
               <IonCol size={'12'}>
                 <Form.Item
                   name={'name'}
-                  label={t`form.name.label`}
+                  label={t('form.name.label')}
                   required={true}
                 >
-                  <Input name={'name'} placeholder={t`form.name.placeholder`} />
+                  <Input
+                    name={'name'}
+                    placeholder={t('form.name.placeholder')}
+                  />
                 </Form.Item>
               </IonCol>
             </IonRow>
@@ -70,12 +77,12 @@ const EditProfileForm: React.FC<EditProfileFormType.FormProps> = ({
               <IonCol size={'12'}>
                 <Form.Item
                   name={'email'}
-                  label={t`form.email.label`}
+                  label={t('form.email.label')}
                   required={true}
                 >
                   <Input
                     name={'email'}
-                    placeholder={t`form.email.placeholder`}
+                    placeholder={t('form.email.placeholder')}
                   />
                 </Form.Item>
               </IonCol>
@@ -112,7 +119,7 @@ const EditProfileForm: React.FC<EditProfileFormType.FormProps> = ({
               <IonCol size={'12'}>
                 <Form.Item name={'editProfile'}>
                   <SubmitButton type={'primary'} style={{ width: '100%' }}>
-                    {t`form.edit.save`}
+                    {t('form.edit.save')}
                   </SubmitButton>
                 </Form.Item>
               </IonCol>

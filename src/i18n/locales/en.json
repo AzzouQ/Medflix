@@ -50,6 +50,9 @@
       "placeholder": "n4w p4sSwOrD",
       "required": "Please type a new password"
     },
+    "password": {
+      "required": "Password is required"
+    },
     "video": {
       "label": "Title",
       "placeholder": "My vidéo",
@@ -75,13 +78,19 @@
     "upload": {
       "title": "Upload a video !",
       "save": "Upload",
-      "dragger": {
-        "title": "Add a video",
-        "subtitle": "Click or drag"
+      "dragger":  {
+        "video": {
+          "title": "Add a video",
+          "subtitle": "Click or drag"
+        },
+        "image": {
+          "title": "Add a thumbnail",
+          "subtitle": "Click or drag"
+        }
       }
     },
 
-    "editProfile": {
+    "edit": {
       "title": "Edit your profile !",
       "save": "Save"
     }

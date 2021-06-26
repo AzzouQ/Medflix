@@ -6,6 +6,7 @@ import { t } from 'i18n';
 
 import UploadForm from './UploadForm';
 import { Styles } from './UploadModal.styles';
+import CloseModalContainer from 'components/CloseModal';
 
 import type { UploadModalType } from './UploadModal.container';
 
@@ -16,6 +17,7 @@ const UploadModal: React.FC<UploadModalType.Props> = ({
   return (
     <>
       <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
+        <CloseModalContainer {...{ setModalOpen }} />
         <UploadForm setModalOpen={setModalOpen} />
       </IonModal>
       <Button

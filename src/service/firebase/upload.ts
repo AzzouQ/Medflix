@@ -20,6 +20,7 @@ export type UploadType =
   | {
       type: VideoType;
       file: RcFile;
+      image: RcFile;
     }
   | undefined;
 
@@ -27,13 +28,19 @@ export const useFirebaseUpload = () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelectors.getUser);
   const unsubscribe = useRef<Function>();
+  const unsubscribeImage = useRef<Function>();
   const [uploadData, startUpload] = useState<UploadType>(undefined);
-
   useEffect(() => {
-    if (uploadData?.file && uploadData?.type) {
+    let thumbnailDownloadUrl: string | undefined = undefined;
+    if (uploadData?.file && uploadData?.type && uploadData.image) {
       const uploadTask = storage
         .ref(`/videos/${auth.currentUser!.uid}/${uploadData.file.uid}`)
         .put(uploadData.file);
+
+      const thumbnailTask = storage
+        .ref(`/videos/${auth.currentUser!.uid}/${uploadData.image.uid}`)
+        .put(uploadData.image);
+
       dispatch(
         uploadActions.setTaskManager({
           taskManager: {
@@ -43,6 +50,17 @@ export const useFirebaseUpload = () => {
           },
         })
       );
+
+      unsubscribeImage.current = thumbnailTask.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+        null,
+        null,
+        async () => {
+          thumbnailDownloadUrl =
+            await thumbnailTask.snapshot.ref.getDownloadURL();
+        }
+      );
+
       unsubscribe.current = uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         // onNext
@@ -65,6 +83,8 @@ export const useFirebaseUpload = () => {
           try {
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
             const videoID = await database.ref(`/videos/`).push({
+              thumbnail: thumbnailDownloadUrl,
+              flagged: false,
               owner: user!.uid,
               title: uploadData.type.title,
               description: uploadData.type.description,
@@ -83,12 +103,17 @@ export const useFirebaseUpload = () => {
                 ? [...Object.values(videos), videoID.key]
                 : [videoID.key],
             });
+
+            dispatch(uploadActions.setComplete({ downloadURL: downloadUrl }));
+
             message.success(t`-Votre video a été publier.`);
           } catch (error) {
             console.log(error);
           } finally {
-            unsubscribe.current!();
             dispatch(uploadActions.resetUpload());
+
+            unsubscribe.current!();
+            unsubscribeImage.current!();
           }
         }
       );
