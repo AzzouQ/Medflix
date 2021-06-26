@@ -1,9 +1,17 @@
 import algoliasearch from 'algoliasearch';
+import { createNullCache } from '@algolia/cache-common';
+import { createInMemoryCache } from '@algolia/cache-in-memory';
 
 import { useEffect, useState } from 'react';
 import { VideoType } from 'types';
 
-const client = algoliasearch('TGU1CR9BF2', '1de5ba502b35dcea00c796384f1c9c93');
+const client = algoliasearch('TGU1CR9BF2', '1de5ba502b35dcea00c796384f1c9c93', {
+  // Caches responses from Algolia
+  responsesCache: createNullCache(), // or createNullCache()
+
+  // Caches Promises with the same request payload
+  requestsCache: createInMemoryCache({ serializable: false }), // or createNullCache()
+});
 const index = client.initIndex('medflix');
 
 export const useAlgoliaSearch = () => {
@@ -25,14 +33,16 @@ export const useSubsSearch = () => {
 
   useEffect(() => {
     if (subs.length > 0) {
-      const addOwnerTag = subs.map((val) => 'owner:' + val)
+      const addOwnerTag = subs.map((val) => 'owner:' + val);
       const filters = addOwnerTag.join(' OR ');
 
-    index.search("", {
-      filters
-    }).then(({hits}) => {
-      setSearchResult(hits as VideoType[]);
-    });
+      index
+        .search('', {
+          filters,
+        })
+        .then(({ hits }) => {
+          setSearchResult(hits as VideoType[]);
+        });
     }
   }, [subs]);
 
