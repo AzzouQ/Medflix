@@ -83,7 +83,8 @@ async function sendMail(videoObject) {
 exports.indexentry = functions.database
     .ref("/videos/{videoId}")
     .onWrite(async (data, context) => {
-      if (data.before.val().flagged !== data.after.val().flagged) {
+      if (data.before.val() &&
+       data.before.val().flagged !== data.after.val().flagged) {
         return null;
       }
 
@@ -103,7 +104,7 @@ exports.indexentry = functions.database
       await index.saveObject(firebaseObject);
 
       if (firebaseObject.report > firebaseObject.view * REPORT_PERCENTAGE &&
-         !data.before.val().flagged) {
+         data.after.val().flagged === false) {
         sendMail(firebaseObject);
         return data.after.ref.update({
           flagged: true,
