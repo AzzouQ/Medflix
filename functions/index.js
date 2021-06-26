@@ -83,7 +83,8 @@ async function sendMail(videoObject) {
 exports.indexentry = functions.database
     .ref("/videos/{videoId}")
     .onWrite(async (data, context) => {
-      if (data.before.val().flagged !== data.after.val().flagged) {
+      if (data.before.val() &&
+       data.before.val().flagged !== data.after.val().flagged) {
         return null;
       }
 
