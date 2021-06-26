@@ -4,26 +4,18 @@ const Styles: StylesType = {
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-  },
-  form: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    alignContent: 'center',
   },
   title: {
     textAlign: 'center',
   },
   dragger: {
-    minWidth: 150,
-    width: '15vw',
-    marginLeft: '1rem',
-    marginRight: '1rem',
-    flex: 1,
-    justifyContent: 'center',
+    width: 150,
+    minHeight: 100,
+    justifySelf: 'center',
     alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   icon: {
     fontSize: 30,

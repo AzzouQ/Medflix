@@ -29,19 +29,14 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
   });
 
   return (
-    <IonCol style={Styles.container}>
+    <IonRow style={Styles.container}>
       <Formik<UploadType.FormValues>
         initialValues={initialValues}
         onSubmit={uploadFormSubmit}
         validationSchema={yupValidation}
       >
         {(formik) => (
-          <Form
-            name={'sign-in'}
-            size={'middle'}
-            layout={'vertical'}
-            style={Styles.form}
-          >
+          <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
             <IonLoading isOpen={formik.isSubmitting} message={t`loading`} />
             <IonRow>
               <IonCol size={'12'}>
@@ -50,7 +45,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 </Typography.Title>
               </IonCol>
             </IonRow>
-            <IonRow style={Styles.container}>
+            <IonRow>
               <Upload.Dragger
                 accept={'video/*'}
                 onChange={onChange}
@@ -63,9 +58,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 <Typography.Title level={5}>
                   {t`form.upload.dragger.video.title`}
                 </Typography.Title>
-                <Typography.Text>{t`form.upload.dragger.video.subtitle`}</Typography.Text>
               </Upload.Dragger>
-
               <Upload.Dragger
                 accept={'image/*'}
                 onChange={onChangeImage}
@@ -78,10 +71,9 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 <Typography.Title level={5}>
                   {t`form.upload.dragger.image.title`}
                 </Typography.Title>
-                <Typography.Text>{t`form.upload.dragger.image.subtitle`}</Typography.Text>
               </Upload.Dragger>
             </IonRow>
-            <IonRow>
+            <IonRow style={{ marginTop: 40 }}>
               <IonCol size={'12'}>
                 <Form.Item
                   name={'title'}
@@ -124,7 +116,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
           </Form>
         )}
       </Formik>
-    </IonCol>
+    </IonRow>
   );
 };
 
