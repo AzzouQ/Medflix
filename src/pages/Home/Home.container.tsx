@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 import Home from './Home';
 
@@ -10,7 +10,7 @@ export declare namespace HomeType {
     videos: VideoType[];
     searchText: string;
     setSearchText: React.Dispatch<React.SetStateAction<string>>;
-    onMobileSearch: MouseEventHandler<HTMLElement>;
+    mobileSearchState: [boolean, UseStateType<boolean>];
     modalOpenState: [boolean, UseStateType<boolean>];
   };
 }
@@ -18,10 +18,7 @@ export declare namespace HomeType {
 const HomeContainer: React.FC = () => {
   const [videos, searchText, setSearchText] = useAlgoliaSearch();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-
-  const onMobileSearch = () => {
-    setModalOpen(true);
-  };
+  const [mobileSearch, setMobileSearch] = useState<boolean>(false);
 
   return (
     <Home
@@ -29,7 +26,7 @@ const HomeContainer: React.FC = () => {
         videos,
         searchText,
         setSearchText,
-        onMobileSearch,
+        mobileSearchState: [mobileSearch, setMobileSearch],
         modalOpenState: [isModalOpen, setModalOpen],
       }}
     />

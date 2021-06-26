@@ -36,7 +36,12 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
         validationSchema={yupValidation}
       >
         {(formik) => (
-          <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
+          <Form
+            name={'sign-in'}
+            size={'middle'}
+            layout={'vertical'}
+            style={Styles.form}
+          >
             <IonLoading isOpen={formik.isSubmitting} message={t`loading`} />
             <IonRow>
               <IonCol size={'12'}>
@@ -60,8 +65,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 </Typography.Title>
                 <Typography.Text>{t`form.upload.dragger.video.subtitle`}</Typography.Text>
               </Upload.Dragger>
-            </IonRow>
-            <IonRow style={Styles.container}>
+
               <Upload.Dragger
                 accept={'image/*'}
                 onChange={onChangeImage}
@@ -77,7 +81,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 <Typography.Text>{t`form.upload.dragger.image.subtitle`}</Typography.Text>
               </Upload.Dragger>
             </IonRow>
-            <IonRow style={{ marginTop: 40 }}>
+            <IonRow>
               <IonCol size={'12'}>
                 <Form.Item
                   name={'title'}

@@ -12,26 +12,24 @@ import {
   IonTitle,
   IonToolbar,
   isPlatform,
-  IonModal,
 } from '@ionic/react';
-import { Button, Typography } from 'antd';
+import { Button } from 'antd';
 import { t } from 'i18n';
 
 import AuthModal from 'components/AuthModal';
 import VideoCard from 'components/VideoCard';
 import Footer from 'components/Footer';
-import CloseModalContainer from 'components/CloseModal';
 
 import { Styles } from './Home.styles';
 
 import type { HomeType } from './Home.container';
-import { SearchOutlined } from '@ant-design/icons';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 
 const Home: React.FC<HomeType.Props> = ({
   videos,
   searchText,
   setSearchText,
-  onMobileSearch,
+  mobileSearchState: [isMobileSearch, setMobileSearch],
   modalOpenState: [isModalOpen, setModalOpen],
 }) => {
   const VideoList = () => {
@@ -53,7 +51,7 @@ const Home: React.FC<HomeType.Props> = ({
         size={'middle'}
         shape={'circle'}
         icon={<SearchOutlined />}
-        onClick={onMobileSearch}
+        onClick={() => setMobileSearch(true)}
         style={Styles.buttonSpace}
       />
     ) : (
@@ -64,13 +62,19 @@ const Home: React.FC<HomeType.Props> = ({
     );
   };
 
-  const SearchModal = () => {
+  const SearchMobileHeader = () => {
     return (
-      <IonModal isOpen={isModalOpen} onDidDismiss={() => setModalOpen(false)}>
-        <CloseModalContainer {...{ setModalOpen }} />
-
-        <Typography.Text>Example</Typography.Text>
-      </IonModal>
+      <div style={Styles.row}>
+        <IonSearchbar
+          value={searchText}
+          onIonChange={(e) => setSearchText(e.detail.value!)}
+        />
+        <Button
+          type={'primary'}
+          icon={<CloseOutlined />}
+          onClick={() => setMobileSearch(false)}
+        />
+      </div>
     );
   };
 
@@ -78,18 +82,23 @@ const Home: React.FC<HomeType.Props> = ({
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot={'start'}>
-            <IonTitle>{t`header.title.home`}</IonTitle>
-          </IonButtons>
-          <SearchBar />
-          <IonButtons slot={'end'} style={Styles.buttons}>
-            <AuthModal />
-          </IonButtons>
+          {isMobileSearch ? (
+            <SearchMobileHeader />
+          ) : (
+            <>
+              <IonButtons slot={'start'}>
+                <IonTitle>{t`header.title.home`}</IonTitle>
+              </IonButtons>
+              <SearchBar />
+              <IonButtons slot={'end'} style={Styles.buttons}>
+                <AuthModal />
+              </IonButtons>
+            </>
+          )}
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <SearchModal />
         <IonGrid>
           <IonList style={Styles.list}>
             <IonRow style={Styles.container}>
