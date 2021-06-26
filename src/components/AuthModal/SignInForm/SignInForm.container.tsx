@@ -105,7 +105,7 @@ const SignInFormContainer: React.FC<Props> = ({
       );
       setModalOpen(false);
     } catch (error) {
-      console.log('response: ', error);
+      console.log('Google Error: ', error);
     }
   };
 
@@ -148,7 +148,7 @@ const SignInFormContainer: React.FC<Props> = ({
       );
       setModalOpen(false);
     } catch (error) {
-      console.log('response: ', error);
+      console.log('Facebook Error: ', error);
     }
   };
 
