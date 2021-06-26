@@ -4,4 +4,5 @@
     <string name="title_activity_main">Medflix</string>
     <string name="package_name">com.medflixofficial.app</string>
     <string name="custom_url_scheme">com.medflixofficial.app</string>
+    <string name="server_client_id">953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com</string>
 </resources>

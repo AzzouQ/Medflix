@@ -13,6 +13,7 @@ import type { SignInType } from './SignInForm.container';
 const SignInForm: React.FC<SignInType.FormProps> = ({
   formikSubmit,
   goToSignUp,
+  onGoogle,
 }) => {
   const initialValues = {
     email: '',
@@ -86,6 +87,20 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
                 <Form.Item name={'signUp'}>
                   <Button type={'default'} block={true} onClick={goToSignUp}>
                     {t`form.signIn.switch`}
+                  </Button>
+                </Form.Item>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol size={'12'}>
+                <Form.Item name={'google'}>
+                  <Button
+                    type={'primary'}
+                    style={{ backgroundColor: 'white' }}
+                    block={true}
+                    onClick={onGoogle}
+                  >
+                    {t`Google`}
                   </Button>
                 </Form.Item>
               </IonCol>

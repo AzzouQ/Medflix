@@ -4,6 +4,8 @@ import { IonApp } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
+import '@codetrix-studio/capacitor-google-auth';
+
 
 import 'theme';
 
