@@ -1,4 +1,5 @@
 export type VideoType = {
+  flagged: boolean;
   owner: string;
   title: string;
   description: string;
@@ -7,5 +8,6 @@ export type VideoType = {
   objectID: string;
   view: number;
   like: number;
+  thumbnail: string;
   report: number;
 };

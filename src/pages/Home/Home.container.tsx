@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import Home from './Home';
 
-import type { VideoType } from 'types';
-import { searchVideo } from 'service/firebase/algolia';
+import type { UseStateType, VideoType } from 'types';
+import { useAlgoliaSearch } from 'service/algolia/algolia';
 
 export declare namespace HomeType {
   type Props = {
-    videos: VideoType[] | undefined;
+    videos: VideoType[];
     searchText: string;
     setSearchText: React.Dispatch<React.SetStateAction<string>>;
+    mobileSearchState: [boolean, UseStateType<boolean>];
+    modalOpenState: [boolean, UseStateType<boolean>];
   };
 }
 
 const HomeContainer: React.FC = () => {
-  const { pathname } = useLocation();
-  const isFocus = pathname === '/home';
-  const [videos, setVideos] = useState<VideoType[]>();
-  const [searchText, setSearchText] = useState('');
+  const [videos, searchText, setSearchText] = useAlgoliaSearch();
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [mobileSearch, setMobileSearch] = useState<boolean>(false);
 
-  useEffect(() => {
-    const getAllVideos = async () => {
-      searchVideo(searchText).then(({ hits }) => {
-        setVideos(hits as VideoType[]);
-      });
-    };
-
-    if (isFocus) {
-      getAllVideos();
-    }
-  }, [isFocus, searchText]);
-
-  return <Home {...{ videos, searchText, setSearchText }} />;
+  return (
+    <Home
+      {...{
+        videos,
+        searchText,
+        setSearchText,
+        mobileSearchState: [mobileSearch, setMobileSearch],
+        modalOpenState: [isModalOpen, setModalOpen],
+      }}
+    />
+  );
 };
 
 export default HomeContainer;

@@ -33,8 +33,6 @@ const uploadSlice = createSlice({
     },
     setComplete: (state, action) => {
       state.downloadURL = action.payload.downloadURL;
-      state.metadata = action.payload.metadata;
-      state.state = action.payload.state;
     },
     resetUpload: () => initialState,
   },
@@ -59,7 +57,7 @@ export const uploadSelectors = {
     return state.progress;
   }),
   getComplete: createSelector(stateSelector, (state) => {
-    return { downloadURL: state.downloadURL, metadata: state.metadata };
+    return state.downloadURL;
   }),
   getProgressBar: createSelector(stateSelector, (state) => {
     return {

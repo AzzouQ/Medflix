@@ -59,7 +59,9 @@
       "label": "Description",
       "placeholder": "Super vidéo"
     },
-
+    "password": {
+      "required": "Le mot de passe est requis"
+    },
     "signIn": {
       "title": "Connectez-vous !",
       "save": "Me connecter",
@@ -76,8 +78,14 @@
       "title": "Publier une vidéo !",
       "save": "Publier",
       "dragger": {
-        "title": "Ajoutez une vidéo",
-        "subtitle": "Cliquez ou faites glissez"
+        "video": {
+          "title": "Ajoutez une vidéo",
+          "subtitle": "Cliquez ou faites glissez"
+        },
+        "image": {
+          "title": "Ajoutez une miniature",
+          "subtitle": "Cliquez ou faites glissez"
+        }
       }
     },
 

@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitButton } from 'formik-antd';
 import * as Yup from 'yup';
 import { t } from 'i18n';
+import CloseModalContainer from 'components/CloseModal';
 
 import { Styles } from './SignInForm.styles';
 
@@ -14,6 +15,7 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
   formikSubmit,
   goToSignUp,
   onGoogle,
+  setModalOpen,
 }) => {
   const initialValues = {
     email: '',
@@ -29,6 +31,7 @@ const SignInForm: React.FC<SignInType.FormProps> = ({
 
   return (
     <IonRow style={Styles.container}>
+      <CloseModalContainer {...{ setModalOpen }} />
       <Formik<SignInType.FormValues>
         initialValues={initialValues}
         onSubmit={formikSubmit}

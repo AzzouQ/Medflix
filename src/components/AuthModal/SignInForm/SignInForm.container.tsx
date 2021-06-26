@@ -25,6 +25,7 @@ export declare namespace SignInType {
     formikSubmit: FormSubmit;
     goToSignUp: GoToType;
     onGoogle: GoToType;
+    setModalOpen: (value: boolean) => void;
   };
 }
 
@@ -106,7 +107,7 @@ const SignInFormContainer: React.FC<Props> = ({
     }
   };
 
-  return <SignInForm {...{ formikSubmit, goToSignUp, onGoogle }} />;
+  return <SignInForm {...{ formikSubmit, goToSignUp, onGoogle, setModalOpen }} />;
 };
 
 export default SignInFormContainer;

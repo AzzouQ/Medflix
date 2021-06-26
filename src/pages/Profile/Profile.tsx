@@ -24,6 +24,7 @@ import VideoCard from 'components/VideoCard';
 import type { ProfileType } from './Profile.container';
 import { Styles } from './Profile.styles';
 import SubscribeCard from 'components/SubscribeCard';
+import { isPlatform } from '@ionic/core';
 
 const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
   return (
@@ -34,7 +35,7 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
             {userData && (
               <Avatar
                 src={userData.imageUrl}
-                size={'large'}
+                size={isPlatform('mobile') ? 'small' : 'large'}
                 icon={<UserOutlined />}
                 style={Styles.buttons}
               />

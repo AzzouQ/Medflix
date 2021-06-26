@@ -10,6 +10,12 @@ const Styles: StylesType = {
   buttons: {
     marginRight: 20,
   },
+  row: {
+    marginRight: '.5rem',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+  },
 };
 
 export { Styles };
