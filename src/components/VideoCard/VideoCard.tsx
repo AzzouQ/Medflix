@@ -32,7 +32,6 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],
   modalEditState: [showModalEdit, setShowModalEdit],
   modalDeleteState: [showModalDelete, setShowModalDelete],
-  onStartPlaying,
   onCardClick,
   onShare,
   video,
