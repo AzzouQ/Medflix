@@ -1,7 +1,6 @@
 import {
   FrownOutlined,
   LikeOutlined,
-  UserOutlined,
   DislikeOutlined,
 } from '@ant-design/icons';
 import {
@@ -12,9 +11,9 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { Avatar, Button, Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import Footer from 'components/Footer';
-import VideoCard from 'components/VideoCard';
+// import VideoCard from 'components/VideoCard';
 import React from 'react';
 import type { VideoView } from './Video.container';
 import { Styles } from './Video.styles';
@@ -35,14 +34,7 @@ const Video: React.FC<VideoView.Props> = ({
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            {userData && (
-              <Avatar
-                size={'large'}
-                icon={<UserOutlined />}
-                style={Styles.buttons}
-              />
-            )}
-            <IonTitle>Watch</IonTitle>
+            <IonTitle>{'-Watch'}</IonTitle>
           </IonButtons>
 
           <IonButtons slot={'end'}>
@@ -53,28 +45,31 @@ const Video: React.FC<VideoView.Props> = ({
               loading={likeLoading}
               style={Styles.button}
             >
-              {isLiked ? 'Unlike' : 'Like'}
+              {isLiked ? '-Unlike' : '-Like'}
             </Button>
             <Button
               type={'primary'}
               icon={<FrownOutlined />}
               onClick={onReport}
               loading={reportLoading}
+              style={Styles.button}
             >
-              {isReport ? 'Unreport' : 'Report'}
+              {isReport ? '-Unreport' : '-Report'}
             </Button>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <VideoCard video={video} mode="WATCH" />
+        {/* <VideoCard video={video} mode="WATCH" /> */}
 
-        <Typography.Title>Description {video.description}</Typography.Title>
+        <Typography.Title>{`-Description ${video.description}`}</Typography.Title>
         <div style={{ flexDirection: 'column' }}>
-          <Typography.Title level={2}>View {video.view}</Typography.Title>
-          <Typography.Title level={3}>Like {video.like}</Typography.Title>
-          <Typography.Title level={4}>Report {video.report}</Typography.Title>
+          <Typography.Title level={2}>{`-View ${video.view}`}</Typography.Title>
+          <Typography.Title level={3}>{`-Like ${video.like}`}</Typography.Title>
+          <Typography.Title
+            level={4}
+          >{`-Report ${video.report}`}</Typography.Title>
         </div>
       </IonContent>
       <Footer />

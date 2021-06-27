@@ -27,6 +27,8 @@ export declare namespace VideoCardType {
     modalOpenState: [boolean, UseStateType<boolean>];
     onStartPlaying: () => void;
     onShare: () => Promise<void>;
+    onDelete: () => Promise<void>;
+    onEdit: () => Promise<void>;
     video: VideoType;
     owner: UserType | undefined;
   };
@@ -89,9 +91,16 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
       Clipboard.write({
         string: video.url,
       });
-      message.success(t`-Le lien de la vidéo a été copier.`);
+      message.success(t`message.copy`);
     }
   }, [video]);
+
+  const onDelete = useCallback(async () => {
+  }, []);
+
+  const onEdit = useCallback(async () => {
+    
+  }, []);
 
   useEffect(() => {
     const getOwner = async () => {
@@ -114,6 +123,8 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
         {...{
           modalOpenState: [isModalOpen, setModalOpen],
           onShare,
+          onDelete,
+          onEdit,
           onStartPlaying,
           video,
           owner: owner,

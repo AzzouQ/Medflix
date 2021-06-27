@@ -76,7 +76,7 @@ export const useFirebaseUpload = () => {
         },
         // onError
         (_error) => {
-          message.error(t`-Une erreur s'est produite.`);
+          message.error(t`message.uploadError`);
         },
         // onComplete
         async () => {
@@ -106,7 +106,7 @@ export const useFirebaseUpload = () => {
 
             dispatch(uploadActions.setComplete({ downloadURL: downloadUrl }));
 
-            message.success(t`-Votre video a été publier.`);
+            message.success(t`message.upload`);
           } catch (error) {
             console.log(error);
           } finally {
