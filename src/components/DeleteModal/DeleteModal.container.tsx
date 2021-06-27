@@ -47,7 +47,6 @@ const DeleteModalContainer: React.FC<Props> = ({
       .catch(() => {
         message.error(t`deleteModal.error`);
       });
-    setModalOpen(false);
   };
 
   const onCancel = () => {
