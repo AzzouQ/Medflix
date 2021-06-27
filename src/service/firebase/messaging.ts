@@ -15,10 +15,6 @@ type initializeMessagingProps = (user: firebase.User) => Promise<void>;
 type pushMessagingProps = (uid: string) => Promise<void>;
 
 export const initializeMessaging: initializeMessagingProps = async (user) => {
-
-  await PushNotifications.requestPermissions();
-  await PushNotifications.register();
-
   if (isPlatform('ios')) {
     console.log(`Couldn't initialize Cloud Messaging for iOS: unsupported`);
   } else if (isPlatform('mobile')) {
