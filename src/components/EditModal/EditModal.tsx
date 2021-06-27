@@ -50,7 +50,7 @@ const EditModal: React.FC<EditModalType.Props> = ({
       <IonRow>
         <IonCol size={'12'}>
           <Button type={'primary'} icon={<EditOutlined />} onClick={onSubmit}>
-            {'Edit'}
+            {t`header.button.edit`}
           </Button>
         </IonCol>
       </IonRow>
