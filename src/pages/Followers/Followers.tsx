@@ -29,7 +29,7 @@ import { useSubsSearch } from 'service/algolia/algolia';
 const Followers: React.FC = () => {
   const user = useSelector(userSelectors.getUser);
   const { pathname } = useLocation();
-  const isFocus = pathname === '/followers';
+  const isFocus = pathname === '/subscription';
   const [videos, setSubs] = useSubsSearch()
   useEffect(() => {
     const getVideos = async () => {

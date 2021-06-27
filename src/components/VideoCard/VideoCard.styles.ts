@@ -7,7 +7,7 @@ const Styles: StylesType = {
     alignContent: 'center',
   },
   icon: {
-    fontSize: 30,
+    fontSize: 20,
   },
 };
 

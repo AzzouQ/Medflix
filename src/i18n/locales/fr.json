@@ -1,7 +1,7 @@
 {
   "tab": {
     "home": "Accueil",
-    "followers": "Followers",
+    "followers": "Abonnements",
     "profile": "Profil"
   },
 
@@ -92,6 +92,12 @@
     "edit": {
       "title": "Éditez votre profil !",
       "save": "Enregistrer"
+    },
+
+    "message": {
+      "copy": "Le lien de la vidéo a été copier.",
+      "upload": "Votre video a été publier.",
+      "uploadError": "Une erreur s'est produite."
     }
   },
 

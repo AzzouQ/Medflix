@@ -1,7 +1,7 @@
 {
   "tab": {
     "home": "Home",
-    "followers": "Followers",
+    "followers": "Subscription",
     "profile": "Profile"
   },
 
@@ -14,7 +14,7 @@
     },
     "title": {
       "home": "Latest videos",
-      "followers": "Followers",
+      "followers": "Subscription",
       "create": "Create",
       "editProfile": "Edit Profile",
       "profile": "Profile"
@@ -78,7 +78,7 @@
     "upload": {
       "title": "Upload a video !",
       "save": "Upload",
-      "dragger":  {
+      "dragger": {
         "video": {
           "title": "Add a video",
           "subtitle": "Click or drag"
@@ -93,6 +93,12 @@
     "edit": {
       "title": "Edit your profile !",
       "save": "Save"
+    },
+
+    "message": {
+      "copy": "Link copied to clipboard.",
+      "upload": "Your video have been published.",
+      "uploadError": "An error occured."
     }
   },
 

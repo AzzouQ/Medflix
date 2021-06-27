@@ -9,21 +9,32 @@ import {
   IonRow,
 } from '@ionic/react';
 import { Image, Avatar } from 'antd';
-import { UserOutlined, ShareAltOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  ShareAltOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from '@ant-design/icons';
 
 import { Styles } from './VideoCard.styles';
 import { thumbnail } from 'assets';
 
 import type { VideoCardType } from './VideoCard.container';
+import { useSelector } from 'react-redux';
+import { userSelectors } from 'slices';
 
 const VideoCard: React.FC<VideoCardType.Props> = ({
   modalOpenState: [isModalOpen, setModalOpen],
   onStartPlaying,
   onCardClick,
   onShare,
+  onDelete,
+  onEdit,
   video,
   owner,
 }) => {
+  const user = useSelector(userSelectors.getUser);
+
   return (
     <>
       <IonCard>
@@ -48,12 +59,18 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
                 />
               </a>
             </IonCol>
-            <IonCol size={'9'}>
+            <IonCol size={user?.uid === owner?.uid ? '7' : '9'}>
               <IonCardTitle>{video.title}</IonCardTitle>
               <IonCardSubtitle>{owner?.name}</IonCardSubtitle>
             </IonCol>
-            <IonCol size={'1'}>
+            <IonCol size={user?.uid === owner?.uid ? '3' : '1'}>
               <ShareAltOutlined style={Styles.icon} onClick={onShare} />
+              {user?.uid === owner?.uid && (
+                <DeleteOutlined style={Styles.icon} onClick={onDelete} />
+              )}
+              {user?.uid === owner?.uid && (
+                <EditOutlined style={Styles.icon} onClick={onEdit} />
+              )}
             </IonCol>
           </IonRow>
         </IonCardHeader>
