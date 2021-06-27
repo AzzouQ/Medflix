@@ -1,8 +1,17 @@
 {
 	"deleteModal": {
+		"error": "Échec de la suppression de la vidéo...",
+		"info": "Rafraîchir la page pour mettre à jour les données",
 		"no": "Non",
+		"success": "La vidéo a été supprimée !",
 		"title": "Voulez-vous vraiment supprimer cette vidéo",
 		"yes": "Oui"
+	},
+	"editModal": {
+		"emptyTitle": "Le titre ne peut pas être vide",
+		"error": "Échec de la mise à jour de la vidéo...",
+		"info": "Rafraîchir la page pour mettre à jour les données",
+		"success": "La vidéo a été mise à jour !"
 	},
 	"firebase": {
 		"auth/claims-too-large": "La charge utile des revendications fournie à setCustomUserClaims() dépasse la taille maximale autorisée de 1 000 octets.",
@@ -160,8 +169,11 @@
 	"watch": {
 		"TITLE": "Regarder",
 		"description": "Description",
+		"errorLoadingData": "Impossible de charger les données de la vidéo",
 		"like": "J'aime",
+		"likeUserError": "Vous devez être connecté pour aimer une vidéo",
 		"report": "Signaler",
+		"reportUserError": "Vous devez être connecté pour signaler une vidéo",
 		"unlike": "Annuler",
 		"unreport": "Annuler",
 		"view": "Vue"

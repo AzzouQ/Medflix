@@ -1,8 +1,17 @@
 {
 	"deleteModal": {
+		"error": "Failed to remove video...",
+		"info": "Refresh page to update data",
 		"no": "No",
+		"success": "Video has been removed!",
 		"title": "Do you really want to delete this video",
 		"yes": "Yes"
+	},
+	"editModal": {
+		"emptyTitle": "Title can't be empty",
+		"error": "Failed to update video...",
+		"info": "Refresh page to update data",
+		"success": "Video has been updated!"
 	},
 	"firebase": {
 		"auth/claims-too-large": "The claims payload supplied to setCustomUserClaims () exceeds the maximum allowable size of 1000 bytes.",
@@ -160,8 +169,11 @@
 	"watch": {
 		"TITLE": "Watch",
 		"description": "Description",
+		"errorLoadingData": "Unable to load video data",
 		"like": "Like",
+		"likeUserError": "You must be logged in to like a video",
 		"report": "Report",
+		"reportUserError": "You must be logged in to report a video",
 		"unlike": "Dislike",
 		"unreport": "Unreport",
 		"view": "View"

@@ -18,6 +18,7 @@ import Footer from 'components/Footer';
 
 import type { VideoView } from './Video.container';
 import { Styles } from './Video.styles';
+import { t } from 'i18n';
 
 const Video: React.FC<VideoView.Props> = ({
   user,
@@ -35,7 +36,7 @@ const Video: React.FC<VideoView.Props> = ({
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{'-Watch'}</IonTitle>
+            <IonTitle>{t`watch.TITLE`}</IonTitle>
           </IonButtons>
 
           <IonButtons slot={'end'}>
@@ -46,7 +47,7 @@ const Video: React.FC<VideoView.Props> = ({
               loading={likeLoading}
               style={Styles.button}
             >
-              {isLiked ? '-Unlike' : '-Like'}
+              {isLiked ? t`watch.unlike` : t`watch.like`}
             </Button>
             <Button
               type={'primary'}
@@ -55,20 +56,26 @@ const Video: React.FC<VideoView.Props> = ({
               loading={reportLoading}
               style={Styles.button}
             >
-              {isReport ? '-Unreport' : '-Report'}
+              {isReport ? t`watch.unreport` : t`watch.report`}
             </Button>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <Typography.Title>{`-Description ${video.description}`}</Typography.Title>
+        <Typography.Title>
+          {t`watch.description` + ` ${video.description}`}
+        </Typography.Title>
         <div style={{ flexDirection: 'column' }}>
-          <Typography.Title level={2}>{`-View ${video.view}`}</Typography.Title>
-          <Typography.Title level={3}>{`-Like ${video.like}`}</Typography.Title>
-          <Typography.Title
-            level={4}
-          >{`-Report ${video.report}`}</Typography.Title>
+          <Typography.Title level={2}>
+            {t`watch.view` + ` ${video.view}`}
+          </Typography.Title>
+          <Typography.Title level={3}>
+            {t`watch.like` + ` ${video.like}`}
+          </Typography.Title>
+          <Typography.Title level={4}>
+            {t`watch.report` + ` ${video.report}`}
+          </Typography.Title>
         </div>
       </IonContent>
       <Footer />
