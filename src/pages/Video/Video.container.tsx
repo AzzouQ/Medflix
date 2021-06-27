@@ -239,6 +239,7 @@ const VideoContainer: React.FC = () => {
         setLikeLoading(false);
       });
   };
+
   const onReport = () => {
     if (!user) {
       message.error('Vous devez être connecté pour signaler une vidéo');
@@ -261,6 +262,7 @@ const VideoContainer: React.FC = () => {
     if (isLiked) unlike();
     else like();
   };
+
   useEffect(() => {
     const getUserData = async (urlId: string) => {
       try {

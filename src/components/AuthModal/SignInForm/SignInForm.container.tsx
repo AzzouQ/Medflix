@@ -1,8 +1,11 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Plugins } from '@capacitor/core';
 import GravatarAPI from 'gravatar-api';
-import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
+import {
+  FacebookLogin,
+  FacebookLoginResponse,
+} from '@capacitor-community/facebook-login';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 import firebase, {
   auth,
@@ -71,7 +74,7 @@ const SignInFormContainer: React.FC<Props> = ({
 
   const onGoogle: GoToType = async () => {
     try {
-      const response = await Plugins.GoogleAuth.signIn();
+      const response = await GoogleAuth.signIn();
       const credential = firebase.auth.GoogleAuthProvider.credential(
         response.authentication.idToken
       );
@@ -111,7 +114,7 @@ const SignInFormContainer: React.FC<Props> = ({
 
   const onFacebook: GoToType = async () => {
     try {
-      const response: FacebookLoginResponse = await Plugins.FacebookLogin.login(
+      const response: FacebookLoginResponse = await FacebookLogin.login(
         { permissions: ['public_profile', 'email'] }
       );
       const credential = firebase.auth.FacebookAuthProvider.credential(

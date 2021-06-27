@@ -1,8 +1,4 @@
-import {
-  FrownOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-} from '@ant-design/icons';
+import React from 'react';
 import {
   IonButtons,
   IonContent,
@@ -11,10 +7,15 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import {
+  FrownOutlined,
+  LikeOutlined,
+  DislikeOutlined,
+} from '@ant-design/icons';
 import { Button, Typography } from 'antd';
+
 import Footer from 'components/Footer';
-// import VideoCard from 'components/VideoCard';
-import React from 'react';
+
 import type { VideoView } from './Video.container';
 import { Styles } from './Video.styles';
 
@@ -61,8 +62,6 @@ const Video: React.FC<VideoView.Props> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        {/* <VideoCard video={video} mode="WATCH" /> */}
-
         <Typography.Title>{`-Description ${video.description}`}</Typography.Title>
         <div style={{ flexDirection: 'column' }}>
           <Typography.Title level={2}>{`-View ${video.view}`}</Typography.Title>

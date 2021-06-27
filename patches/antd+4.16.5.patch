@@ -1,5 +1,5 @@
 diff --git a/node_modules/antd/lib/index.d.ts b/node_modules/antd/lib/index.d.ts
-index 3c3aafc..900e34c 100644
+index d3fcf23..7656968 100644
 --- a/node_modules/antd/lib/index.d.ts
 +++ b/node_modules/antd/lib/index.d.ts
 @@ -121,6 +121,6 @@ export type { TooltipProps } from './tooltip';
@@ -21,7 +21,7 @@ index 90d327b..887c4e8 100644
  export { DraggerProps } from './Dragger';
  export default Upload;
 diff --git a/node_modules/antd/lib/upload/interface.d.ts b/node_modules/antd/lib/upload/interface.d.ts
-index d1be30d..5e9a8db 100644
+index 6d58563..4aad5db 100644
 --- a/node_modules/antd/lib/upload/interface.d.ts
 +++ b/node_modules/antd/lib/upload/interface.d.ts
 @@ -4,6 +4,7 @@ import { ProgressProps } from '../progress';

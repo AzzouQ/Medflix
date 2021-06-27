@@ -64,7 +64,7 @@ const Profile: React.FC<ProfileType.Props> = ({ user, videos, userData }) => {
               <IonRow style={Styles.container}>
                 {videos?.map((video, index) => (
                   <IonCol size={'auto'} key={index}>
-                    <VideoCard video={video} mode="REDIRECT" />
+                    <VideoCard video={video} />
                   </IonCol>
                 ))}
               </IonRow>

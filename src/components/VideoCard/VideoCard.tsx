@@ -24,8 +24,6 @@ import { useSelector } from 'react-redux';
 import { userSelectors } from 'slices';
 
 const VideoCard: React.FC<VideoCardType.Props> = ({
-  modalOpenState: [isModalOpen, setModalOpen],
-  onStartPlaying,
   onCardClick,
   onShare,
   onDelete,

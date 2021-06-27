@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { isPlatform } from '@ionic/react';
-import { Plugins } from '@capacitor/core';
-import { useVideoPlayer } from 'react-video-player-hook';
+import { Share } from '@capacitor/share';
+import { Clipboard } from '@capacitor/clipboard';
 import { message } from 'antd';
 import { t } from 'i18n';
 
@@ -11,21 +11,16 @@ import { userSelectors } from 'slices';
 
 import VideoCard from './VideoCard';
 
-import type { UserType, UseStateType, VideoType } from 'types';
+import type { UserType, VideoType } from 'types';
 import { useHistory } from 'react-router';
-
-const { Share, Clipboard } = Plugins;
 
 type Props = {
   video: VideoType;
-  mode: 'REDIRECT' | 'WATCH';
 };
 
 export declare namespace VideoCardType {
   type Props = {
     onCardClick: () => void;
-    modalOpenState: [boolean, UseStateType<boolean>];
-    onStartPlaying: () => void;
     onShare: () => Promise<void>;
     onDelete: () => Promise<void>;
     onEdit: () => Promise<void>;
@@ -34,50 +29,10 @@ export declare namespace VideoCardType {
   };
 }
 
-type OnLog = (fromPlayerId: string, currentTime: number | undefined) => void;
-
-const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
+const VideoCardContainer: React.FC<Props> = ({ video }) => {
   const user = useSelector(userSelectors.getUser);
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const isExited = useRef(false);
   const [owner, setOwner] = useState<UserType>();
   const history = useHistory();
-
-  const onCloseModal = async () => {
-    await stopAllPlayers();
-    setModalOpen(false);
-    isExited.current = true;
-  };
-
-  const onLog: OnLog = async (
-    fromPlayerId: string,
-    currentTime: number | undefined
-  ) => {
-    if (!isExited.current) {
-      console.log(`${fromPlayerId} is at ${currentTime}`);
-    }
-  };
-
-  const { initPlayer, stopAllPlayers } = useVideoPlayer({
-    onPause: onLog,
-    onPlay: onLog,
-    onEnded: onCloseModal,
-    onExit: onCloseModal,
-  });
-
-  const onStartPlaying = useCallback(async () => {
-    database.ref(`/videos/${video.objectID}/view`).transaction((viewCount) => {
-      return viewCount + 1;
-    });
-    await initPlayer(
-      'embedded',
-      video.url,
-      'fullscreen-video',
-      'div',
-      800,
-      400
-    );
-  }, [initPlayer, video.url, video.objectID]);
 
   const onShare = useCallback(async () => {
     if (isPlatform('mobile')) {
@@ -111,8 +66,8 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
   }, [user?.name, video.owner]);
 
   const onCardClick = () => {
-    if (mode === 'REDIRECT') history.push('/watch/' + video.objectID);
-    else if (mode === 'WATCH') onStartPlaying();
+    history.push('/watch/' + video.objectID);
+
   };
 
   return (
@@ -121,11 +76,9 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
 
       <VideoCard
         {...{
-          modalOpenState: [isModalOpen, setModalOpen],
           onShare,
           onDelete,
           onEdit,
-          onStartPlaying,
           video,
           owner: owner,
           onCardClick,

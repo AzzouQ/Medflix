@@ -6,5 +6,5 @@
     <string name="custom_url_scheme">com.medflixofficial.app</string>
     <string name="server_client_id">953812443127-pf0ntdicmgjirklid8pe8c682cp29rrl.apps.googleusercontent.com</string>
     <string name="facebook_app_id">4359858914025573</string>
-    <string name="fb_login_protocol_scheme">fb4359858914025573</string>
+    <string name="facebook_client_token">4b9471419dcb2a01e3547ea448effe87</string>
 </resources>
