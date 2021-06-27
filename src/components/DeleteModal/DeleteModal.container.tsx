@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { database } from 'service/firebase';
 
 import DeleteModal from './DeleteModal';
+import { t } from 'i18n';
 
 type Props = {
   setModalOpen: (value: boolean) => void;
@@ -25,7 +26,6 @@ const DeleteModalContainer: React.FC<Props> = ({
   video,
 }) => {
   const onDelete = () => {
-    // TODO DELETE VIDEO
     database
       .ref()
       .transaction((post) => {
@@ -40,12 +40,12 @@ const DeleteModalContainer: React.FC<Props> = ({
         return post;
       })
       .then(() => {
-        message.success('video removed!');
-        message.info('refresh to update data');
+        message.success(t`deleteModal.success`);
+        message.info(t`deleteModal.info`);
         setModalOpen(false);
       })
       .catch(() => {
-        message.error('failed to remove video...');
+        message.error(t`deleteModal.error`);
       });
     setModalOpen(false);
   };

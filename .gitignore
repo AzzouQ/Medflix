@@ -33,3 +33,5 @@ yarn-error.log*
 *.scss.map
 
 firebase-debug.log
+
+babeledit.babel

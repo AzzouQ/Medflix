@@ -33,7 +33,7 @@ const EditModal: React.FC<EditModalType.Props> = ({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             name={'title'}
-            placeholder={'title'}
+            placeholder={t`form.video.placeholder`}
           />
         </IonCol>
       </IonRow>
@@ -43,14 +43,14 @@ const EditModal: React.FC<EditModalType.Props> = ({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             name={'description'}
-            placeholder={'description'}
+            placeholder={t`form.description.placeholder`}
           />
         </IonCol>
       </IonRow>
       <IonRow>
         <IonCol size={'12'}>
           <Button type={'primary'} icon={<EditOutlined />} onClick={onSubmit}>
-            {'Edit'}
+            {t`header.button.edit`}
           </Button>
         </IonCol>
       </IonRow>

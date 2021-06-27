@@ -37,7 +37,10 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
       >
         {(formik) => (
           <Form name={'sign-in'} size={'middle'} layout={'vertical'}>
-            <IonLoading isOpen={formik.isSubmitting} message={t`loading`} />
+            <IonLoading
+              isOpen={formik.isSubmitting}
+              message={t`loading.generic`}
+            />
             <IonRow>
               <IonCol size={'12'}>
                 <Typography.Title level={2} style={Styles.title}>

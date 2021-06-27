@@ -7,6 +7,7 @@ import { userSelectors, UserState } from 'slices/user.slice';
 import type { UserType, VideoType } from 'types';
 import Video from './Video';
 import { message } from 'antd';
+import { t } from 'i18n';
 
 export declare namespace VideoView {
   type Props = {
@@ -242,10 +243,12 @@ const VideoContainer: React.FC = () => {
 
   const onReport = () => {
     if (!user) {
-      message.error('Vous devez être connecté pour signaler une vidéo');
+      message.error(t`watch.reportUserError`);
+      return;
     }
     if (!video) {
-      message.error('Il y a un problème...');
+      message.error(t`watch.errorLoadingData`);
+      return;
     }
 
     if (isReport) unreport();
@@ -254,10 +257,12 @@ const VideoContainer: React.FC = () => {
 
   const onLike = () => {
     if (!user) {
-      message.error('Vous devez être connecté pour liker une vidéo');
+      message.error(t`watch.likeUserError`);
+      return;
     }
     if (!video) {
-      message.error('Il y a un problème...');
+      message.error(t`watch.errorLoadingData`);
+      return;
     }
     if (isLiked) unlike();
     else like();
@@ -283,7 +288,7 @@ const VideoContainer: React.FC = () => {
     }
   }, [user, isFocus, video?.owner]);
 
-  if (!userData || !video) return <Loading text={'Loading video data...'} />;
+  if (!userData || !video) return <Loading text={t`loading.video`} />;
   return (
     <Video
       {...{

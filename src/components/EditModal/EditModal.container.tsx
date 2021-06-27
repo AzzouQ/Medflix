@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { database } from 'service/firebase';
 
 import EditModal from './EditModal';
+import { t } from 'i18n';
 
 type Props = {
   setModalOpen: (value: boolean) => void;
@@ -34,6 +35,10 @@ const EditModalContainer: React.FC<Props> = ({
   const [description, setDescription] = useState(video.description);
 
   const onSubmit = () => {
+    if (title.length === 0) {
+      message.error(t`editModal.emptyTitle`);
+      return;
+    }
     // TODO Edit Modal
     database
       .ref('videos')
@@ -43,12 +48,12 @@ const EditModalContainer: React.FC<Props> = ({
         description,
       })
       .then(() => {
-        message.success('video updated!');
-        message.info('refresh to see new data');
+        message.success(t`editModal.success`);
+        message.info(t`editModal.info`);
         setModalOpen(false);
       })
       .catch(() => {
-        message.error('failed to update video...');
+        message.error(t`editModal.error`);
       });
   };
 
