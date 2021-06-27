@@ -25,10 +25,10 @@ export declare namespace VideoCardType {
   type Props = {
     onCardClick: () => void;
     modalOpenState: [boolean, UseStateType<boolean>];
+    modalEditState: [boolean, UseStateType<boolean>];
+    modalDeleteState: [boolean, UseStateType<boolean>];
     onStartPlaying: () => void;
     onShare: () => Promise<void>;
-    onDelete: () => Promise<void>;
-    onEdit: () => Promise<void>;
     video: VideoType;
     owner: UserType | undefined;
   };
@@ -39,6 +39,9 @@ type OnLog = (fromPlayerId: string, currentTime: number | undefined) => void;
 const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
   const user = useSelector(userSelectors.getUser);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+
   const isExited = useRef(false);
   const [owner, setOwner] = useState<UserType>();
   const history = useHistory();
@@ -95,13 +98,6 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
     }
   }, [video]);
 
-  const onDelete = useCallback(async () => {
-  }, []);
-
-  const onEdit = useCallback(async () => {
-    
-  }, []);
-
   useEffect(() => {
     const getOwner = async () => {
       const ownerSnap = await database.ref(`/users/${video.owner}`).get();
@@ -122,9 +118,9 @@ const VideoCardContainer: React.FC<Props> = ({ video, mode }) => {
       <VideoCard
         {...{
           modalOpenState: [isModalOpen, setModalOpen],
+          modalEditState: [showModalEdit, setShowModalEdit],
+          modalDeleteState: [showModalDelete, setShowModalDelete],
           onShare,
-          onDelete,
-          onEdit,
           onStartPlaying,
           video,
           owner: owner,

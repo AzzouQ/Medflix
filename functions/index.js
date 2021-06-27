@@ -83,10 +83,16 @@ async function sendMail(videoObject) {
 exports.indexentry = functions.database
     .ref("/videos/{videoId}")
     .onWrite(async (data, context) => {
-      if (data.before.val() &&
+      if (!data.after.val()) {
+        await index.deleteObject(context.params.videoId);
+        return null;
+      }
+
+      if (data.before.val() && data.after.val() &&
        data.before.val().flagged !== data.after.val().flagged) {
         return null;
       }
+
 
       const firebaseObject = {
         title: data.after.val().title,
