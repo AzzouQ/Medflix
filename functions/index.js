@@ -104,7 +104,7 @@ exports.indexentry = functions.database
       await index.saveObject(firebaseObject);
 
       if (firebaseObject.report > firebaseObject.view * REPORT_PERCENTAGE &&
-         data.after.val().flagged === false) {
+        data.before.val() && data.before.val().flagged === false) {
         sendMail(firebaseObject);
         return data.after.ref.update({
           flagged: true,
