@@ -5,6 +5,9 @@ import App from './App';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+
+GoogleAuth.init();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
