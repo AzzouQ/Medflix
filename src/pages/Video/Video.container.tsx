@@ -288,7 +288,7 @@ const VideoContainer: React.FC = () => {
     }
   }, [user, isFocus, video?.owner]);
 
-  if (!userData || !video) return <Loading text={'Loading video data...'} />;
+  if (!userData || !video) return <Loading text={t`loading.video`} />;
   return (
     <Video
       {...{

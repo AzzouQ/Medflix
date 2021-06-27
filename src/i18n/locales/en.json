@@ -156,7 +156,13 @@
 			"profile": "Profile"
 		}
 	},
-	"loading": "Please wait...",
+	"loading": {
+		"generic": "Please wait...",
+		"video": "Loading video data..."
+	},
+	"message": {
+		"copy": "Video url has been copied to clipboard"
+	},
 	"subscriptions": {
 		"subscribe": "Follow",
 		"unsubscribe": "Unfollow"
@@ -166,6 +172,7 @@
 		"home": "Home",
 		"profile": "Profile"
 	},
+	"test": "Please wait...",
 	"watch": {
 		"TITLE": "Watch",
 		"description": "Description",

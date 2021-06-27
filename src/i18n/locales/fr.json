@@ -156,7 +156,13 @@
 			"profile": "Profil"
 		}
 	},
-	"loading": "Veuillez patientez...",
+	"loading": {
+		"generic": "Veuillez patientez...",
+		"video": "Chargement des données vidéo..."
+	},
+	"message": {
+		"copy": "L'URL de la vidéo a été copiée dans le presse-papiers"
+	},
 	"subscriptions": {
 		"subscribe": "Suivre",
 		"unsubscribe": "Ne plus suivre"
@@ -166,6 +172,7 @@
 		"home": "Accueil",
 		"profile": "Profil"
 	},
+	"test": "Veuillez patientez...",
 	"watch": {
 		"TITLE": "Regarder",
 		"description": "Description",
