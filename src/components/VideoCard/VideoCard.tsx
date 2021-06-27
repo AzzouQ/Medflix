@@ -17,7 +17,6 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 
-import CloseModal from 'components/CloseModal';
 import EditModal from 'components/EditModal';
 import DeleteModal from 'components/DeleteModal';
 
@@ -45,14 +44,12 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
         isOpen={showModalEdit}
         onDidDismiss={() => setShowModalEdit(false)}
       >
-        <CloseModal {...{ setModalOpen: setShowModalEdit }} />
-        <EditModal {...{ video, owner, setModalOpen: setShowModalEdit }} />
+        <EditModal {...{ video, setModalOpen: setShowModalEdit }} />
       </IonModal>
       <IonModal
         isOpen={showModalDelete}
         onDidDismiss={() => setShowModalDelete(false)}
       >
-        <CloseModal {...{ setModalOpen: setShowModalDelete }} />
         <DeleteModal {...{ video, owner, setModalOpen: setShowModalDelete }} />
       </IonModal>
       <IonCard>
