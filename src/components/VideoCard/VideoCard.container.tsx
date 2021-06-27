@@ -11,7 +11,7 @@ import { userSelectors } from 'slices';
 
 import VideoCard from './VideoCard';
 
-import type { UserType, VideoType } from 'types';
+import type { UserType, UseStateType, VideoType } from 'types';
 import { useHistory } from 'react-router';
 
 type Props = {
@@ -21,9 +21,10 @@ type Props = {
 export declare namespace VideoCardType {
   type Props = {
     onCardClick: () => void;
+    modalOpenState: [boolean, UseStateType<boolean>];
+    modalEditState: [boolean, UseStateType<boolean>];
+    modalDeleteState: [boolean, UseStateType<boolean>];
     onShare: () => Promise<void>;
-    onDelete: () => Promise<void>;
-    onEdit: () => Promise<void>;
     video: VideoType;
     owner: UserType | undefined;
   };
@@ -31,6 +32,10 @@ export declare namespace VideoCardType {
 
 const VideoCardContainer: React.FC<Props> = ({ video }) => {
   const user = useSelector(userSelectors.getUser);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+
   const [owner, setOwner] = useState<UserType>();
   const history = useHistory();
 
@@ -49,13 +54,6 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
       message.success(t`message.copy`);
     }
   }, [video]);
-
-  const onDelete = useCallback(async () => {
-  }, []);
-
-  const onEdit = useCallback(async () => {
-    
-  }, []);
 
   useEffect(() => {
     const getOwner = async () => {
@@ -77,8 +75,9 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
       <VideoCard
         {...{
           onShare,
-          onDelete,
-          onEdit,
+          modalOpenState: [isModalOpen, setModalOpen],
+          modalEditState: [showModalEdit, setShowModalEdit],
+          modalDeleteState: [showModalDelete, setShowModalDelete],
           video,
           owner: owner,
           onCardClick,
