@@ -36,7 +36,7 @@ const Video: React.FC<VideoView.Props> = ({
       <IonHeader>
         <IonToolbar>
           <IonButtons slot={'start'}>
-            <IonTitle>{t`watch.TITLE`}</IonTitle>
+            <IonTitle>{t`watch.title`}</IonTitle>
           </IonButtons>
 
           <IonButtons slot={'end'}>

@@ -161,7 +161,7 @@
 		"video": "Chargement des données vidéo..."
 	},
 	"message": {
-		"copy": "L'URL de la vidéo a été copiée dans le presse-papiers"
+		"copy": "L'URL de la vidéo a été copiée dans le presse-papier"
 	},
 	"subscriptions": {
 		"subscribe": "Suivre",
@@ -174,7 +174,7 @@
 	},
 	"test": "Veuillez patientez...",
 	"watch": {
-		"TITLE": "Regarder",
+		"title": "Regarder",
 		"description": "Description",
 		"errorLoadingData": "Impossible de charger les données de la vidéo",
 		"like": "J'aime",
