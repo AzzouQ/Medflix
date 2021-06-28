@@ -11,12 +11,13 @@ import {
   FrownOutlined,
   LikeOutlined,
   DislikeOutlined,
+  SendOutlined,
 } from '@ant-design/icons';
-import { Button, Typography } from 'antd';
+import { Button, Typography, Input } from 'antd';
 
 import Footer from 'components/Footer';
 
-import type { VideoView } from './Video.container';
+import type { Comment, VideoView } from './Video.container';
 import { Styles } from './Video.styles';
 import { t } from 'i18n';
 
@@ -30,6 +31,9 @@ const Video: React.FC<VideoView.Props> = ({
   isLiked,
   reportLoading,
   isReport,
+  commentList,
+  commentState: [commentInput, setCommentInput],
+  onComment,
 }) => {
   return (
     <IonPage>
@@ -76,6 +80,16 @@ const Video: React.FC<VideoView.Props> = ({
           <Typography.Title level={4}>
             {t`watch.report` + ` ${video.report}`}
           </Typography.Title>
+          <Input
+            onChange={(e) => setCommentInput(e.target.value)}
+            value={commentInput}
+          />
+          <Button type={'primary'} icon={<SendOutlined />} onClick={onComment}>
+            {t`watch.comment`}
+          </Button>
+          {commentList.map(({ author, body, date }: Comment) => (
+            <Typography.Title level={4}>{body}</Typography.Title>
+          ))}
         </div>
       </IonContent>
       <Footer />

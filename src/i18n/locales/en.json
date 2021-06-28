@@ -85,8 +85,7 @@
     },
     "edit": {
       "save": "Save",
-      "title": "Edit your profile !",
-      "video": "Edit your video !"
+      "title": "Edit your profile !"
     },
     "email": {
       "error": "Invalid e-mail",
@@ -175,13 +174,18 @@
   },
   "test": "Please wait...",
   "watch": {
-    "title": "Watch",
+    "comment": "Send",
+    "commentError": "Unable to post the comment",
+    "commentSuccess": "Comment posted with success!",
+    "commentUserError": "You must be logged in to comment a video",
     "description": "Description",
+    "emptyComment": "Comment body can't be empty",
     "errorLoadingData": "Unable to load video data",
     "like": "Like",
     "likeUserError": "You must be logged in to like a video",
     "report": "Report",
     "reportUserError": "You must be logged in to report a video",
+    "title": "Watch",
     "unlike": "Dislike",
     "unreport": "Unreport",
     "view": "View"

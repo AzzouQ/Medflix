@@ -85,8 +85,7 @@
     },
     "edit": {
       "save": "Enregistrer",
-      "title": "Éditez votre profil !",
-      "video": "Éditez votre vidéo !"
+      "title": "Éditez votre profil !"
     },
     "email": {
       "error": "L'email est invalide",
@@ -175,13 +174,18 @@
   },
   "test": "Veuillez patientez...",
   "watch": {
-    "title": "Regarder",
+    "comment": "Envoyer",
+    "commentError": "Impossible de poster le commentaire",
+    "commentSuccess": "Commentaire posté avec succès !",
+    "commentUserError": "Vous devez être connecté pour commenter une vidéo",
     "description": "Description",
+    "emptyComment": "Le commentaire ne peut pas être vide",
     "errorLoadingData": "Impossible de charger les données de la vidéo",
     "like": "J'aime",
     "likeUserError": "Vous devez être connecté pour aimer une vidéo",
     "report": "Signaler",
     "reportUserError": "Vous devez être connecté pour signaler une vidéo",
+    "title": "Regarder",
     "unlike": "Annuler",
     "unreport": "Annuler",
     "view": "Vue"
