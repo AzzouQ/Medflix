@@ -54,6 +54,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 onChange={onChange}
                 onRemove={onRemove}
                 beforeUpload={() => false}
+                itemRender={() => <></>}
                 maxCount={1}
                 style={Styles.dragger}
               >
@@ -67,6 +68,7 @@ const UploadForm: React.FC<UploadType.FormProps> = ({
                 onChange={onChangeImage}
                 onRemove={onRemoveImage}
                 beforeUpload={() => false}
+                itemRender={() => <></>}
                 maxCount={1}
                 style={Styles.dragger}
               >

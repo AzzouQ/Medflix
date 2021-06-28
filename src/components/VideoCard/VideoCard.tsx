@@ -70,7 +70,9 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
                 <Avatar
                   size={'large'}
                   icon={<UserOutlined />}
-                  src={owner?.imageUrl}
+                  src={
+                    user?.uid === owner?.uid ? user?.imageUrl : owner?.imageUrl
+                  }
                 />
               </a>
             </IonCol>
