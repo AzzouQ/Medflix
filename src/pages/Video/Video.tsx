@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   IonButtons,
   IonContent,
   IonHeader,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -13,7 +14,7 @@ import {
   DislikeOutlined,
   SendOutlined,
 } from '@ant-design/icons';
-import { Button, Typography, Input } from 'antd';
+import { Button, Typography, Input, Image } from 'antd';
 
 import Footer from 'components/Footer';
 
@@ -36,15 +37,14 @@ const Video: React.FC<VideoView.Props> = ({
   commentState: [commentInput, setCommentInput],
   onComment,
 }) => {
-  const onPlay = () => {
-    CapacitorVideoPlayer.initPlayer({
+  const onPlay = async () => {
+    await CapacitorVideoPlayer.initPlayer({
       mode: 'fullscreen',
       url: video?.url,
       playerId: 'fullscreen',
       componentTag: 'div',
     });
-
-    CapacitorVideoPlayer.play({ playerId: 'fullscreen' });
+    await CapacitorVideoPlayer.play({ playerId: 'fullscreen' });
   };
 
   return (
@@ -79,57 +79,48 @@ const Video: React.FC<VideoView.Props> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
-        <div style={{ flexDirection: 'row', display: 'flex' }}>
-          <div
-            id="fullscreen"
-            style={{
-              display: 'block',
-              maxWidth: '60vw',
-              maxHeight: '60vh',
-              width: 'auto',
-              height: 'auto',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+        <IonRow
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+          }}
+        >
+          <Image
+            src={video.thumbnail}
+            preview={false}
+            height={400}
+            width={640}
+            onClick={onPlay}
+          />
+          <div id="fullscreen" />
+        </IonRow>
+        <IonRow>
+          <Typography.Title
+            level={1}
+            style={{ textAlign: 'center', justifySelf: 'center' }}
           >
-            <img
-              alt="video"
-              style={{
-                display: 'block',
-                maxWidth: '60vw',
-                maxHeight: '60vh',
-                width: 'auto',
-                height: 'auto',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onClick={onPlay}
-              src={video.thumbnail}
-            />
-          </div>
+            {video.title}
+          </Typography.Title>
+        </IonRow>
+        <IonRow>
+          <Typography.Title
+            level={4}
+            style={{ textAlign: 'center', justifySelf: 'center' }}
+          >
+            {`${video.view} ` +
+              t`watch.view` +
+              ` - ${video.view} ` +
+              t`watch.like`}
+          </Typography.Title>
+        </IonRow>
 
-          <div
-            style={{
-              textAlign: 'center',
-              flexDirection: 'column',
-              alignItems: 'center',
-              flex: 1,
-            }}
-          >
-            <Typography.Title level={2}>
-              {t`watch.view` + ` ${video.view}`}
-            </Typography.Title>
-            <Typography.Title level={3}>
-              {t`watch.like` + ` ${video.like}`}
-            </Typography.Title>
-            <Typography.Title level={4}>
-              {t`watch.report` + ` ${video.report}`}
-            </Typography.Title>
-          </div>
-        </div>
-        <Typography.Title>
-          {t`watch.description` + ` ${video.description}`}
-        </Typography.Title>
+        <IonRow>
+          <Typography.Title level={5}>
+            {video.description ?? 'Pas de description'}
+          </Typography.Title>
+        </IonRow>
         <div
           style={{
             flexDirection: 'column',
