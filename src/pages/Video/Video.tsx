@@ -89,7 +89,7 @@ const Video: React.FC<VideoView.Props> = ({
           </Button>
           {commentList.map(({ author, body, date }: Comment) => (
             <Typography.Title level={4}>{body}</Typography.Title>
-          ))}
+          )).reverse()}
         </div>
       </IonContent>
       <Footer />
