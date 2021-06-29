@@ -13,8 +13,9 @@ import {
   LikeOutlined,
   DislikeOutlined,
   SendOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
-import { Button, Typography, Input, Image } from 'antd';
+import { Button, Typography, Input, Image, Avatar } from 'antd';
 
 import Footer from 'components/Footer';
 
@@ -112,7 +113,8 @@ const Video: React.FC<VideoView.Props> = ({
             {`${video.view} ` +
               t`watch.view` +
               ` - ${video.view} ` +
-              t`watch.like`}
+              t`watch.like` +
+              ` - ${new Date(video.createDate).toLocaleDateString()} `}
           </Typography.Title>
         </IonRow>
 
@@ -137,7 +139,31 @@ const Video: React.FC<VideoView.Props> = ({
           </Button>
           {commentList
             .map(({ author, body, date }: Comment) => (
-              <Typography.Title level={4}>{body}</Typography.Title>
+              <IonRow
+                style={{
+                  marginBottom: '1vh',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <IonRow style={{ alignItems: 'center' }}>
+                  <a href={`/profile/${author?.uid}`}>
+                    <Avatar
+                      size={'large'}
+                      icon={<UserOutlined />}
+                      src={author?.imageUrl}
+                    />
+                  </a>
+                  <Typography.Text style={{ marginLeft: '2vw' }}>
+                    {body}
+                  </Typography.Text>
+                </IonRow>
+                <IonRow>
+                  <Typography.Text style={{ marginRight: '2vw' }}>
+                    {new Date(date).toLocaleDateString()}
+                  </Typography.Text>
+                </IonRow>
+              </IonRow>
             ))
             .reverse()}
         </div>

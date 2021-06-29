@@ -58,7 +58,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
             <Image
               src={video.thumbnail || thumbnail}
               height={200}
-              width={320}
+              width={280}
               preview={false}
             />
           </IonCardContent>
