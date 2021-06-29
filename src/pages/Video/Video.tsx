@@ -133,8 +133,14 @@ const Video: React.FC<VideoView.Props> = ({
           <Input
             onChange={(e) => setCommentInput(e.target.value)}
             value={commentInput}
+            style={{ marginBottom: 5 }}
           />
-          <Button type={'primary'} icon={<SendOutlined />} onClick={onComment}>
+          <Button
+            type={'primary'}
+            icon={<SendOutlined />}
+            onClick={onComment}
+            style={{ marginBottom: 5 }}
+          >
             {t`watch.comment`}
           </Button>
           {commentList
