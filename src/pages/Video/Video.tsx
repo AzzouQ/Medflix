@@ -19,6 +19,8 @@ import { Button, Typography, Input, Image, Avatar } from 'antd';
 
 import Footer from 'components/Footer';
 
+import { database } from 'service/firebase';
+
 import type { Comment, VideoView } from './Video.container';
 import { Styles } from './Video.styles';
 import { t } from 'i18n';
@@ -45,7 +47,14 @@ const Video: React.FC<VideoView.Props> = ({
       playerId: 'fullscreen',
       componentTag: 'div',
     });
+
     await CapacitorVideoPlayer.play({ playerId: 'fullscreen' });
+
+    await database
+      .ref('videos/')
+      .child(video.objectID)
+      .child('view')
+      .transaction((post) => post + 1);
   };
 
   return (
@@ -112,7 +121,7 @@ const Video: React.FC<VideoView.Props> = ({
           >
             {`${video.view} ` +
               t`watch.view` +
-              ` - ${video.view} ` +
+              ` - ${video.like} ` +
               t`watch.like` +
               ` - ${new Date(video.createDate).toLocaleDateString()} `}
           </Typography.Title>
