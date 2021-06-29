@@ -65,7 +65,6 @@ const VideoCardContainer: React.FC<Props> = ({ video }) => {
 
   const onCardClick = () => {
     history.push('/watch/' + video.objectID);
-
   };
 
   return (
