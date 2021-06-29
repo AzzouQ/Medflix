@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { t } from 'i18n';
 
 import { database, pushMessaging } from 'service/firebase';
@@ -17,7 +17,8 @@ const SubscribeCard: React.FC<Props> = ({ userData }) => {
 
   const onFollow = useCallback(() => {
     if (!user?.uid) {
-      throw new Error('User disconnect');
+      message.error(t`subscriptions.disconnected`);
+      throw new Error('Disconnected');
     }
     return database.ref(`/users/`).transaction((snapshot) => {
       if (snapshot) {
@@ -46,7 +47,8 @@ const SubscribeCard: React.FC<Props> = ({ userData }) => {
 
   const onUnfollow = useCallback(() => {
     if (!user?.uid) {
-      throw new Error('User disconnect');
+      message.error(t`subscriptions.disconnected`);
+      throw new Error('Disconnected');
     }
     return database.ref(`/users/`).transaction((snapshot) => {
       if (snapshot) {
@@ -92,15 +94,19 @@ const SubscribeCard: React.FC<Props> = ({ userData }) => {
       type={'primary'}
       style={{ marginRight: 20 }}
       onClick={() => {
-        if (isFollow) {
-          console.log('Stop follow');
-          onUnfollow();
-          setFollow(false);
-        } else {
-          console.log('Start follow');
-          onFollow();
-          setFollow(true);
-          pushMessaging(userData.uid);
+        try {
+          if (isFollow) {
+            console.log('Stop follow');
+            onUnfollow();
+            setFollow(false);
+          } else {
+            console.log('Start follow');
+            onFollow();
+            setFollow(true);
+            pushMessaging(userData.uid);
+          }
+        } catch (err) {
+          console.log(err);
         }
       }}
     >

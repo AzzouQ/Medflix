@@ -165,6 +165,7 @@
 		"copy": "L'URL de la vidéo a été copiée dans le presse-papier"
 	},
 	"subscriptions": {
+		"disconnected": "Vous devez être connecté pour suivre quelqu'un",
 		"subscribe": "Suivre",
 		"unsubscribe": "Ne plus suivre"
 	},

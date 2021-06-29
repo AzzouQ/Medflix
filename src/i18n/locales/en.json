@@ -165,6 +165,7 @@
 		"copy": "Video url has been copied to clipboard"
 	},
 	"subscriptions": {
+		"disconnected": "You must be logged in to follow someone",
 		"subscribe": "Follow",
 		"unsubscribe": "Unfollow"
 	},
