@@ -1,104 +1,19 @@
 {
-  "tab": {
-    "home": "Home",
-    "followers": "Followers",
-    "profile": "Profile"
+  "deleteModal": {
+    "error": "Failed to remove video...",
+    "info": "Refresh page to update data",
+    "no": "No",
+    "success": "Video has been removed!",
+    "title": "Do you really want to delete this video",
+    "yes": "Yes"
   },
-
-  "header": {
-    "button": {
-      "signIn": "Connect",
-      "signOut": "Disconnect",
-      "upload": "Upload",
-      "edit": "Edit"
-    },
-    "title": {
-      "home": "Latest videos",
-      "followers": "Followers",
-      "create": "Create",
-      "editProfile": "Edit Profile",
-      "profile": "Profile"
-    }
+  "editModal": {
+    "emptyTitle": "Title can't be empty",
+    "error": "Failed to update video...",
+    "info": "Refresh page to update data",
+    "success": "Video has been updated!"
   },
-
-  "subscriptions": {
-    "subscribe": "Follow",
-    "unsubscribe": "Unfollow"
-  },
-
-  "loading": "Please wait...",
-
-  "form": {
-    "name": {
-      "label": "Name",
-      "placeholder": "John Doe",
-      "required": "Please type a name"
-    },
-    "email": {
-      "label": "E-mail",
-      "placeholder": "example@mail.com",
-      "required": "Please type an e-mail",
-      "error": "Invalid e-mail"
-    },
-    "currentPassword": {
-      "label": "Password",
-      "placeholder": "p4sSwOrD",
-      "required": "Please type a password"
-    },
-    "newPassword": {
-      "label": "New password",
-      "placeholder": "n4w p4sSwOrD",
-      "required": "Please type a new password"
-    },
-    "password": {
-      "required": "Password is required"
-    },
-    "video": {
-      "label": "Title",
-      "placeholder": "My vidéo",
-      "required": "Please type a name"
-    },
-    "description": {
-      "label": "Description",
-      "placeholder": "Awesome video"
-    },
-
-    "signIn": {
-      "title": "Sign in !",
-      "save": "Sign me",
-      "switch": "Not registered yet ?"
-    },
-
-    "signUp": {
-      "title": "Welcome !",
-      "save": "Create my account",
-      "switch": "Already registered ?"
-    },
-
-    "upload": {
-      "title": "Upload a video !",
-      "save": "Upload",
-      "dragger":  {
-        "video": {
-          "title": "Add a video",
-          "subtitle": "Click or drag"
-        },
-        "image": {
-          "title": "Add a thumbnail",
-          "subtitle": "Click or drag"
-        }
-      }
-    },
-
-    "edit": {
-      "title": "Edit your profile !",
-      "save": "Save"
-    }
-  },
-
   "firebase": {
-    "auth/too-many-requests": "Calm down on the clicks. (🤪)",
-    "auth/wrong-password": "The password is incorrect.",
     "auth/claims-too-large": "The claims payload supplied to setCustomUserClaims () exceeds the maximum allowable size of 1000 bytes.",
     "auth/email-already-exists": "The email provided is already in use by an existing user. Each user must have a unique email.",
     "auth/email-already-in-use": "Mail already in use by another user",
@@ -150,10 +65,129 @@
     "auth/reserved-claims": "One or more custom user claims provided to setCustomUserClaims() are reserved. For example, OIDC specific claims such as (sub, iat, iss, exp, aud, auth_time, etc.) should not be used as keys for custom claims.",
     "auth/session-cookie-expired": "The provided Firebase session cookie has expired.",
     "auth/session-cookie-revoked": "The Firebase session cookie has been revoked.",
+    "auth/too-many-requests": "Calm down on the clicks. (🤪)",
     "auth/uid-already-exists": "The supplied uid is already in use by an existing user. Each user must have a unique uid.",
     "auth/unauthorized-continue-uri": "The domain of the pursuit URL is not whitelisted. Add the domain to the whitelist in the Firebase console.",
     "auth/user-not-found": "There is no user record matching the username provided",
     "auth/weak-password": "Too weak password",
+    "auth/wrong-password": "The password is incorrect.",
     "unknown": "Unknown error"
+  },
+  "form": {
+    "currentPassword": {
+      "label": "Password",
+      "placeholder": "p4sSwOrD",
+      "required": "Please type a password"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Awesome video"
+    },
+    "edit": {
+      "save": "Save",
+      "title": "Edit your profile !"
+    },
+    "email": {
+      "error": "Invalid e-mail",
+      "label": "E-mail",
+      "placeholder": "example@mail.com",
+      "required": "Please type an e-mail"
+    },
+    "message": {
+      "copy": "Link copied to clipboard.",
+      "upload": "Your video have been published.",
+      "uploadError": "An error occured."
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "John Doe",
+      "required": "Please type a name"
+    },
+    "newPassword": {
+      "label": "New password",
+      "placeholder": "n4w p4sSwOrD",
+      "required": "Please type a new password"
+    },
+    "password": {
+      "required": "Password is required"
+    },
+    "signIn": {
+      "save": "Sign me",
+      "switch": "Not registered yet ?",
+      "title": "Sign in !"
+    },
+    "signUp": {
+      "save": "Create my account",
+      "switch": "Already registered ?",
+      "title": "Welcome !"
+    },
+    "upload": {
+      "dragger": {
+        "image": {
+          "subtitle": "Click or drag",
+          "title": "Add a thumbnail"
+        },
+        "video": {
+          "subtitle": "Click or drag",
+          "title": "Add a video"
+        }
+      },
+      "save": "Upload",
+      "title": "Upload a video !"
+    },
+    "video": {
+      "label": "Title",
+      "placeholder": "My vidéo",
+      "required": "Please type a name"
+    }
+  },
+  "header": {
+    "button": {
+      "edit": "Edit",
+      "signIn": "Connect",
+      "signOut": "Disconnect",
+      "upload": "Upload"
+    },
+    "title": {
+      "create": "Create",
+      "editProfile": "Edit Profile",
+      "followers": "Subscription",
+      "home": "Latest videos",
+      "profile": "Profile"
+    }
+  },
+  "loading": {
+    "generic": "Please wait...",
+    "video": "Loading video data..."
+  },
+  "message": {
+    "copy": "Video url has been copied to clipboard"
+  },
+  "subscriptions": {
+    "subscribe": "Follow",
+    "unsubscribe": "Unfollow"
+  },
+  "tab": {
+    "followers": "Subscription",
+    "home": "Home",
+    "profile": "Profile"
+  },
+  "test": "Please wait...",
+  "watch": {
+    "comment": "Send",
+    "commentError": "Unable to post the comment",
+    "commentSuccess": "Comment posted with success!",
+    "commentUserError": "You must be logged in to comment a video",
+    "description": "Description",
+    "emptyComment": "Comment body can't be empty",
+    "errorLoadingData": "Unable to load video data",
+    "like": "Like",
+    "likeUserError": "You must be logged in to like a video",
+    "report": "Report",
+    "reportUserError": "You must be logged in to report a video",
+    "title": "Watch",
+    "unlike": "Dislike",
+    "unreport": "Unreport",
+    "view": "View"
   }
 }

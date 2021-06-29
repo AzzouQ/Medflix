@@ -1,103 +1,19 @@
 {
-  "tab": {
-    "home": "Accueil",
-    "followers": "Followers",
-    "profile": "Profil"
+  "deleteModal": {
+    "error": "Échec de la suppression de la vidéo...",
+    "info": "Rafraîchir la page pour mettre à jour les données",
+    "no": "Non",
+    "success": "La vidéo a été supprimée !",
+    "title": "Voulez-vous vraiment supprimer cette vidéo",
+    "yes": "Oui"
   },
-
-  "header": {
-    "button": {
-      "signIn": "Se connecter",
-      "signOut": "Se déconnecter",
-      "upload": "Publier",
-      "edit": "Éditez"
-    },
-    "title": {
-      "home": "Dernières vidéos",
-      "followers": "Abonnements",
-      "create": "Créer",
-      "editProfile": "Gérer Profil",
-      "profile": "Profil"
-    }
+  "editModal": {
+    "emptyTitle": "Le titre ne peut pas être vide",
+    "error": "Échec de la mise à jour de la vidéo...",
+    "info": "Rafraîchir la page pour mettre à jour les données",
+    "success": "La vidéo a été mise à jour !"
   },
-
-  "subscriptions": {
-    "subscribe": "Suivre",
-    "unsubscribe": "Ne plus suivre"
-  },
-
-  "loading": "Veuillez patientez...",
-
-  "form": {
-    "name": {
-      "label": "Nom",
-      "placeholder": "John Doe",
-      "required": "Veuillez entrer un nom"
-    },
-    "email": {
-      "label": "E-mail",
-      "placeholder": "example@mail.com",
-      "required": "Veuillez entrer un email",
-      "error": "L'email est invalide"
-    },
-    "currentPassword": {
-      "label": "Mot de passe",
-      "placeholder": "p4sSwOrD",
-      "required": "Veuillez entrer un mot de passe"
-    },
-    "newPassword": {
-      "label": "Nouveau mot de passe",
-      "placeholder": "n4w p4sSwOrD",
-      "required": "Veuillez entrer un nouveau mot de passe"
-    },
-    "video": {
-      "label": "Titre",
-      "placeholder": "Ma vidéo",
-      "required": "Veuillez entrer un titre"
-    },
-    "description": {
-      "label": "Description",
-      "placeholder": "Super vidéo"
-    },
-    "password": {
-      "required": "Le mot de passe est requis"
-    },
-    "signIn": {
-      "title": "Connectez-vous !",
-      "save": "Me connecter",
-      "switch": "Pas encore inscrit ?"
-    },
-
-    "signUp": {
-      "title": "Bienvenue !",
-      "save": "Créer mon compte",
-      "switch": "Déjà inscrit ?"
-    },
-
-    "upload": {
-      "title": "Publier une vidéo !",
-      "save": "Publier",
-      "dragger": {
-        "video": {
-          "title": "Ajoutez une vidéo",
-          "subtitle": "Cliquez ou faites glissez"
-        },
-        "image": {
-          "title": "Ajoutez une miniature",
-          "subtitle": "Cliquez ou faites glissez"
-        }
-      }
-    },
-
-    "edit": {
-      "title": "Éditez votre profil !",
-      "save": "Enregistrer"
-    }
-  },
-
   "firebase": {
-    "auth/too-many-requests": "Calme toi sur les clicks. (🤪)",
-    "auth/wrong-password": "Le mot de passe est incorrect.",
     "auth/claims-too-large": "La charge utile des revendications fournie à setCustomUserClaims() dépasse la taille maximale autorisée de 1 000 octets.",
     "auth/email-already-exists": "L'e-mail fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un e-mail unique.",
     "auth/email-already-in-use": "Mail déjà utilisé par un autre utilisateur",
@@ -149,10 +65,129 @@
     "auth/reserved-claims": "Une ou plusieurs revendications utilisateur personnalisées fournies à setCustomUserClaims() sont réservées. Par exemple, les revendications spécifiques OIDC telles que (sub, iat, iss, exp, aud, auth_time, etc.) ne doivent pas être utilisées comme clés pour les revendications personnalisées.",
     "auth/session-cookie-expired": "Le cookie de session Firebase fourni a expiré.",
     "auth/session-cookie-revoked": "Le cookie de session Firebase a été révoqué.",
+    "auth/too-many-requests": "Calme toi sur les clicks. (🤪)",
     "auth/uid-already-exists": "L'uid fourni est déjà utilisé par un utilisateur existant. Chaque utilisateur doit avoir un uid unique.",
     "auth/unauthorized-continue-uri": "Le domaine de l'URL de poursuite ne figure pas sur la liste blanche. Ajoutez le domaine à la liste blanche dans la console Firebase.",
     "auth/user-not-found": "Il n'existe aucun enregistrement d'utilisateur correspondant à l'identifiant fourni",
     "auth/weak-password": "Mot de passe trop faible",
+    "auth/wrong-password": "Le mot de passe est incorrect.",
     "unknown": "Erreur inconnue"
+  },
+  "form": {
+    "currentPassword": {
+      "label": "Mot de passe",
+      "placeholder": "p4sSwOrD",
+      "required": "Veuillez entrer un mot de passe"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Super vidéo"
+    },
+    "edit": {
+      "save": "Enregistrer",
+      "title": "Éditez votre profil !"
+    },
+    "email": {
+      "error": "L'email est invalide",
+      "label": "E-mail",
+      "placeholder": "example@mail.com",
+      "required": "Veuillez entrer un email"
+    },
+    "message": {
+      "copy": "Le lien de la vidéo a été copier.",
+      "upload": "Votre video a été publier.",
+      "uploadError": "Une erreur s'est produite."
+    },
+    "name": {
+      "label": "Nom",
+      "placeholder": "John Doe",
+      "required": "Veuillez entrer un nom"
+    },
+    "newPassword": {
+      "label": "Nouveau mot de passe",
+      "placeholder": "n4w p4sSwOrD",
+      "required": "Veuillez entrer un nouveau mot de passe"
+    },
+    "password": {
+      "required": "Le mot de passe est requis"
+    },
+    "signIn": {
+      "save": "Me connecter",
+      "switch": "Pas encore inscrit ?",
+      "title": "Connectez-vous !"
+    },
+    "signUp": {
+      "save": "Créer mon compte",
+      "switch": "Déjà inscrit ?",
+      "title": "Bienvenue !"
+    },
+    "upload": {
+      "dragger": {
+        "image": {
+          "subtitle": "Cliquez ou faites glissez",
+          "title": "Ajoutez une miniature"
+        },
+        "video": {
+          "subtitle": "Cliquez ou faites glissez",
+          "title": "Ajoutez une vidéo"
+        }
+      },
+      "save": "Publier",
+      "title": "Publier une vidéo !"
+    },
+    "video": {
+      "label": "Titre",
+      "placeholder": "Ma vidéo",
+      "required": "Veuillez entrer un titre"
+    }
+  },
+  "header": {
+    "button": {
+      "edit": "Éditez",
+      "signIn": "Se connecter",
+      "signOut": "Se déconnecter",
+      "upload": "Publier"
+    },
+    "title": {
+      "create": "Créer",
+      "editProfile": "Gérer Profil",
+      "followers": "Abonnements",
+      "home": "Dernières vidéos",
+      "profile": "Profil"
+    }
+  },
+  "loading": {
+    "generic": "Veuillez patientez...",
+    "video": "Chargement des données vidéo..."
+  },
+  "message": {
+    "copy": "L'URL de la vidéo a été copiée dans le presse-papier"
+  },
+  "subscriptions": {
+    "subscribe": "Suivre",
+    "unsubscribe": "Ne plus suivre"
+  },
+  "tab": {
+    "followers": "Abonnements",
+    "home": "Accueil",
+    "profile": "Profil"
+  },
+  "test": "Veuillez patientez...",
+  "watch": {
+    "comment": "Envoyer",
+    "commentError": "Impossible de poster le commentaire",
+    "commentSuccess": "Commentaire posté avec succès !",
+    "commentUserError": "Vous devez être connecté pour commenter une vidéo",
+    "description": "Description",
+    "emptyComment": "Le commentaire ne peut pas être vide",
+    "errorLoadingData": "Impossible de charger les données de la vidéo",
+    "like": "J'aime",
+    "likeUserError": "Vous devez être connecté pour aimer une vidéo",
+    "report": "Signaler",
+    "reportUserError": "Vous devez être connecté pour signaler une vidéo",
+    "title": "Regarder",
+    "unlike": "Annuler",
+    "unreport": "Annuler",
+    "view": "Vue"
   }
 }

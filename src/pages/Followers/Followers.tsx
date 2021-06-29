@@ -29,15 +29,14 @@ import { useSubsSearch } from 'service/algolia/algolia';
 const Followers: React.FC = () => {
   const user = useSelector(userSelectors.getUser);
   const { pathname } = useLocation();
-  const isFocus = pathname === '/followers';
-  const [videos, setSubs] = useSubsSearch()
+  const isFocus = pathname === '/subscription';
+  const [videos, setSubs] = useSubsSearch();
   useEffect(() => {
     const getVideos = async () => {
       const videosIDsSnap = await database
         .ref(`/users/${user?.uid}/subscriptions`)
         .get();
       if (videosIDsSnap.val()) {
-
         setSubs(videosIDsSnap.val());
       } else {
         setSubs([]);
@@ -71,7 +70,7 @@ const Followers: React.FC = () => {
               <IonRow style={{ justifyContent: 'center' }}>
                 {videos?.map((video, index) => (
                   <IonCol size={'auto'} key={index}>
-                    <VideoCard video={video} mode="REDIRECT" />
+                    <VideoCard video={video} />
                   </IonCol>
                 ))}
               </IonRow>

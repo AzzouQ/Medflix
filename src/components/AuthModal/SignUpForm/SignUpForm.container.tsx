@@ -44,10 +44,12 @@ const SignUpFormContainer: React.FC<Props> = ({
     { setFieldError, setSubmitting }
   ) => {
     try {
+      console.log('Start');
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
+      console.log('Put in DB');
       await database.ref(`/users/${user!.uid}`).set({
         name: name,
         email: email,
@@ -63,7 +65,10 @@ const SignUpFormContainer: React.FC<Props> = ({
           },
         }),
       });
+      console.log('Put in DB: Done');
+      console.log('Init messaging');
       await initializeMessaging(user!);
+      console.log('Init messaging: Done');
       const userInfos = await database.ref(`/users/${user!.uid}`).get();
       dispatch(
         userActions.initUser({ user: { ...userInfos.val(), uid: user!.uid } })

@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FacebookLogin } from '@capacitor-community/facebook-login';
-import { registerWebPlugin } from '@capacitor/core';
 
 import App from './App';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
-registerWebPlugin(FacebookLogin);
+GoogleAuth.init();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

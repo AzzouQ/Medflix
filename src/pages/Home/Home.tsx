@@ -37,7 +37,7 @@ const Home: React.FC<HomeType.Props> = ({
       <>
         {videos?.map((video, index) => (
           <IonCol size={'auto'} key={index}>
-            <VideoCard video={video} mode="REDIRECT" />
+            <VideoCard video={video} />
           </IonCol>
         ))}
       </>

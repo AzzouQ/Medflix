@@ -1,12 +1,16 @@
-import Loading from 'components/Loading';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
+import { message } from 'antd';
+import { t } from 'i18n';
+
 import { database } from 'service/firebase';
 import { userSelectors, UserState } from 'slices/user.slice';
-import type { UserType, VideoType } from 'types';
+
+import Loading from 'components/Loading';
 import Video from './Video';
-import { message } from 'antd';
+
+import type { UserType, UseStateType, VideoType } from 'types';
 
 export declare namespace VideoView {
   type Props = {
@@ -15,12 +19,21 @@ export declare namespace VideoView {
     userData?: UserType;
     onReport: () => void;
     onLike: () => void;
+    onComment: () => void;
     likeLoading: boolean;
     isLiked: boolean;
     reportLoading: boolean;
     isReport: boolean;
+    commentList: Comment[];
+    commentState: [string, UseStateType<string>];
   };
 }
+
+export type Comment = {
+  author: UserType;
+  body: string;
+  date: Date;
+};
 
 interface VideoLocation {
   id: string;
@@ -37,6 +50,11 @@ const VideoContainer: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [reportLoading, setReportLoading] = useState(false);
   const [isReport, setIsReport] = useState(false);
+  const [commentInput, setCommentInput] = useState('');
+  const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [commentLoading, setCommentLoading] = useState(false);
+
+  // CapacitorVideoPlayer.initPlayer();
 
   const vid = video?.objectID;
   const uid = user?.uid;
@@ -56,11 +74,36 @@ const VideoContainer: React.FC = () => {
     }
   }, [isFocus, id]);
 
+  const getComment = useCallback(() => {
+    setCommentLoading(true);
+    const comments = database.ref(`/videos/${vid}/comments`);
+    return comments
+      .once('value')
+      .then((data) => {
+        if (data.val()) {
+          const newCommentList: Comment[] = [];
+          for (const key in data.val()) {
+            if (Object.prototype.hasOwnProperty.call(data.val(), key)) {
+              const element = data.val()[key];
+              newCommentList.push(element);
+            }
+          }
+          setCommentList(newCommentList);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setCommentLoading(false);
+      });
+  }, [vid]);
+
   useEffect(() => {
     const getReport = () => {
       setReportLoading(true);
       const report = database.ref(`/users/${uid}/report`);
-      report
+      return report
         .once('value')
         .then((data) => {
           if (data.val()) {
@@ -78,7 +121,7 @@ const VideoContainer: React.FC = () => {
     const getLike = () => {
       setLikeLoading(true);
       const like = database.ref(`/users/${uid}/like`);
-      like
+      return like
         .once('value')
         .then((data) => {
           if (data.val()) {
@@ -94,10 +137,9 @@ const VideoContainer: React.FC = () => {
     };
 
     if (uid && vid) {
-      getLike();
-      getReport();
+      Promise.all([getLike(), getReport(), getComment()]);
     }
-  }, [uid, vid]);
+  }, [uid, vid, getComment]);
 
   useEffect(() => {
     if (vid) {
@@ -211,6 +253,38 @@ const VideoContainer: React.FC = () => {
       });
   };
 
+  const onComment = () => {
+    if (commentInput.length === 0) {
+      message.error(t`watch.emptyComment`);
+      return;
+    }
+
+    if (!user) {
+      message.error(t`watch.commentUserError`);
+      return;
+    }
+
+    if (commentLoading) return;
+
+    setCommentLoading(true);
+
+    database
+      .ref('videos')
+      .child(video?.objectID!)
+      .child('comments')
+      .push({ author: user, date: +new Date(), body: commentInput })
+      .then(() => {
+        message.success(t`watch.commentSuccess`);
+        getComment();
+      })
+      .catch(() => {
+        message.error(t`watch.commentError`);
+      })
+      .finally(() => {
+        setCommentLoading(false);
+      });
+  };
+
   const unlike = () => {
     const videoId = vid!;
     const uid = user!.uid;
@@ -239,12 +313,15 @@ const VideoContainer: React.FC = () => {
         setLikeLoading(false);
       });
   };
+
   const onReport = () => {
     if (!user) {
-      message.error('Vous devez être connecté pour signaler une vidéo');
+      message.error(t`watch.reportUserError`);
+      return;
     }
     if (!video) {
-      message.error('Il y a un problème...');
+      message.error(t`watch.errorLoadingData`);
+      return;
     }
 
     if (isReport) unreport();
@@ -253,14 +330,17 @@ const VideoContainer: React.FC = () => {
 
   const onLike = () => {
     if (!user) {
-      message.error('Vous devez être connecté pour liker une vidéo');
+      message.error(t`watch.likeUserError`);
+      return;
     }
     if (!video) {
-      message.error('Il y a un problème...');
+      message.error(t`watch.errorLoadingData`);
+      return;
     }
     if (isLiked) unlike();
     else like();
   };
+
   useEffect(() => {
     const getUserData = async (urlId: string) => {
       try {
@@ -281,10 +361,14 @@ const VideoContainer: React.FC = () => {
     }
   }, [user, isFocus, video?.owner]);
 
-  if (!userData || !video) return <Loading text={'Loading video data...'} />;
+  if (!userData || !video) return <Loading text={t`loading.video`} />;
+
   return (
     <Video
       {...{
+        onComment,
+        commentState: [commentInput, setCommentInput],
+        commentList,
         user,
         video,
         userData,

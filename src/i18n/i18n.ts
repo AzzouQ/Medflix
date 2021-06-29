@@ -1,5 +1,5 @@
 import i18next, { LanguageDetectorAsyncModule } from 'i18next';
-import { Device } from '@capacitor/core';
+import { Device } from '@capacitor/device';
 
 import { fr, en } from './locales';
 

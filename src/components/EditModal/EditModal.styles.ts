@@ -5,9 +5,7 @@ const Styles: StylesType = {
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-  },
-  icon: {
-    fontSize: 20,
+    flexDirection: 'column',
   },
 };
 

@@ -25,8 +25,7 @@ const Router: React.FC = () => {
     Root: '/',
     Profile: '/profile',
     Home: '/home',
-    EditProfile: '/editProfile',
-    Followers: '/followers',
+    Subscription: '/subscription',
     Video: '/watch',
   };
 
@@ -41,7 +40,7 @@ const Router: React.FC = () => {
           <Home />
         </Route>
 
-        <Route exact path={Links.Followers}>
+        <Route exact path={Links.Subscription}>
           <Followers />
         </Route>
 
@@ -58,7 +57,7 @@ const Router: React.FC = () => {
           <IonLabel>{t`tab.home`}</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab={'Followers'} href={Links.Followers}>
+        <IonTabButton tab={'Subscription'} href={Links.Subscription}>
           <TeamOutlined style={{ fontSize: 25 }} />
           <IonLabel>{t('tab.followers')}</IonLabel>
         </IonTabButton>
