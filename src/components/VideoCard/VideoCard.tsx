@@ -8,6 +8,7 @@ import {
   IonCol,
   IonRow,
   IonModal,
+  isPlatform,
 } from '@ionic/react';
 import { Image, Avatar } from 'antd';
 import {
@@ -58,7 +59,7 @@ const VideoCard: React.FC<VideoCardType.Props> = ({
             <Image
               src={video.thumbnail || thumbnail}
               height={200}
-              width={280}
+              width={isPlatform('mobile') ? 280 : 320}
               preview={false}
             />
           </IonCardContent>
