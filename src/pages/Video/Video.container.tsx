@@ -1,13 +1,18 @@
-import Loading from 'components/Loading';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
-import { database } from 'service/firebase';
-import { userSelectors, UserState } from 'slices/user.slice';
-import type { UserType, UseStateType, VideoType } from 'types';
-import Video from './Video';
 import { message } from 'antd';
 import { t } from 'i18n';
+
+import { CapacitorVideoPlayer } from 'capacitor-video-player';
+
+import { database } from 'service/firebase';
+import { userSelectors, UserState } from 'slices/user.slice';
+
+import Loading from 'components/Loading';
+import Video from './Video';
+
+import type { UserType, UseStateType, VideoType } from 'types';
 
 export declare namespace VideoView {
   type Props = {
@@ -51,6 +56,8 @@ const VideoContainer: React.FC = () => {
   const [commentList, setCommentList] = useState<Comment[]>([]);
 
   const [commentLoading, setCommentLoading] = useState(false);
+
+  // CapacitorVideoPlayer.initPlayer();
 
   const vid = video?.objectID;
   const uid = user?.uid;
