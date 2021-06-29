@@ -4,8 +4,6 @@ import { useLocation, useParams } from 'react-router';
 import { message } from 'antd';
 import { t } from 'i18n';
 
-import { CapacitorVideoPlayer } from 'capacitor-video-player';
-
 import { database } from 'service/firebase';
 import { userSelectors, UserState } from 'slices/user.slice';
 
@@ -54,7 +52,6 @@ const VideoContainer: React.FC = () => {
   const [isReport, setIsReport] = useState(false);
   const [commentInput, setCommentInput] = useState('');
   const [commentList, setCommentList] = useState<Comment[]>([]);
-
   const [commentLoading, setCommentLoading] = useState(false);
 
   // CapacitorVideoPlayer.initPlayer();

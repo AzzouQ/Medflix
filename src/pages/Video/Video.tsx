@@ -20,6 +20,7 @@ import Footer from 'components/Footer';
 import type { Comment, VideoView } from './Video.container';
 import { Styles } from './Video.styles';
 import { t } from 'i18n';
+import { CapacitorVideoPlayer } from 'capacitor-video-player';
 
 const Video: React.FC<VideoView.Props> = ({
   user,
@@ -35,6 +36,17 @@ const Video: React.FC<VideoView.Props> = ({
   commentState: [commentInput, setCommentInput],
   onComment,
 }) => {
+  const onPlay = () => {
+    CapacitorVideoPlayer.initPlayer({
+      mode: 'fullscreen',
+      url: video?.url,
+      playerId: 'fullscreen',
+      componentTag: 'div',
+    });
+
+    CapacitorVideoPlayer.play({ playerId: 'fullscreen' });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -67,19 +79,64 @@ const Video: React.FC<VideoView.Props> = ({
       </IonHeader>
 
       <IonContent fullscreen={true}>
+        <div style={{ flexDirection: 'row', display: 'flex' }}>
+          <div
+            id="fullscreen"
+            style={{
+              display: 'block',
+              maxWidth: '60vw',
+              maxHeight: '60vh',
+              width: 'auto',
+              height: 'auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <img
+              alt="video"
+              style={{
+                display: 'block',
+                maxWidth: '60vw',
+                maxHeight: '60vh',
+                width: 'auto',
+                height: 'auto',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onClick={onPlay}
+              src={video.thumbnail}
+            />
+          </div>
+
+          <div
+            style={{
+              textAlign: 'center',
+              flexDirection: 'column',
+              alignItems: 'center',
+              flex: 1,
+            }}
+          >
+            <Typography.Title level={2}>
+              {t`watch.view` + ` ${video.view}`}
+            </Typography.Title>
+            <Typography.Title level={3}>
+              {t`watch.like` + ` ${video.like}`}
+            </Typography.Title>
+            <Typography.Title level={4}>
+              {t`watch.report` + ` ${video.report}`}
+            </Typography.Title>
+          </div>
+        </div>
         <Typography.Title>
           {t`watch.description` + ` ${video.description}`}
         </Typography.Title>
-        <div style={{ flexDirection: 'column' }}>
-          <Typography.Title level={2}>
-            {t`watch.view` + ` ${video.view}`}
-          </Typography.Title>
-          <Typography.Title level={3}>
-            {t`watch.like` + ` ${video.like}`}
-          </Typography.Title>
-          <Typography.Title level={4}>
-            {t`watch.report` + ` ${video.report}`}
-          </Typography.Title>
+        <div
+          style={{
+            flexDirection: 'column',
+            display: 'flex',
+            flex: 1,
+          }}
+        >
           <Input
             onChange={(e) => setCommentInput(e.target.value)}
             value={commentInput}
@@ -87,9 +144,11 @@ const Video: React.FC<VideoView.Props> = ({
           <Button type={'primary'} icon={<SendOutlined />} onClick={onComment}>
             {t`watch.comment`}
           </Button>
-          {commentList.map(({ author, body, date }: Comment) => (
-            <Typography.Title level={4}>{body}</Typography.Title>
-          )).reverse()}
+          {commentList
+            .map(({ author, body, date }: Comment) => (
+              <Typography.Title level={4}>{body}</Typography.Title>
+            ))
+            .reverse()}
         </div>
       </IonContent>
       <Footer />
